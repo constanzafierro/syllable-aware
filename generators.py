@@ -44,7 +44,7 @@ class GeneralGenerator():
             pad_length = (right_limit - left_limit + 1) - self.max_len
             for k, ind_token in enumerate([0]*pad_length + self.ind_tokens[left_limit:right_limit+1]):
                 X_batch[current_batch_index, k] = ind_token
-            Y_batch[current_batch_index, self.ind_tokens[right_limit+1]-1] = 1 # -1 correct??
+            Y_batch[current_batch_index, self.ind_tokens[right_limit+1]-1] = 1 # -1 because indexing starts in 1
             # check current_batch_index
             current_batch_index += 1
             if current_batch_index == self.batch_size:

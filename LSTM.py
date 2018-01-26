@@ -5,6 +5,9 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Embedding
 from keras.layers import LSTM
 from keras.optimizers import RMSprop
+from keras.models import load_model
+
+from math import ceil
 import numpy as np
 import random
 import sys
@@ -51,15 +54,19 @@ def on_epoch_end(epoch, logs):
 
 # get processed text
 print('Process text...')
-string_tokens = get_processed_text('horoscopo_raw.txt')
+string_tokens = get_processed_text('horoscopo_test_overfitting.txt')
 print('tokens length:', len(string_tokens))
 # crear diccionario tokens-int
 print('Vectorization...')
 string_voc = set(string_tokens)
 token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
 index_to_token = dict((token_to_index[t], t) for t in string_voc)
-# traducir corpus a enteros
+# translate string corpus to integers corpus
 ind_corpus = [token_to_index[token] for token in string_tokens]
+# testing proposes: test/train split
+len_train = int(len(ind_corpus)*0.8)
+ind_corpus_train = ind_corpus[0:len_train]
+ind_corpus_test = ind_corpus[len_train:]
 voc = set(ind_corpus)
 print('voc size:', len(voc))
 
@@ -78,7 +85,7 @@ model.compile(loss='categorical_crossentropy', optimizer=optimizer)
 # train model
 batch_size = 128
 epochs = 60
-train_gen = GeneralGenerator(batch_size, ind_corpus, voc, max_len)
+train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
 #val_gen = GeneralGenerator(batch_size, ind_val_tokens, voc, max_len)
 
 print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
@@ -86,10 +93,46 @@ print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 model_output = model.fit_generator(
     train_gen.generator(),
     train_gen.steps_per_epoch,
-    epochs=epochs,
-    callbacks=[print_callback]
+    epochs=epochs#,
+    #callbacks=[print_callback]
 )
 
-#final_model_file = 'final.h5'
-#print('Saving last model:', final_model_file)
-#lstm_model.save(final_model_file)
+#print('Saving last model:', 'model_test_overfitting.h5')
+#model.save('model_test_overfitting.h5')
+
+###########################
+# Quick test of correctness:
+#   select the 'horoscopo_test_overfitting.txt'
+#   set True the test
+###########################
+if True:
+    # Create X, Y test
+    print("---- Evaluation")
+    ind_corpus_test = ind_corpus_train # using test_data = train_data to check correctness -> we should have ~1 perplexity
+    num_test = ceil(len(ind_corpus_test)/(max_len+1))
+    X_test = np.zeros((num_test, max_len), dtype = np.int32)
+    Y_test = np.zeros((num_test, len(voc)), dtype = np.bool)
+    test_count = 0
+    for i in np.arange(0, len(ind_corpus_test), max_len+1):
+        j = i+max_len if i+max_len < len(ind_corpus_test) else len(ind_corpus_test)-1
+        pad_length = max_len-(j-i)
+        for k, ind_token in enumerate([0]*pad_length + ind_corpus_test[i:j]):
+            X_test[test_count, k] = ind_token
+        Y_test[test_count, ind_corpus_test[j]-1] = 1
+        test_count += 1
+    loss = model.evaluate(X_test, Y_test, batch_size=batch_size)
+    print(model.metrics_names[0], loss)
+    print("Perplexity:", np.exp(loss))
+
+if False:
+    for i in range(5):
+        print('----- test ', i+1, '-----')
+        start_index = random.randint(0, len(string_tokens) - max_len - 1)
+        sentence = string_tokens[start_index: start_index + max_len]
+        print('sentence: ', ''.join(sentence))
+        print('next: ', string_tokens[start_index + max_len])
+        x_pred = np.zeros((1, max_len))
+        for t, token in enumerate(sentence):
+            x_pred[0, t] = token_to_index[token]
+        preds = model.predict(x_pred, verbose=0)[0]
+        print('predicted next:', index_to_token[np.argmax(preds)+1])

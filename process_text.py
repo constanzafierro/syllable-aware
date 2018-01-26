@@ -1,4 +1,4 @@
-from language_model_general import *
+from token_selectors import *
 
 def get_processed_text(raw_filename):
     '''Process raw text to tokens with the selectors array
@@ -7,12 +7,12 @@ def get_processed_text(raw_filename):
     Returns:
         Array with string tokens
     '''
-    corpus = open(raw_filename).read().lower()[0:1000]
+    corpus = open(raw_filename).read().lower()
     not_word = ".,\n¡!:();\"0123456789…\xa0"
     word_selector = WordSelector(to_ignore=not_word)
-    word_selector.calculate_most_frequent(corpus=corpus, quantity=0.6) # 2
+    word_selector.calculate_most_frequent(corpus=corpus, quantity=0.6)
     syllable_selector = SyllableSelector(to_ignore=not_word)
-    syllable_selector.calculate_most_frequent(corpus=corpus, quantity=0.4) # 3
+    syllable_selector.calculate_most_frequent(corpus=corpus, quantity=0.4)
     selectors = [PuntuactionSelector(), word_selector, syllable_selector, CharacterSelector()]
     processed_corpus = []
     i = 0
@@ -26,7 +26,7 @@ def get_processed_text(raw_filename):
                 else:
                     j = k
         if i == j:
-            #processed_corpus.append(corpus[i])
+            # none selector picked it -> ignore it
             i += 1
         else:
             i = j
