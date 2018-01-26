@@ -54,7 +54,7 @@ def on_epoch_end(epoch, logs):
 
 # get processed text
 print('Process text...')
-string_tokens = get_processed_text('horoscopo_test_overfitting.txt')
+string_tokens = get_processed_text('data/horoscopo_test_overfitting.txt')
 print('tokens length:', len(string_tokens))
 # crear diccionario tokens-int
 print('Vectorization...')
