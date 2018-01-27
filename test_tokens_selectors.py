@@ -1,5 +1,5 @@
 import unittest
-from language_model_general import *
+from token_selectors import *
 
 def test_token(corpus, token):
     '''Iterates over the corpus calling select method of token object
@@ -45,7 +45,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_word(self):
         corpus = "Hola ¿como estas? bien! Y tu? No tan bien, como..."
-        word_selector = WordSelector(to_ignore="¿?.,\n¡!:();\"0123456789…")
+        word_selector = WordSelector(sign_to_ignore=[i for i in "¿?.,\n¡!:();\"0123456789…"])
         word_selector.calculate_most_frequent(corpus=corpus, quantity=0.2)
         processed_corpus = []
         i = 0
@@ -67,7 +67,7 @@ class TestStringMethods(unittest.TestCase):
         corpus = "Hola corazón ¿como estas? bien! Y tu? No tan bien, como..."
         # ho-la: co-ra-zón: co-mo: es-tas: bien: y: tu: No: tan: bien: co-mo:
         # 13, co:3 mo:2 bien:2
-        syllable_selector = SyllableSelector(to_ignore="¿?.,\n¡!:();\"0123456789…")
+        syllable_selector = SyllableSelector(sign_to_ignore=[i for i in "¿?.,\n¡!:();\"0123456789…"])
         # 1 silaba
         syllable_selector.calculate_most_frequent(corpus=corpus, quantity=0.1)
         processed_corpus = []
@@ -98,10 +98,10 @@ class TestStringMethods(unittest.TestCase):
 
     def test_combination(self):
         corpus = "Hola coco ¿Cómo estás? bien! Y tú? No tan bien, como..."
-        ignore = "¿?.,\n¡!:();\"0123456789…"
-        word_selector = WordSelector(to_ignore=ignore)
+        ignore = [i for i in "¿?.,\n¡!:();\"0123456789…"]
+        word_selector = WordSelector(sign_to_ignore=ignore)
         word_selector.calculate_most_frequent(corpus=corpus, quantity=0.2) # 2
-        syllable_selector = SyllableSelector(to_ignore=ignore)
+        syllable_selector = SyllableSelector(sign_to_ignore=ignore)
         syllable_selector.calculate_most_frequent(corpus=corpus, quantity=0.25) # 3
         selectors = [PuntuactionSelector(), word_selector, syllable_selector, CharacterSelector()]
         processed_corpus = []
@@ -123,10 +123,10 @@ class TestStringMethods(unittest.TestCase):
     def test_quantity(self):
         # Same as before but with quantity of words/syllables
         corpus = "Hola coco ¿Cómo estás? bien! Y tú? No tan bien, como..."
-        not_word = "¿?.,\n¡!:();\"0123456789…"
-        word_selector = WordSelector(to_ignore=not_word)
+        not_word = [i for i in "¿?.,\n¡!:();\"0123456789…"]
+        word_selector = WordSelector(sign_to_ignore=not_word)
         word_selector.calculate_most_frequent(corpus=corpus, quantity=2) # 2
-        syllable_selector = SyllableSelector(to_ignore=not_word)
+        syllable_selector = SyllableSelector(sign_to_ignore=not_word)
         syllable_selector.calculate_most_frequent(corpus=corpus, quantity=3) # 3
         selectors = [PuntuactionSelector(), word_selector, syllable_selector, CharacterSelector()]
         processed_corpus = []

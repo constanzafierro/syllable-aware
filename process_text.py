@@ -1,18 +1,27 @@
 from token_selectors import *
 
-def get_processed_text(raw_filename):
+def get_processed_text(raw_filename, quantity_word = 0.6, quantity_syllable = 0.4):
     '''Process raw text to tokens with the selectors array
     Args:
         raw_filename: string path to txt file
     Returns:
         Array with string tokens
     '''
-    corpus = open(raw_filename).read().lower()
+    corpus = open(raw_filename).read().lower()#[1:1000]
     not_word = ".,\n¡!:();\"0123456789…\xa0"
-    word_selector = WordSelector(to_ignore=not_word)
-    word_selector.calculate_most_frequent(corpus=corpus, quantity=0.6)
-    syllable_selector = SyllableSelector(to_ignore=not_word)
-    syllable_selector.calculate_most_frequent(corpus=corpus, quantity=0.4)
+
+    sign_to_ignore = [i for i in not_word]
+
+    word_selector = WordSelector(sign_to_ignore=sign_to_ignore)
+    word_selector.calculate_most_frequent(corpus=corpus, quantity=quantity_word)
+
+    word_to_ignore = [i for i in word_selector.frequent]
+
+    syllable_selector = SyllableSelector(sign_to_ignore=sign_to_ignore, word_to_ignore = word_to_ignore)
+    syllable_selector.calculate_most_frequent(corpus=corpus, quantity=quantity_syllable)
+
+    ## Para toquenizar se tokeniza primero en puntuacion, luego en palabras
+
     selectors = [PuntuactionSelector(), word_selector, syllable_selector, CharacterSelector()]
     processed_corpus = []
     i = 0
