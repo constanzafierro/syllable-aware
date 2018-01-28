@@ -1,16 +1,17 @@
-from process_text import get_processed_text
+from process_text import *
 from generators import GeneralGenerator
 
 # get processed text
 
-
-for a in range(0, 1):
+corpus = open('./data/horoscopo_raw.txt').read().lower()[1:1000]
+for a in range(11):
         quantity_syllable = a/10.0
         quantity_word = 1-a/10.0
 
         print('\nquantity of syllable = {} ; quantity of words = {}'.format(quantity_syllable, quantity_word))
         print('Process text...')
-        string_tokens = get_processed_text('./data/horoscopo_raw.txt', quantity_word, quantity_syllable)
+        selectors = get_selectors(corpus, quantity_word, quantity_syllable)
+        string_tokens = get_processed_text(corpus, selectors)
         print('tokens length:', len(string_tokens))
         # crear diccionario tokens-int
         print('Vectorization...')
