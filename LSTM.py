@@ -15,6 +15,48 @@ import sys
 
 import time
 
+'''
+Parámetros:
+
+*** Ambos valores deben estar entre 0 y 1 ***
+
+quantity_word:
+    Fracción de Palabras a considerar en el Vocabulario (default=1)
+    
+quantity_syllable:
+    Fracción de Sílabas a considerar en el Vocabulario (default=0)
+
+Modo de Uso (Ejemplo):
+!python3 args.py --quantity_word 0 --quantity_syllable 1
+
+Modo de Uso (Abreviado)
+!python3 args.py -qw 0 -qs 1
+
+'''
+
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-qw','--quantity_word',
+                    type=float, default=1,
+                    help='Fracción de Palabras a considerar en el Vocabulario (default=1)')
+
+parser.add_argument('-qs','--quantity_syllable',
+                    type=float, default=0,
+                    help='Fracción de Sílabas a considerar en el Vocabulario (default=0)')
+
+args = parser.parse_args()
+
+quantity_word = args.quantity_word
+quantity_syllable = args.quantity_syllable
+
+if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
+  print('Ambos valores deben estar entre 0 y 1')
+  raise ValueError 
+
+print("quantity_word = {} \nquantity_syllable = {}".format(quantity_word, quantity_syllable))
+
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
@@ -198,8 +240,9 @@ workers=2 # 2 en Google Colaboratory (?)
 
 
 ## Caso 1: Vocabulario consiste en Solamente Palabras
-quantity_word = 1
-quantity_syllable = 0
+
+#quantity_word = 1 #ingresado en argparser
+#quantity_syllable = 0 #ingresado en argparser
 train_size = 0.8
 
 
