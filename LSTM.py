@@ -27,10 +27,10 @@ quantity_syllable:
     Fracción de Sílabas a considerar en el Vocabulario (default=0)
 
 Modo de Uso (Ejemplo):
-!python3 LSTM.py --quantity_word 0 --quantity_syllable 1
+!python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --verbosity
 
 Modo de Uso (Abreviado)
-!python3 LSTM.py -qw 0 -qs 1
+!python3 LSTM.py -qw 0 -qs 1 -v
 
 '''
 
@@ -46,16 +46,24 @@ parser.add_argument('-qs','--quantity_syllable',
                     type=float, default=0,
                     help='Fracción de Sílabas a considerar en el Vocabulario (default=0)')
 
+parser.add_argument('-v', '--verbosity', action='count', default=0,
+                    help="Verbosity")
+
 args = parser.parse_args()
+
+if args.verbosity >= 1: verbose = True
 
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
-
+    
 if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
   print('Ambos valores deben estar entre 0 y 1')
   raise ValueError 
 
-print("quantity_word = {} \nquantity_syllable = {}".format(quantity_word, quantity_syllable))
+print('quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
+
+
+##
 
 
 def sample(preds, temperature=1.0):
@@ -282,7 +290,7 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 
 # Accuracy Test
 print('\n'*5 + 'ACCURACY TEST' + '\n'*5)
-accuracyTest(model, string_tokens, max_len=max_len, verbose=True)
+accuracyTest(model, string_tokens, max_len=max_len, verbose=verbose)
 
 
 
