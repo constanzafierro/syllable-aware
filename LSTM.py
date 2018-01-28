@@ -1,4 +1,4 @@
-process_text import *
+from process_text import *
 
 from generators import GeneralGenerator
 from keras.callbacks import LambdaCallback
