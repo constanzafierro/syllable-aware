@@ -44,7 +44,7 @@ def on_epoch_end(epoch, logs):
         print()
 
 
-def next_word_generative(model, sentence, index_to_token, max_len = 100):
+def next_word_generative(model, sentence, index_to_token, token_to_index, max_len = 100):
     ## Generation of the next word
     last_char = ''
     word_generate = ''
@@ -65,7 +65,7 @@ def next_word_generative(model, sentence, index_to_token, max_len = 100):
     return word_generate
 
 
-def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
+def test_eval(model, index_to_token, token_to_index corpus, selectors, step_t = 100):
 
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
     Ntest = len(get_processed_text(corpus, only_word))
@@ -80,7 +80,7 @@ def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
             words = corpus[start_index: start_index + i]
             token_test = get_processed_text(words, selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            word_i = next_word_generative(model, sentence, index_to_token)
+            word_i = next_word_generative(model, sentence, index_to_token, token_to_index)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
             ppl += np.log(perplexity_i(word_i_processed, words, corpus))
@@ -98,7 +98,7 @@ def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
 
 
 def perplexity_i(word_i_processed, words, corpus):
-    indexes = km.kmpMatch(corpus, corpus)
+    indexes = km.kmpMatch(corpus, words)
     p_word = 0
     p_context = 0
 
