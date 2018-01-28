@@ -74,7 +74,8 @@ def preprocessing(*args, **kwargs):
     
     # get processed text
     print('Process text...')
-    string_tokens = get_processed_text(path_to_file, quantity_word, quantity_syllable)
+    #string_tokens = get_processed_text(path_to_file, quantity_word, quantity_syllable)
+    string_tokens = helper_get_processed_text(path_to_file, quantity_word, quantity_syllable)
     print('tokens length:', len(string_tokens))
     
     # crear diccionario tokens-int
