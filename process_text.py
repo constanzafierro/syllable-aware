@@ -1,6 +1,12 @@
 from token_selectors import *
 
 
+def helper_get_processed_text(raw_filename, quantity_word = 0.6, quantity_syllable = 0.4):
+    corpus = open(raw_filename).read().lower()#[1:1000]
+    selectors = get_selectors(corpus,quantity_word = 0.6, quantity_syllable = 0.4)
+    return get_processed_text(corpus, selectors)
+
+
 def get_selectors(corpus, quantity_word = 0.6, quantity_syllable = 0.4):
     #corpus = open(raw_filename).read().lower()#[1:1000]
     not_word = ".,\n¡!:();\"0123456789…\xa0"
