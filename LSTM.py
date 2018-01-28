@@ -27,10 +27,10 @@ quantity_syllable:
     Fracción de Sílabas a considerar en el Vocabulario (default=0)
 
 Modo de Uso (Ejemplo):
-!python3 args.py --quantity_word 0 --quantity_syllable 1
+!python3 LSTM.py --quantity_word 0 --quantity_syllable 1
 
 Modo de Uso (Abreviado)
-!python3 args.py -qw 0 -qs 1
+!python3 LSTM.py -qw 0 -qs 1
 
 '''
 
