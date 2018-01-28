@@ -3,14 +3,17 @@ import numpy as np
 from process_text import *
 
 
-def next_word_generative(model, sentence, index_to_token):
+def next_word_generative(model, sentence, index_to_token, max_len = 100):
     ## Generation of the next word
     last_char = ''
     word_generate = ''
     while last_char != ':':
-        x_pred = np.zeros((1, len(sentence)))
+        x_pred = np.zeros((1, max_len))
         for t, token in enumerate(sentence):
-            x_pred[0, t] = token_to_index[token]
+            if len(sentence) < max_len:
+                x_pred[0, max_len - len(sentence) + t] = token_to_index[token]
+            else:
+                x_pred[0, t] = token_to_index[token]
         preds = model.predict(x_pred, verbose=0)[0]
         next_index = sample(preds) # temperature = 1.0 por defecto
         next_token = index_to_token[next_index+1] # dict starting at 1
