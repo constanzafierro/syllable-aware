@@ -77,7 +77,7 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
     return word_generate.replace(':','').replace('.','')
 
 
-def test_eval(model, corpus, selectors, step_t = 100):
+def test_eval(model, corpus, selectors, step_t = 3):
     '''Evaluation of model with perplexity like metrics
     Args:
         model: is a pre-trained model
@@ -127,7 +127,7 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     Returns:
          float, P(word_i_processed | words) = count(word_i_processed-words)/counts(words) in corpus
     '''
-    indexes = km.kmpMatch(corpus, words)
+    indexes = km.kmpMatch(words, corpus)
     p_word = 0
     p_context = 0
 

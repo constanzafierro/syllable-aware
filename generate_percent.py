@@ -40,11 +40,11 @@ def run_model(model, ind_corpus_train, voc, epochs = 20, batch_size = 128, max_l
 
 
 def main():
-    train_raw_filename ='./data/horoscopo_raw.txt' 
-    test_raw_filename = './data/horoscopo_raw.txt'
+    train_raw_filename ='./data/horoscopo_test_overfitting.txt' 
+    test_raw_filename = './data/horoscopo_test_overfitting.txt'
 
-    corpus_train = open(train_raw_filename).read().lower()[1:1000]
-    corpus_test = open(test_raw_filename).read().lower()[1:1000]
+    corpus_train = open(train_raw_filename).read().lower()
+    corpus_test = open(test_raw_filename).read().lower()
 
     for a in range(11):
         quantity_syllable = a/10.0
@@ -74,7 +74,7 @@ def main():
         ## run model
         model = run_model(model, ind_corpus, voc)
 
-        pp = test_eval(model, corpus_test, selectors, step_t = 5)
+        pp = test_eval(model, corpus_test, selectors, step_t = 2)
         print('perplexity = {} para el modelo: %palabras = {} ; %caracteres = {}'.format(pp, quantity_word, quantity_syllable))
 
 
