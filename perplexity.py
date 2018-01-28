@@ -20,9 +20,8 @@ def next_word_generative(model, sentence, index_to_token):
     return word_generate
 
 
-def test_eval(model, index_to_token, raw_filename, selectors, step_t = 100):
+def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
 
-    corpus = open(raw_filename).read().lower()
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
     Ntest = len(get_processed_text(corpus, only_word))
 
