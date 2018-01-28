@@ -32,19 +32,23 @@ def test_eval(model, index_to_token, raw_filename, selectors, step_t = 100):
     ppl = 0
     for i in range(len(corpus) - step_t - 1):
         #start_index
-        words = corpus[start_index: start_index + step_t]
-
-        token_test = get_processed_text(words, selectors)
-
-        sentence = tokens_test[-step_t:]
-
-        word_i = next_word_generative(model, sentence, index_to_token)
-
-        word_i_processed = word_i.replace("-", "")
-        word_i_processed = word_i_processed.replace(":", "")
-        ppl += np.log(perplexity_i(word_i_processed, words, corpus))
-
-        start_index += 1
+        if i < step_t:
+            words = corpus[start_index: start_index + i]
+            token_test = get_processed_text(words, selectors)
+            sentence = tokens_test if len(tokens_test) < step_t else tokens_test[-step_t:]
+            word_i = next_word_generative(model, sentence, index_to_token)
+            word_i_processed = word_i.replace("-", "")
+            word_i_processed = word_i_processed.replace(":", "")
+            ppl += np.log(perplexity_i(word_i_processed, words, corpus))
+        else:
+            words = corpus[start_index: start_index + step_t]
+            token_test = get_processed_text(words, selectors)
+            sentence = tokens_test if len(tokens_test) < step_t else tokens_test[-step_t:]
+            word_i = next_word_generative(model, sentence, index_to_token)
+            word_i_processed = word_i.replace("-", "")
+            word_i_processed = word_i_processed.replace(":", "")
+            ppl += np.log(perplexity_i(word_i_processed, words, corpus))
+            start_index += 1
 
     return ppl/Ntest
 
