@@ -35,7 +35,7 @@ def get_most_frequent(list_tokens, quantity):
     count = 0
     ans = set()
     freq_dict = Counter(list_tokens).most_common()
-    max_tokens = int(len(list_tokens)*quantity) if quantity <= 1 else quantity
+    max_tokens = int(len(freq_dict)*quantity) if quantity <= 1 else quantity
     for token, freq in freq_dict:
         if len(ans) < max_tokens:
             ans.add(token)

@@ -37,7 +37,7 @@ def on_epoch_end(epoch, logs):
         #sys.stdout.write(''.join(generated))
 
         for i in range(100):
-            x_pred = np.zeros((1, max_len))
+            x_pred = np.zeros((1, max_len)) # no debería ser en len(sentence) ?? 
             for t, token in enumerate(sentence):
                 x_pred[0, t] = token_to_index[token]
 

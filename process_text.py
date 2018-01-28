@@ -1,13 +1,8 @@
 from token_selectors import *
 
-def get_processed_text(raw_filename, quantity_word = 0.6, quantity_syllable = 0.4):
-    '''Process raw text to tokens with the selectors array
-    Args:
-        raw_filename: string path to txt file
-    Returns:
-        Array with string tokens
-    '''
-    corpus = open(raw_filename).read().lower()#[1:1000]
+
+def get_selectors(corpus, quantity_word = 0.6, quantity_syllable = 0.4):
+    #corpus = open(raw_filename).read().lower()#[1:1000]
     not_word = ".,\n¡!:();\"0123456789…\xa0"
 
     sign_to_ignore = [i for i in not_word]
@@ -24,6 +19,18 @@ def get_processed_text(raw_filename, quantity_word = 0.6, quantity_syllable = 0.
     ## Para toquenizar se tokeniza primero en puntuacion, luego en palabras
 
     selectors = [PuntuactionSelector(), word_selector, syllable_selector, CharacterSelector()]
+
+    return selectors
+
+
+def get_processed_text(corpus, selectors):
+    '''Process raw text to tokens with the selectors array
+    Args:
+        raw_filename: string path to txt file
+    Returns:
+        Array with string tokens
+    '''
+    #corpus = open(raw_filename).read().lower()#[1:1000]
     processed_corpus = []
     i = 0
     while i < len(corpus)-6:
