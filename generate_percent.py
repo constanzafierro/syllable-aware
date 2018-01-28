@@ -38,6 +38,7 @@ def run_model(model, ind_corpus_train, voc, epochs = 20, batch_size = 128, max_l
     )
     return model
 
+
 def main():
     train_raw_filename ='./data/horoscopo_raw.txt' 
     test_raw_filename = './data/horoscopo_raw.txt'

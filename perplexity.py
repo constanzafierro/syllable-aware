@@ -73,7 +73,7 @@ def test_eval(model, corpus, selectors, step_t = 100):
     token_test = get_processed_text(corpus, selectors)
     # crear diccionario tokens-int
     print('Vectorization...')
-    string_voc = set(tokens_test)
+    string_voc = set(token_test)
     token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
     index_to_token = dict((token_to_index[t], t) for t in string_voc)
 
