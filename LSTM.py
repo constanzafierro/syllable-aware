@@ -128,7 +128,7 @@ def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=1
     return model
 
 
-def accuracyTest(model, max_len=100, string_tokens, verbose=False, *args, **kwargs):
+def accuracyTest(model, string_tokens, max_len=100, verbose=False, *args, **kwargs):
     '''
     Requiere
     
@@ -225,6 +225,9 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 #   select the 'horoscopo_test_overfitting.txt'
 #   set True the test
 ###########################
+
+max_len = 100
+
 if True:
     # Create X, Y test
     print("---- Evaluation")
