@@ -1,13 +1,33 @@
 from token_selectors import *
 
 
-def helper_get_processed_text(raw_filename, quantity_word = 0.6, quantity_syllable = 0.4):
-    corpus = open(raw_filename).read().lower()#[1:1000]
-    selectors = get_selectors(corpus,quantity_word = 0.6, quantity_syllable = 0.4)
+def helper_get_processed_text(raw_filename, quantity_word = 0.5, quantity_syllable = 0.5):
+    '''Process array of string to tokens with the selectors array
+    Args:
+        raw_filename: path of file in txt
+        quantity_word: quantity of words if quantity of words is between 0 and 1 is a percent
+                       by default quantity_word = 0.5
+        quantity_syllable: quantity of syllable if quantity of words is between 0 and 1 is a percent
+                       by default quantity_syllable = 0.5
+    Returns:
+        Array with string tokens
+    '''
+    corpus = open(raw_filename).read().lower()
+    selectors = get_selectors(corpus, quantity_word, quantity_syllable)
     return get_processed_text(corpus, selectors)
 
 
-def get_selectors(corpus, quantity_word = 0.6, quantity_syllable = 0.4):
+def get_selectors(corpus, quantity_word = 0.5, quantity_syllable = 0.5):
+    '''Generate a selectors from array of string and the quantity of words and syllables
+    Args:
+        corpus: array of strings
+        quantity_word: quantity of words if quantity of words is between 0 and 1 is a percent
+                       by default quantity_word = 0.5
+        quantity_syllable: quantity of syllable if quantity of words is between 0 and 1 is a percent
+                       by default quantity_syllable = 0.5
+    Returns:
+        Array with tokens selectors
+    '''
     #corpus = open(raw_filename).read().lower()#[1:1000]
     not_word = ".,\n¡!:();\"0123456789…\xa0"
 
@@ -30,9 +50,10 @@ def get_selectors(corpus, quantity_word = 0.6, quantity_syllable = 0.4):
 
 
 def get_processed_text(corpus, selectors):
-    '''Process raw text to tokens with the selectors array
+    '''Process array of string to tokens with the selectors array
     Args:
-        raw_filename: string path to txt file
+        corpus: array of strings
+        selectors: array of selectos
     Returns:
         Array with string tokens
     '''

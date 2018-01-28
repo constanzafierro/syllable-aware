@@ -45,6 +45,16 @@ def on_epoch_end(epoch, logs):
 
 
 def next_word_generate(model, sentence, index_to_token, token_to_index, max_len = 100):
+    '''Generate of the next word like a string
+    Args:
+        model: is a pre-trained model
+        sentence: array of string, is the input of the model to predict the next word
+        index_to_token: dictionary of index (int) to token
+        token_to_index: dictionary of token to index (int)
+        max_len: dimension of max input to model, by default max_len=100
+    Returns:
+        Array with string tokens
+    '''
     ## Generate of the next word
     last_char = ''
     word_generate = ''
@@ -62,11 +72,21 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
         sentence = sentence[1:] + [next_token]
         word_generate += next_token
         last_char = next_token[-1]
+
+    print('Frase generada--- {}'.format(" ".join(sentence)))
     return word_generate
 
 
 def test_eval(model, corpus, selectors, step_t = 100):
-
+    '''Evaluation of model with perplexity like metrics
+    Args:
+        model: is a pre-trained model
+        corpus: array of string to eval de model
+        selectors: array of tokens to tokenize corpus
+        step_t: size of windows to eval perplexity under markov assumption
+    Returns:
+        Array with string tokens
+    '''
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
     Ntest = len(get_processed_text(corpus, only_word))
 
@@ -102,6 +122,15 @@ def test_eval(model, corpus, selectors, step_t = 100):
 
 
 def conditional_prob_wordi(word_i_processed, words, corpus):
+    '''estimate the conditional probability of a word in a given context a corpus
+       P(word_i_processed | words)
+    Args:
+        word_i_processed: string to be evaluate 
+        words: array of words before to word_i_processed
+        corpus: array of words
+    Returns:
+         float, P(word_i_processed | words) = count(word_i_processed-words)/counts(words) in corpus
+    '''
     indexes = km.kmpMatch(corpus, words)
     p_word = 0
     p_context = 0
