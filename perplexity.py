@@ -77,6 +77,14 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
     return word_generate.replace(':','').replace('.','')
 
 
+def get_array_words(corpus, selectors):
+    tokens = get_processed_text(corpus, selectors)
+    words = []
+    for i, token in enumerate(tokens):
+        word[i] = token.replace(':','').replace('-','')
+    return words
+
+
 def test_eval(model, corpus, selectors, step_t = 3):
     '''Evaluation of model with perplexity like metrics
     Args:
@@ -91,24 +99,27 @@ def test_eval(model, corpus, selectors, step_t = 3):
     Ntest = len(get_processed_text(corpus, only_word))
 
     token_test = get_processed_text(corpus, selectors)
+
+    words_array = get_array_words(corpus, only_word)
+
     # crear diccionario tokens-int
     string_voc = set(token_test)
     token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
     index_to_token = dict((token_to_index[t], t) for t in string_voc)
 
-    start_index = 1
+    start_index = 0
     ppl = 0
-    for i in range(len(corpus) - step_t - 1):
+    for i in range(len(words_array) - step_t - 1):
         #start_index
         if i < step_t:
-            words = corpus[start_index: start_index + i]
-            token_test = get_processed_text(words, selectors)
+            words = words_array[start_index: start_index + i + 1]
+            token_test = get_processed_text(' '.join(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             ppl += np.log(conditional_prob_wordi(word_i, words, corpus))
         else:
-            words = corpus[start_index: start_index + step_t]
-            token_test = get_processed_text(words, selectors)
+            words = words_array[start_index: start_index + step_t]
+            token_test = get_processed_text(' '.join(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             ppl += np.log(conditional_prob_wordi(word_i, words, corpus))
