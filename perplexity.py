@@ -44,8 +44,8 @@ def on_epoch_end(epoch, logs):
         print()
 
 
-def next_word_generative(model, sentence, index_to_token, token_to_index, max_len = 100):
-    ## Generation of the next word
+def next_word_generate(model, sentence, index_to_token, token_to_index, max_len = 100):
+    ## Generate of the next word
     last_char = ''
     word_generate = ''
     while last_char != ':':
@@ -65,12 +65,17 @@ def next_word_generative(model, sentence, index_to_token, token_to_index, max_le
     return word_generate
 
 
-def test_eval(model, index_to_token, token_to_index, corpus, selectors, step_t = 100):
+def test_eval(model, corpus, selectors, step_t = 100):
 
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
     Ntest = len(get_processed_text(corpus, only_word))
 
     token_test = get_processed_text(corpus, selectors)
+    # crear diccionario tokens-int
+    print('Vectorization...')
+    string_voc = set(tokens_test)
+    token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
+    index_to_token = dict((token_to_index[t], t) for t in string_voc)
 
     start_index = 1
     ppl = 0
@@ -88,7 +93,7 @@ def test_eval(model, index_to_token, token_to_index, corpus, selectors, step_t =
             words = corpus[start_index: start_index + step_t]
             token_test = get_processed_text(words, selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            word_i = next_word_generative(model, sentence, index_to_token)
+            word_i = next_word_generate(model, sentence, index_to_token)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
             ppl += np.log(perplexity_i(word_i_processed, words, corpus))

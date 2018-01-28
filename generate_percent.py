@@ -54,11 +54,13 @@ def main():
         selectors = get_selectors(corpus_train, quantity_word, quantity_syllable)
         string_tokens = get_processed_text(corpus_train, selectors)
         print('tokens length:', len(string_tokens))
+
         # crear diccionario tokens-int
         print('Vectorization...')
         string_voc = set(string_tokens)
         token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
         index_to_token = dict((token_to_index[t], t) for t in string_voc)
+
         # traducir corpus a enteros
         ind_corpus = [token_to_index[token] for token in string_tokens]
         voc = set(ind_corpus)
@@ -71,8 +73,8 @@ def main():
         ## run model
         model = run_model(model, ind_corpus, voc)
 
-        ppl = test_eval(model, index_to_token, token_to_index, corpus_test, selectors, step_t = 100)
-        print('perplexity = {} para el modelo: %palabras = {} ; %caracteres = {}'.format(ppl,quantity_word, quantity_syllable))
+        pp = test_eval(model, corpus_test, selectors, step_t = 5)
+        print('perplexity = {} para el modelo: %palabras = {} ; %caracteres = {}'.format(pp, quantity_word, quantity_syllable))
 
 
 if __name__ == '__main__':
