@@ -98,21 +98,21 @@ def preprocessing(*args, **kwargs):
     return string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc
 
 ## Agrego unroll=True, implementation=2 a capa LSTM para ejecutarlo en google colaboratory (usando GPU)
-def build_model(len_voc, max_len=100, embedding_dim=300):
+def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=True):
     # build the model: a single LSTM
     print('Build model...')
     model = Sequential()
     model.add(Embedding(input_dim=len_voc+1, output_dim=embedding_dim, input_length=max_len, mask_zero=True))
-    model.add(LSTM(128, unroll=True, implementation=2)) #
+    model.add(LSTM(lstm_units, unroll=unroll, implementation=implementation)) #
     model.add(Dense(len_voc))
     model.add(Activation('softmax'))
-    optimizer = RMSprop(lr=0.01)
+    optimizer = RMSprop(lr=learning_rate)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer)
     
     return model
 
-## Agrego workers=2 a model.fit_generator para ejecutarlo en google colaboratory (usando GPU)
-def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100):
+
+def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100, workers=1)
     # train model
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
     #val_gen = GeneralGenerator(batch_size, ind_val_tokens, voc, max_len)
@@ -122,13 +122,13 @@ def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=1
         train_gen.generator(),
         train_gen.steps_per_epoch,
         epochs=epochs,
-        workers=2 #,
+        workers=workers
         #callbacks=[print_callback]
     )
     return model
 
 
-def accuracyTest(model, string_tokens, max_len=100, verbose=False, *args, **kwargs):
+def accuracyTest(model, string_tokens, max_len, verbose=False, *args, **kwargs):
     '''
     Requiere
     
@@ -175,9 +175,26 @@ def accuracyTest(model, string_tokens, max_len=100, verbose=False, *args, **kwar
 
 ## MAIN
 
-
 # Path al documento  = Usando doc Overfitting !!
 path_to_file = 'data/horoscopo_test_overfitting.txt'
+
+
+## Hiperparameters
+
+# Embeddings
+max_len=100
+embedding_dim=300
+
+# LSTM
+lstm_units = 128
+learning_rate=0.01
+implementation=2 # Must be 2 for GPU
+unroll=True
+
+# Train
+epochs=20
+batch_size=128
+workers=2 # 2 en Google Colaboratory (?)
 
 
 ## Caso 1: Vocabulario consiste en Solamente Palabras
@@ -200,8 +217,9 @@ print(string_voc)
 
 
 ## build model
-# max_len=100, embedding_dim=300
-model = build_model(len_voc= len(voc))
+model = build_model(len_voc=len(voc), lstm_units=lstm_units, learning_rate=learning_rate,
+                    max_len=max_len, embedding_dim=embedding_dim, implementation=implementation,
+                    unroll=unroll)
 
 
 # Model Summary
@@ -209,9 +227,9 @@ print(model.summary())
 
 
 ## run model
-# batch_size=128 , epochs=20
+#ind_corpus_train
 t_i = time.time()
-model = run_model(model, ind_corpus, voc)
+model = run_model(model, ind_corpus_train, voc, epochs=epochs, batch_size=batch_size, max_len=max_len, workers=workers)
 t_f = time.time() - t_i
 print('\n'*5 + 'Elapsed Time : ', t_f)
 
@@ -221,7 +239,11 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 
 # Accuracy Test
 print('\n'*5 + 'ACCURACY TEST' + '\n'*5)
-accuracyTest(model, string_tokens, max_len=100, verbose=True)
+accuracyTest(model, string_tokens, max_len=max_len, verbose=True)
+
+
+
+
 
 
 ###########################
