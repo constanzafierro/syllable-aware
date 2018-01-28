@@ -1,5 +1,6 @@
 import kmp as km
 import numpy as np
+from process_text import *
 
 
 def next_word_generative(model, sentence, index_to_token):
