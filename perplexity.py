@@ -95,13 +95,13 @@ def test_eval(model, corpus, selectors, step_t = 100):
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
-            ppl += np.log(perplexity_i(word_i_processed, words, corpus))
+            ppl += np.log(conditional_prob_wordi(word_i_processed, words, corpus))
             start_index += 1
 
-    return np.exp(-ppl/Ntest)
+    return -ppl/Ntest
 
 
-def perplexity_i(word_i_processed, words, corpus):
+def conditional_prob_wordi(word_i_processed, words, corpus):
     indexes = km.kmpMatch(corpus, words)
     p_word = 0
     p_context = 0
