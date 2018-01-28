@@ -126,7 +126,7 @@ def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=1
     return model
 
 
-def accuracyTest(model=model, max_len=max_len, string_tokens=string_tokens, verbose=False, *args, **kwargs):
+def accuracyTest(model, max_len, string_tokens, verbose=False, *args, **kwargs):
     '''
     Requiere
     
@@ -201,7 +201,10 @@ print(string_voc)
 ## build model
 # max_len=100, embedding_dim=300
 model = build_model(len_voc= len(voc))
-model.summary()
+
+
+# Model Summary
+print(model.summary())
 
 
 ## run model
@@ -210,8 +213,6 @@ t_i = time.time()
 model = run_model(model, ind_corpus, voc)
 t_f = time.time() - t_i
 print('\n'*5 + 'Elapsed Time : ', t_f)
-
-
 
 #print('Saving last model:', 'model_test_overfitting.h5')
 #model.save('model_test_overfitting.h5')
