@@ -166,7 +166,6 @@ def accuracyTest(model, string_tokens, max_len=100, verbose=False, *args, **kwar
     
     accuracy = 100*(1-accumulated_error/N)
     
-    print('\n'*5)
     print('N total :', N)
     print('Accumulated Error : ', accumulated_error)
     print('Accuracy : {0:.2f}'.format(accuracy))
@@ -222,7 +221,7 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 
 # Accuracy Test
 print('\n'*5 + 'ACCURACY TEST' + '\n'*5)
-accuracyTest(model, string_tokens, max_len=100, verbose=False)
+accuracyTest(model, string_tokens, max_len=100, verbose=True)
 
 
 ###########################
