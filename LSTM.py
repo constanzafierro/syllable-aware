@@ -164,6 +164,7 @@ def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedd
 
 def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100, workers=1):
     # train model
+    print('Training model')
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
     #val_gen = GeneralGenerator(batch_size, ind_val_tokens, voc, max_len)
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
@@ -260,11 +261,13 @@ args = (path_to_file, quantity_word, quantity_syllable, train_size)
 string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc = preprocessing(args)
 
 
-print('Tokens')
-print(string_tokens)
-
-print('Vocabulario')
-print(string_voc)
+if verbose == True:
+    
+    print('Tokens')
+    print(string_tokens)
+    
+    print('Vocabulario')
+    print(string_voc)
 
 
 ## build model
@@ -273,8 +276,9 @@ model = build_model(len_voc=len(voc), lstm_units=lstm_units, learning_rate=learn
                     unroll=unroll)
 
 
-# Model Summary
-print(model.summary())
+if verbose == True:
+    # Model Summary
+    print(model.summary())
 
 
 ## run model
