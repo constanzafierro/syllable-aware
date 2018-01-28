@@ -112,7 +112,7 @@ def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedd
     return model
 
 
-def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100, workers=1)
+def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100, workers=1):
     # train model
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
     #val_gen = GeneralGenerator(batch_size, ind_val_tokens, voc, max_len)
