@@ -81,7 +81,7 @@ def get_array_words(corpus, selectors):
     tokens = get_processed_text(corpus, selectors)
     words = []
     for i, token in enumerate(tokens):
-        word[i] = token.replace(':','').replace('-','')
+        words[i] = token.replace(':','').replace('-','')
     return words
 
 
