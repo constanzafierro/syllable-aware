@@ -72,7 +72,6 @@ def test_eval(model, corpus, selectors, step_t = 100):
 
     token_test = get_processed_text(corpus, selectors)
     # crear diccionario tokens-int
-    print('Vectorization...')
     string_voc = set(token_test)
     token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
     index_to_token = dict((token_to_index[t], t) for t in string_voc)
@@ -85,7 +84,7 @@ def test_eval(model, corpus, selectors, step_t = 100):
             words = corpus[start_index: start_index + i]
             token_test = get_processed_text(words, selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            word_i = next_word_generative(model, sentence, index_to_token, token_to_index)
+            word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
             ppl += np.log(perplexity_i(word_i_processed, words, corpus))
