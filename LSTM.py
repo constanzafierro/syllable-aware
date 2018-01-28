@@ -15,6 +15,51 @@ import sys
 
 import time
 
+'''
+Parámetros:
+
+*** Ambos valores deben estar entre 0 y 1 ***
+
+quantity_word:
+    Fracción de Palabras a considerar en el Vocabulario (default=1)
+    
+quantity_syllable:
+    Fracción de Sílabas a considerar en el Vocabulario (default=0)
+
+Modo de Uso (Ejemplo):
+!python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --verbosity
+
+Modo de Uso (Abreviado)
+!python3 LSTM.py -qw 0 -qs 1 -v
+
+'''
+
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-qw','--quantity_word',
+                    type=float, default=1,
+                    help='Fracción de Palabras a considerar en el Vocabulario (default=1)')
+
+parser.add_argument('-qs','--quantity_syllable',
+                    type=float, default=0,
+                    help='Fracción de Sílabas a considerar en el Vocabulario (default=0)')
+
+args = parser.parse_args()
+
+quantity_word = args.quantity_word
+quantity_syllable = args.quantity_syllable
+
+
+if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
+  print('Ambos valores deben estar entre 0 y 1')
+  raise ValueError 
+
+print(' \n\n\n\n\n quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
+
+##
+
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
@@ -114,6 +159,7 @@ def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedd
 
 def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100, workers=1):
     # train model
+    print('Training model')
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
     #val_gen = GeneralGenerator(batch_size, ind_val_tokens, voc, max_len)
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
@@ -198,8 +244,9 @@ workers=2 # 2 en Google Colaboratory (?)
 
 
 ## Caso 1: Vocabulario consiste en Solamente Palabras
-quantity_word = 1
-quantity_syllable = 0
+
+#quantity_word = 1 #ingresado en argparser
+#quantity_syllable = 0 #ingresado en argparser
 train_size = 0.8
 
 
@@ -208,10 +255,9 @@ args = (path_to_file, quantity_word, quantity_syllable, train_size)
 # Preprocess ...
 string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc = preprocessing(args)
 
-
 print('Tokens')
 print(string_tokens)
-
+    
 print('Vocabulario')
 print(string_voc)
 
@@ -220,7 +266,6 @@ print(string_voc)
 model = build_model(len_voc=len(voc), lstm_units=lstm_units, learning_rate=learning_rate,
                     max_len=max_len, embedding_dim=embedding_dim, implementation=implementation,
                     unroll=unroll)
-
 
 # Model Summary
 print(model.summary())
@@ -239,7 +284,7 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 
 # Accuracy Test
 print('\n'*5 + 'ACCURACY TEST' + '\n'*5)
-accuracyTest(model, string_tokens, max_len=max_len, verbose=True)
+accuracyTest(model, string_tokens, max_len=max_len, verbose=False)
 
 
 
