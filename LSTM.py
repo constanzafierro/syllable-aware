@@ -66,7 +66,7 @@ print(' \n\n\n\n\n quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.forma
 
 if  verbosity >= 1:
     verbose = True
- else:
+else:
     verbose = False
 
 ##
