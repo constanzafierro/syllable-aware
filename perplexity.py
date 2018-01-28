@@ -49,7 +49,7 @@ def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
             ppl += np.log(perplexity_i(word_i_processed, words, corpus))
             start_index += 1
 
-    return ppl/Ntest
+    return np.exp(-ppl/Ntest)
 
 
 def perplexity_i(word_i_processed, words, corpus):
