@@ -105,17 +105,13 @@ def test_eval(model, corpus, selectors, step_t = 100):
             token_test = get_processed_text(words, selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            word_i_processed = word_i.replace("-", "")
-            word_i_processed = word_i_processed.replace(":", "")
-            ppl += np.log(conditional_prob_wordi(word_i_processed, words, corpus))
+            ppl += np.log(conditional_prob_wordi(word_i, words, corpus))
         else:
             words = corpus[start_index: start_index + step_t]
             token_test = get_processed_text(words, selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            word_i_processed = word_i.replace("-", "")
-            word_i_processed = word_i_processed.replace(":", "")
-            ppl += np.log(conditional_prob_wordi(word_i_processed, words, corpus))
+            ppl += np.log(conditional_prob_wordi(word_i, words, corpus))
             start_index += 1
 
     return -ppl/Ntest
@@ -136,11 +132,11 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     p_context = 0
 
     if len(indexes) == 0:
-        return 0
+        return 0.001
 
     for i in indexes:
         p_context += 1
-        if corpus[i:(i+len(words)+1)] == (words + word_i_processed):
+        if corpus[i:(i+len(words)+1)] == (words[0:] + [word_i_processed]):
             p_word += 1
 
     return p_word/p_context
