@@ -46,13 +46,8 @@ parser.add_argument('-qs','--quantity_syllable',
                     type=float, default=0,
                     help='Fracción de Sílabas a considerar en el Vocabulario (default=0)')
 
-parser.add_argument('-v', '--verbosity', action='count', default=0,
-                    help="Verbosity")
-
 args = parser.parse_args()
 
-
-verbosity = args.verbosity
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
 
@@ -62,12 +57,6 @@ if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_sy
   raise ValueError 
 
 print(' \n\n\n\n\n quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
-
-
-if  verbosity >= 1:
-    verbose = True
-else:
-    verbose = False
 
 ##
 
@@ -266,14 +255,11 @@ args = (path_to_file, quantity_word, quantity_syllable, train_size)
 # Preprocess ...
 string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc = preprocessing(args)
 
-
-if verbose == True:
+print('Tokens')
+print(string_tokens)
     
-    print('Tokens')
-    print(string_tokens)
-    
-    print('Vocabulario')
-    print(string_voc)
+print('Vocabulario')
+print(string_voc)
 
 
 ## build model
@@ -281,10 +267,8 @@ model = build_model(len_voc=len(voc), lstm_units=lstm_units, learning_rate=learn
                     max_len=max_len, embedding_dim=embedding_dim, implementation=implementation,
                     unroll=unroll)
 
-
-if verbose == True:
-    # Model Summary
-    print(model.summary())
+# Model Summary
+print(model.summary())
 
 
 ## run model
@@ -300,7 +284,7 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 
 # Accuracy Test
 print('\n'*5 + 'ACCURACY TEST' + '\n'*5)
-accuracyTest(model, string_tokens, max_len=max_len, verbose=verbose)
+accuracyTest(model, string_tokens, max_len=max_len, verbose=False)
 
 
 
