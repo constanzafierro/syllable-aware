@@ -19,6 +19,37 @@ def sample(preds, temperature=1.0):
     return np.argmax(probas)
 
 
+def on_epoch_end(epoch, logs):
+    # Function invoked at end of each epoch. Prints generated text.
+    print()
+    print('----- Generating text after Epoch: %d' % epoch)
+    text = string_tokens
+    start_index = random.randint(0, len(text) - max_len - 1)
+    for diversity in [0.2, 0.5, 1.0, 1.2]:
+        print('----- diversity:', diversity)
+
+        sentence = text[start_index: start_index + max_len]
+        generated = sentence.copy()
+        print('----- Generating with seed: "' + ''.join(sentence) + '"')
+        #sys.stdout.write(''.join(generated))
+
+        for i in range(100):
+            x_pred = np.zeros((1, max_len)) # no debería ser en len(sentence) ?? 
+            for t, token in enumerate(sentence):
+                x_pred[0, t] = token_to_index[token]
+
+            preds = model.predict(x_pred, verbose=0)[0]
+            next_index = sample(preds, diversity)
+            next_token = index_to_token[next_index+1] # dict starting at 1
+
+            generated += [next_token]
+            sentence = sentence[1:] + [next_token]
+
+            sys.stdout.write(next_token)
+            sys.stdout.flush()
+        print()
+
+
 def build_model(len_voc, max_len = 100, embedding_dim = 300):
     # build the model: a single LSTM
     print('Build model...')
