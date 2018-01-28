@@ -80,8 +80,8 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
 def get_array_words(corpus, selectors):
     tokens = get_processed_text(corpus, selectors)
     words = []
-    for i, token in enumerate(tokens):
-        words[i] = token.replace(':','').replace('-','')
+    for token in tokens:
+        words.append(token)
     return words
 
 

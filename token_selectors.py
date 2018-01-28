@@ -24,6 +24,7 @@ def get_syllables(word, middle, end):
     word_syllables[-1] = word_syllables[-1][0:-1] + end
     return word_syllables
 
+
 def get_most_frequent(list_tokens, quantity):
     '''Selects most frequent tokens.
     Args:
@@ -37,13 +38,15 @@ def get_most_frequent(list_tokens, quantity):
     freq_dict = Counter(list_tokens).most_common()
     max_tokens = int(len(freq_dict)*quantity) if quantity <= 1 else quantity
     for token, freq in freq_dict:
-        if len(ans) < max_tokens:
+        if len(ans) < max_tokens and token != '':
             ans.add(token)
     return ans
+
 
 def get_next_word(string, begining_at):
     j = string[begining_at:].find(' ')
     return string[begining_at:begining_at+j] if j != -1 else string[begining_at:]
+
 
 def get_list_words(corpus, sign_to_ignore, word_to_ignore):
     '''Returns the list of words in the corpus.'''
@@ -58,6 +61,7 @@ def get_list_words(corpus, sign_to_ignore, word_to_ignore):
         if word in word_to_ignore:
             new_corpus = list(filter(lambda a: a != word, new_corpus))
     return new_corpus
+
 
 class TokenSelector():
     def __init__(self, final_char=':', inter_char='-'):
