@@ -20,7 +20,7 @@ def helper_get_processed_text(raw_filename, quantity_word = 0.5, quantity_syllab
 def get_selectors(corpus, quantity_word = 0.5, quantity_syllable = 0.5):
     '''Generate a selectors from array of string and the quantity of words and syllables
     Args:
-        corpus: array of strings
+        corpus: strings
         quantity_word: quantity of words if quantity of words is between 0 and 1 is a percent
                        by default quantity_word = 0.5
         quantity_syllable: quantity of syllable if quantity of words is between 0 and 1 is a percent
@@ -52,7 +52,7 @@ def get_selectors(corpus, quantity_word = 0.5, quantity_syllable = 0.5):
 def get_processed_text(corpus, selectors):
     '''Process array of string to tokens with the selectors array
     Args:
-        corpus: array of strings
+        corpus: strings
         selectors: array of selectos
     Returns:
         Array with string tokens
