@@ -20,6 +20,7 @@ def get_processed_text(raw_filename, quantity_word = 0.6, quantity_syllable = 0.
     syllable_selector = SyllableSelector(sign_to_ignore=sign_to_ignore, word_to_ignore = word_to_ignore)
     syllable_selector.calculate_most_frequent(corpus=corpus, quantity=quantity_syllable)
 
+    #print(syllable_selector.frequent)
     ## Para toquenizar se tokeniza primero en puntuacion, luego en palabras
 
     selectors = [PuntuactionSelector(), word_selector, syllable_selector, CharacterSelector()]
