@@ -1,4 +1,5 @@
-from process_text import get_processed_text
+process_text import *
+
 from generators import GeneralGenerator
 from keras.callbacks import LambdaCallback
 from keras.models import Sequential
