@@ -220,6 +220,11 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 #model.save('model_test_overfitting.h5')
 
 
+# Accuracy Test
+print('\n'*5 + 'ACCURACY TEST' + '\n'*5)
+accuracyTest(model, string_tokens, max_len=100, verbose=False)
+
+
 ###########################
 # Quick test of correctness:
 #   select the 'horoscopo_test_overfitting.txt'
@@ -228,7 +233,7 @@ print('\n'*5 + 'Elapsed Time : ', t_f)
 
 max_len = 100
 
-if True:
+if False:
     # Create X, Y test
     print("---- Evaluation")
     ind_corpus_test = ind_corpus_train # using test_data = train_data to check correctness -> we should have ~1 perplexity
