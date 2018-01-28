@@ -107,7 +107,7 @@ def test_eval(model, corpus, selectors, step_t = 100):
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
-            ppl += np.log(perplexity_i(word_i_processed, words, corpus))
+            ppl += np.log(conditional_prob_wordi(word_i_processed, words, corpus))
         else:
             words = corpus[start_index: start_index + step_t]
             token_test = get_processed_text(words, selectors)
