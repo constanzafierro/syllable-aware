@@ -100,13 +100,13 @@ def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
 def perplexity_i(word_i_processed, words, corpus):
     indexes = km.kmpMatch(corpus, corpus)
     p_word = 0
-    p_contex = 0
+    p_context = 0
 
     if len(indexes) == 0:
         return 0.01
 
     for i in indexes:
-        p_contex += 1
+        p_context += 1
         if corpus[i:(i+len(words)+1)] == (words + word_i_processed):
             p_word += 1
 

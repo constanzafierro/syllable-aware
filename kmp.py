@@ -45,7 +45,7 @@ def kmpMatch(needle, haystack):
 
     # Loop until we fall off the string or match.
     while index + match < len(haystack):
-        print(index, match)
+        #print(index, match)
 
         # If the current character matches the expected character, then bump up
         # the match index.
