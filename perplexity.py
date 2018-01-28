@@ -73,8 +73,8 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
         word_generate += next_token
         last_char = next_token[-1]
 
-    print('Frase generada--- {}'.format(" ".join(sentence)))
-    return word_generate
+    #print('palabra generada--- {}'.format(" ".join(word_generate)))
+    return word_generate.replace(':','').replace('.','')
 
 
 def test_eval(model, corpus, selectors, step_t = 100):
@@ -136,7 +136,7 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     p_context = 0
 
     if len(indexes) == 0:
-        return 0.01
+        return 0
 
     for i in indexes:
         p_context += 1
