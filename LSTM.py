@@ -51,17 +51,23 @@ parser.add_argument('-v', '--verbosity', action='count', default=0,
 
 args = parser.parse_args()
 
-if args.verbosity >= 1: verbose = True
 
+verbosity = args.verbosity
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
-    
+
+
 if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
   print('Ambos valores deben estar entre 0 y 1')
   raise ValueError 
 
-print('quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
+print(' \n\n\n\n\n quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
 
+
+if  verbosity >= 1:
+    verbose = True
+ else:
+    verbose = False
 
 ##
 
