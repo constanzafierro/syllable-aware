@@ -25,7 +25,7 @@ def build_model(len_voc, max_len = 100, embedding_dim = 300):
     model = Sequential()
     model.add(Embedding(input_dim=len_voc+1, output_dim=embedding_dim, input_length=max_len, mask_zero=True))
     model.add(LSTM(128))
-    model.add(Dense(len(voc)))
+    model.add(Dense(len_voc))
     model.add(Activation('softmax'))
     optimizer = RMSprop(lr=0.01)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer)
