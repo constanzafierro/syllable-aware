@@ -35,7 +35,7 @@ def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
         if i < step_t:
             words = corpus[start_index: start_index + i]
             token_test = get_processed_text(words, selectors)
-            sentence = tokens_test if len(tokens_test) < step_t else tokens_test[-step_t:]
+            sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generative(model, sentence, index_to_token)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
@@ -43,7 +43,7 @@ def test_eval(model, index_to_token, corpus, selectors, step_t = 100):
         else:
             words = corpus[start_index: start_index + step_t]
             token_test = get_processed_text(words, selectors)
-            sentence = tokens_test if len(tokens_test) < step_t else tokens_test[-step_t:]
+            sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generative(model, sentence, index_to_token)
             word_i_processed = word_i.replace("-", "")
             word_i_processed = word_i_processed.replace(":", "")
