@@ -147,9 +147,14 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     if len(indexes) == 0:
         return 0.001
 
+    print(' '.join(words[1:]+[word_i_processed]))
+
     for i in indexes:
         p_context += 1
         if corpus[i:(i+len(words)+1)] == (words[0:] + [word_i_processed]):
             p_word += 1
+
+    print('p_word = {} ; p_context = {}'.format(p_word, p_context))
+
 
     return p_word/p_context
