@@ -57,6 +57,8 @@ def model_prob_predict(preds, word_correct, token_to_index, temperature=1.0):
     exp_preds = np.exp(preds)
     preds = exp_preds / np.sum(exp_preds)
     probas = np.random.multinomial(1, preds, 1)
+    print(probas)
+    print(token_to_index[word_correct])
     return probas[token_to_index[word_correct]]
 
 
