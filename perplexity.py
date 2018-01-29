@@ -7,6 +7,7 @@ from string import punctuation
 def strip_punctuation(corpus):
     return ''.join(c for c in corpus if c not in punctuation)
 
+
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
     preds = np.asarray(preds).astype('float64')
@@ -70,7 +71,7 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
             else:
                 x_pred[0, t] = token_to_index[token]
         preds = model.predict(x_pred, verbose=0)[0]
-        next_index = sample(preds) # temperature = 1.0 por defecto
+        next_index = sample(preds) # default temperature = 1.0 
         next_token = index_to_token[next_index+1] # dict starting at 1
         next = index_to_token[np.argmax(preds)+1]
         sentence = sentence[1:] + [next_token]
@@ -89,7 +90,7 @@ def get_array_words(corpus, selectors):
     return words
 
 
-def test_eval(model, corpus, selectors, step_t = 3):
+def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t = 3):
     '''Evaluation of model with perplexity like metrics
     Args:
         model: is a pre-trained model
@@ -107,11 +108,6 @@ def test_eval(model, corpus, selectors, step_t = 3):
     token_test = get_processed_text(corpus, selectors)
 
     words_array = get_array_words(corpus, only_word)
-
-    # crear diccionario tokens-int
-    string_voc = set(token_test)
-    token_to_index = dict((t, i) for i, t in enumerate(string_voc, 1))
-    index_to_token = dict((token_to_index[t], t) for t in string_voc)
 
     start_index = 0
     ppl = 0

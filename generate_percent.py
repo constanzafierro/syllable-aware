@@ -74,7 +74,7 @@ def main():
         ## run model
         model = run_model(model, ind_corpus, voc)
 
-        pp = test_eval(model, corpus_test, selectors, step_t = 2)
+        pp = test_eval(model, corpus_test, selectors, token_to_index, index_to_token, step_t = 3)
         print('perplexity = {} para el modelo: %palabras = {} ; %caracteres = {}'.format(pp, quantity_word, quantity_syllable))
 
 
