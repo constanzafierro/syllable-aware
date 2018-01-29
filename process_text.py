@@ -77,6 +77,6 @@ def get_processed_text(corpus, selectors):
 
     array_corpus = []
     for i in processed_corpus:
-        if i != ':'
+        if i != ':':
             array_corpus.append(i)
     return array_corpus
