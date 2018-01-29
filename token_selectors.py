@@ -51,12 +51,11 @@ def get_next_word(string, begining_at):
 def token_to_string(tokens):
     map_punctuation = {'<ai>':'¿', '<ci>' : '?', '<pt>' : '.', '<nl>' : '\n', '<cm>' : ','}
     punctuation_sign = set(map_punctuation)
-    string = ''
     for i, token in enumerate(tokens):
         if token in punctuation_sign:
             tokens[i] = map_punctuation[token]
         else:
-            token[i] = token.replace('-', '').replace(':', ' ')
+            tokens[i] = token.replace('-', '').replace(':', ' ')
     return ''.join(tokens)
 
 
