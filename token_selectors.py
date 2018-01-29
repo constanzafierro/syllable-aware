@@ -54,9 +54,7 @@ def token_to_string(tokens):
     for i, token in enumerate(tokens):
         if token in punctuation_sign:
             tokens[i] = map_punctuation[token] + ' '
-        else:
-            tokens[i] = token.replace('-', '').replace(':', ' ')
-    return ''.join(tokens)
+    return ''.join(tokens).replace('-', '').replace(':', ' ')
 
 
 def get_list_words(corpus, sign_to_ignore, word_to_ignore):
