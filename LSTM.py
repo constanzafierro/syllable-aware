@@ -26,11 +26,15 @@ quantity_word:
 quantity_syllable:
     Fracción de Sílabas a considerar en el Vocabulario (default=0)
 
+epochs:
+    Épocas de entrenamiento (default=10)
+    
+
 Modo de Uso (Ejemplo):
-!python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --verbosity
+!python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --epochs 20
 
 Modo de Uso (Abreviado)
-!python3 LSTM.py -qw 0 -qs 1 -v
+!python3 LSTM.py -qw 0 -qs 1 -epo 20
 
 '''
 
@@ -46,14 +50,24 @@ parser.add_argument('-qs','--quantity_syllable',
                     type=float, default=0,
                     help='Fracción de Sílabas a considerar en el Vocabulario (default=0)')
 
+
+parser.add_argument('-epo','--epochs',
+                    type=int, default=10,
+                    help='Épocas de entrenamiento (default=10)')
+
 args = parser.parse_args()
 
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
+epochs = args.epochs
 
 
 if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
   print('Ambos valores deben estar entre 0 y 1')
+  raise ValueError 
+    
+if epochs < 0:
+  print('Se debe ingresar un entero mayor a cero')
   raise ValueError 
 
 print(' \n\n\n\n\n quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
@@ -238,7 +252,7 @@ implementation=2 # Must be 2 for GPU
 unroll=True
 
 # Train
-epochs=20
+#epochs=10 #ingresado en argparser
 batch_size=128
 workers=2 # 2 en Google Colaboratory (?)
 
