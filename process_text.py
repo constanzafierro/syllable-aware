@@ -60,10 +60,10 @@ def get_processed_text(corpus, selectors):
     #corpus = open(raw_filename).read().lower()#[1:1000]
     processed_corpus = []
     i = 0
-    while i < len(corpus)-6:
+    while i < len(corpus)-1:
         j = i
         for token_selector in selectors:
-            while j < len(corpus)-6:
+            while j < len(corpus)-1:
                 k = token_selector.select(corpus, j, processed_corpus)
                 if k==j:
                     break

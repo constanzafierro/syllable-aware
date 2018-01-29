@@ -109,7 +109,7 @@ def test_eval(model, corpus, selectors, step_t = 3):
 
     start_index = 0
     ppl = 0
-    for i in range(len(words_array) - step_t - 1):
+    for i in range(1, len(words_array) - step_t - 1):
         #start_index
         if i < step_t:
             words = words_array[start_index: start_index + i + 1]
