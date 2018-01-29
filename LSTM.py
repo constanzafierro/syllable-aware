@@ -183,7 +183,7 @@ def preprocessing(*args, **kwargs):
     return string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc
 
 ## Agrego unroll=True, implementation=2 a capa LSTM para ejecutarlo en google colaboratory (usando GPU)
-def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=True):
+def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=False):
     # build the model: a single LSTM
     print('Build model...')
     model = Sequential()
@@ -275,7 +275,7 @@ embedding_dim=300
 #lstm_units = 128 #ingresado en argparser
 learning_rate=0.01
 implementation=2 # Must be 2 for GPU
-unroll=True
+unroll=False
 
 # Train
 #epochs=10 #ingresado en argparser
