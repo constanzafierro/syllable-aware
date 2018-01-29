@@ -120,13 +120,13 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += conditional_prob_wordi(word_i, words_array, corpus)#np.log(conditional_prob_wordi(word_i, words, corpus))
+            ppl += conditional_prob_wordi(word_i, words, words_array)#np.log(conditional_prob_wordi(word_i, words, corpus))
         else:
             words = words_array[start_index: start_index + step_t]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += conditional_prob_wordi(word_i, words_array, corpus)#np.log(conditional_prob_wordi(word_i, words, corpus))
+            ppl += conditional_prob_wordi(word_i, words, words_array)#np.log(conditional_prob_wordi(word_i, words, corpus))
             start_index += 1
 
     return -ppl/Ntest
