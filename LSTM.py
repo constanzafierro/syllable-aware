@@ -16,7 +16,8 @@ import sys
 import time
 
 '''
-Parámetros:
+Argumentos (Opcionales)
+
 
 *** Ambos valores deben estar entre 0 y 1 ***
 
@@ -26,15 +27,21 @@ quantity_word:
 quantity_syllable:
     Fracción de Sílabas a considerar en el Vocabulario (default=0)
 
+
+*** Valores deben ser enteros positivos ***
+
 epochs:
     Épocas de entrenamiento (default=10)
     
+batch_size:
+    Tamaño de los batches (default=128)
+    
 
 Modo de Uso (Ejemplo):
-!python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --epochs 20
+!python3 LSTM.py --quantity_word 0.4 --quantity_syllable 0.7 --epochs 20 --batch_size 128
 
 Modo de Uso (Abreviado)
-!python3 LSTM.py -qw 0 -qs 1 -epo 20
+!python3 LSTM.py -qw 0.4 -qs 0.7 -epo 20 -bs 128
 
 '''
 
@@ -55,18 +62,26 @@ parser.add_argument('-epo','--epochs',
                     type=int, default=10,
                     help='Épocas de entrenamiento (default=10)')
 
+parser.add_argument('-bs','--batch_size',
+                    type=int, default=128,
+                    help='Épocas de entrenamiento (default=128)')
+
+
 args = parser.parse_args()
+
 
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
+
 epochs = args.epochs
+batch_size = args.batch_size
 
 
 if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
   print('Ambos valores deben estar entre 0 y 1')
   raise ValueError 
     
-if epochs < 0:
+if epochs < 0 or batch_size < 0:
   print('Se debe ingresar un entero mayor a cero')
   raise ValueError 
 
@@ -253,7 +268,7 @@ unroll=True
 
 # Train
 #epochs=10 #ingresado en argparser
-batch_size=128
+#batch_size=128 #ingresado en argparser
 workers=2 # 2 en Google Colaboratory (?)
 
 
