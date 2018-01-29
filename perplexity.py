@@ -82,11 +82,11 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
     return word_generate.replace(':','').replace('.','')
 
 
-def get_array_words(corpus, selectors):
-    tokens = get_processed_text(corpus, selectors)
+def get_array_words(corpus):
     words = []
-    for token in tokens:
-        words.append(token.replace(':','').replace('-',''))
+    for line in corpus.split('\n'):
+        for word in line.split():
+            words.append(word)
     return words
 
 
@@ -103,11 +103,11 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
 
     corpus = strip_punctuation(corpus)
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
-    Ntest = len(get_processed_text(corpus, only_word))
+    Ntest = len(corpus)
 
     token_test = get_processed_text(corpus, selectors)
 
-    words_array = get_array_words(corpus, only_word)
+    words_array = get_array_words(corpus)
 
     start_index = 0
     ppl = 0
