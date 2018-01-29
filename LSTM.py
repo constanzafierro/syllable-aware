@@ -35,13 +35,16 @@ epochs:
     
 batch_size:
     Tamaño de los batches (default=128)
+
+lstm_units:
+    Cantidad de unidades en la capa LSTM (default=128)
     
 
 Modo de Uso (Ejemplo):
-!python3 LSTM.py --quantity_word 0.4 --quantity_syllable 0.7 --epochs 20 --batch_size 128
+!python3 LSTM.py --quantity_word 0.4 --quantity_syllable 0.7 --epochs 20 --batch_size 128 --lstm_units 128
 
 Modo de Uso (Abreviado)
-!python3 LSTM.py -qw 0.4 -qs 0.7 -epo 20 -bs 128
+!python3 LSTM.py -qw 0.4 -qs 0.7 -epo 20 -bs 128 -lu
 
 '''
 
@@ -64,24 +67,32 @@ parser.add_argument('-epo','--epochs',
 
 parser.add_argument('-bs','--batch_size',
                     type=int, default=128,
-                    help='Épocas de entrenamiento (default=128)')
+                    help='Tamaño de los batches (default=128)')
+
+parser.add_argument('-lu','--lstm_units',
+                    type=int, default=128,
+                    help='Cantidad de unidades en la capa LSTM (default=128)')
 
 
 args = parser.parse_args()
 
-
+# Vocabulario
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
 
+# Entrenamiento
 epochs = args.epochs
 batch_size = args.batch_size
+
+# Modelo
+lstm_units = args.lstm_units
 
 
 if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
   print('Ambos valores deben estar entre 0 y 1')
   raise ValueError 
     
-if epochs < 0 or batch_size < 0:
+if epochs < 0 or batch_size < 0 or lstm_units < 0:
   print('Se debe ingresar un entero mayor a cero')
   raise ValueError 
 
@@ -261,7 +272,7 @@ max_len=100
 embedding_dim=300
 
 # LSTM
-lstm_units = 128
+#lstm_units = 128 #ingresado en argparser
 learning_rate=0.01
 implementation=2 # Must be 2 for GPU
 unroll=True
