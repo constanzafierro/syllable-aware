@@ -56,11 +56,8 @@ def model_prob_predict(preds, word_correct, token_to_index, temperature=1.0):
     preds = np.log(preds) / temperature
     exp_preds = np.exp(preds)
     preds = exp_preds / np.sum(exp_preds)
-    print(preds)
-    probas = np.random.multinomial(1, preds, 1)
-    print(probas)
-    print(token_to_index[word_correct])
-    return probas[0][token_to_index[word_correct]]
+    prob = preds[token_to_index[word_correct]]
+    return prob if prob > 0 else 1e-6
 
 
 def next_word_prob(model, sentence, word, index_to_token, token_to_index, max_len = 100):
