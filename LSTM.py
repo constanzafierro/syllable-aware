@@ -16,7 +16,8 @@ import sys
 import time
 
 '''
-Parámetros:
+Argumentos (Opcionales)
+
 
 *** Ambos valores deben estar entre 0 y 1 ***
 
@@ -26,15 +27,24 @@ quantity_word:
 quantity_syllable:
     Fracción de Sílabas a considerar en el Vocabulario (default=0)
 
+
+*** Valores deben ser enteros positivos ***
+
 epochs:
     Épocas de entrenamiento (default=10)
     
+batch_size:
+    Tamaño de los batches (default=128)
+
+lstm_units:
+    Cantidad de unidades en la capa LSTM (default=128)
+    
 
 Modo de Uso (Ejemplo):
-!python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --epochs 20
+!python3 LSTM.py --quantity_word 0.4 --quantity_syllable 0.7 --epochs 20 --batch_size 128 --lstm_units 128
 
 Modo de Uso (Abreviado)
-!python3 LSTM.py -qw 0 -qs 1 -epo 20
+!python3 LSTM.py -qw 0.4 -qs 0.7 -epo 20 -bs 128 -lu
 
 '''
 
@@ -55,18 +65,34 @@ parser.add_argument('-epo','--epochs',
                     type=int, default=10,
                     help='Épocas de entrenamiento (default=10)')
 
+parser.add_argument('-bs','--batch_size',
+                    type=int, default=128,
+                    help='Tamaño de los batches (default=128)')
+
+parser.add_argument('-lu','--lstm_units',
+                    type=int, default=128,
+                    help='Cantidad de unidades en la capa LSTM (default=128)')
+
+
 args = parser.parse_args()
 
+# Vocabulario
 quantity_word = args.quantity_word
 quantity_syllable = args.quantity_syllable
+
+# Entrenamiento
 epochs = args.epochs
+batch_size = args.batch_size
+
+# Modelo
+lstm_units = args.lstm_units
 
 
 if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
   print('Ambos valores deben estar entre 0 y 1')
   raise ValueError 
     
-if epochs < 0:
+if epochs < 0 or batch_size < 0 or lstm_units < 0:
   print('Se debe ingresar un entero mayor a cero')
   raise ValueError 
 
@@ -157,7 +183,7 @@ def preprocessing(*args, **kwargs):
     return string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc
 
 ## Agrego unroll=True, implementation=2 a capa LSTM para ejecutarlo en google colaboratory (usando GPU)
-def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=True):
+def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=False):
     # build the model: a single LSTM
     print('Build model...')
     model = Sequential()
@@ -246,14 +272,14 @@ max_len=100
 embedding_dim=300
 
 # LSTM
-lstm_units = 128
+#lstm_units = 128 #ingresado en argparser
 learning_rate=0.01
 implementation=2 # Must be 2 for GPU
-unroll=True
+unroll=False
 
 # Train
 #epochs=10 #ingresado en argparser
-batch_size=128
+#batch_size=128 #ingresado en argparser
 workers=2 # 2 en Google Colaboratory (?)
 
 
