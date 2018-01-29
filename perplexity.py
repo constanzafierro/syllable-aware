@@ -102,31 +102,25 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
         Array with string tokens
     '''
 
-#    corpus = strip_punctuation(corpus)
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
-
     token_test = get_processed_text(corpus, selectors)
-
     words_array = get_array_words(corpus, only_word)
-
     Ntest = len(words_array)
-
     start_index = 0
     ppl = 0
     for i in range(1, len(words_array) - step_t - 1):
-        #start_index
         if i < step_t:
             words = words_array[start_index: start_index + i + 1]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += conditional_prob_wordi(word_i, words, words_array)#np.log(conditional_prob_wordi(word_i, words, corpus))
+            ppl += np.log(conditional_prob_wordi(word_i, words, words_array))
         else:
             words = words_array[start_index: start_index + step_t]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += conditional_prob_wordi(word_i, words, words_array)#np.log(conditional_prob_wordi(word_i, words, corpus))
+            ppl += np.log(conditional_prob_wordi(word_i, words, words_array))
             start_index += 1
 
     return -ppl/Ntest
@@ -149,7 +143,7 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     #print(' '.join(words[1:]+[word_i_processed]))
 
     if len(indexes) == 0:
-        return 0#0.001
+        return 0.0001
 
     for i in indexes:
         p_context += 1
@@ -157,6 +151,5 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
             p_word += 1
 
     #print('p_word = {} ; p_context = {}'.format(p_word, p_context))
-
 
     return p_word/p_context

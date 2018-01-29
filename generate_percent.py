@@ -24,7 +24,7 @@ def build_model(len_voc, max_len = 100, embedding_dim = 300):
     return model
 
 
-def run_model(model, ind_corpus_train, voc, epochs = 10, batch_size = 128, max_len= 100):
+def run_model(model, ind_corpus_train, voc, epochs = 20, batch_size = 128, max_len= 100):
     # train model
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
 
@@ -75,7 +75,7 @@ def main():
         model = run_model(model, ind_corpus, voc)
 
         pp = test_eval(model, corpus_test, selectors, token_to_index, index_to_token, step_t = 3)
-        print('perplexity = {} para el modelo: %palabras = {} ; %caracteres = {}'.format(pp, quantity_word, quantity_syllable))
+        print('perplexity = {} para el modelo: %palabras = {} ; %silabas = {}'.format(pp, quantity_word, quantity_syllable))
 
 
 if __name__ == '__main__':
