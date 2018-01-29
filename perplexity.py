@@ -56,7 +56,7 @@ def model_prob_predict(preds, word_correct, token_to_index, temperature=1.0):
     preds = np.log(preds) / temperature
     exp_preds = np.exp(preds)
     preds = exp_preds / np.sum(exp_preds)
-    prob = preds[token_to_index[word_correct]]
+    prob = preds[token_to_index[word_correct] - 1] # dict start in 1
     return prob if prob > 0 else 1e-6
 
 
