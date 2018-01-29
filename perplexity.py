@@ -4,8 +4,8 @@ from process_text import *
 from string import punctuation
 
 
-def strip_punctuation(sting):
-    return ''.join(c for c in string if c not in punctuation)
+def strip_punctuation(corpus):
+    return ''.join(c for c in corpus if c not in punctuation)
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
