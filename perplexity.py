@@ -79,14 +79,14 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
         last_char = next_token[-1]
 
     #print('palabra generada--- {}'.format(" ".join(word_generate)))
-    return word_generate.replace(':','').replace('.','')
+    return word_generate.replace(':','').replace('-','')
 
 
-def get_array_words(corpus):
+def get_array_words(corpus, selectors):
+    tokens = get_processed_text(corpus, selectors)
     words = []
-    for line in corpus.split('\n'):
-        for word in line.split():
-            words.append(word)
+    for token in tokens:
+        words.append(token.replace(':','').replace('-',''))
     return words
 
 
@@ -103,11 +103,11 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
 
     corpus = strip_punctuation(corpus)
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
-    Ntest = len(corpus)
 
     token_test = get_processed_text(corpus, selectors)
 
-    words_array = get_array_words(corpus)
+    words_array = get_array_words(corpus, only_words)
+    Ntest = len(words_array)
 
     start_index = 0
     ppl = 0
@@ -124,7 +124,7 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
             token_test = get_processed_text(' '.join(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += np.log(conditional_prob_wordi(word_i, words, corpus))
+            ppl += conditional_prob_wordi(word_i, words, corpus)#np.log(conditional_prob_wordi(word_i, words, corpus))
             start_index += 1
 
     return -ppl/Ntest
@@ -144,11 +144,11 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     p_word = 0
     p_context = 0
 
-    print(' '.join(words[1:]+[word_i_processed]))
 
     if len(indexes) == 0:
-        return 0.001
+        return 0#0.001
 
+    print(' '.join(words[1:]+[word_i_processed]))
 
     for i in indexes:
         p_context += 1
@@ -158,4 +158,4 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     print('p_word = {} ; p_context = {}'.format(p_word, p_context))
 
 
-    return p_word/p_context
+    return p_word#/p_context
