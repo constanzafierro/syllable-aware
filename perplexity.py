@@ -106,7 +106,7 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
 
     token_test = get_processed_text(corpus, selectors)
 
-    words_array = get_array_words(corpus, only_words)
+    words_array = get_array_words(corpus, only_word)
     Ntest = len(words_array)
 
     start_index = 0
