@@ -158,14 +158,14 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
     for i in range(1, len(words_array) - step_t - 1):
         if i < step_t:
             words = words_array[start_index: start_index + i + 1]
-            token_test = [get_processed_text(word, selectors) for word in words if word[0] != '<' else word] #get_processed_text(token_to_string(words), selectors)
+            token_test = next(get_processed_text(word, selectors) for word in words if word[0] != '<' else word, None) #get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = words_array[start_index + i + 1]
             word_i = get_processed_text(word_i, selectors) if word_i[0] != '<' else word_i
             ppl += np.log(next_word_prob(model, sentence, word_i, index_to_token, token_to_index))
         else:
             words = words_array[start_index: start_index + step_t]
-            token_test = [get_processed_text(word, selectors) for word in words if word[0] != '<' else word]
+            token_test = next(get_processed_text(word, selectors) for word in words if word[0] != '<' else word, None)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = words_array[start_index + i + 1]
             word_i = get_processed_text(word_i, selectors) if word_i[0] != '<' else word_i 
