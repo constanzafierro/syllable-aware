@@ -9,16 +9,6 @@ def strip_punctuation(corpus):
     return ''.join(c for c in corpus if c not in punctuation)
 
 
-def sample(preds, temperature=1.0):
-    # helper function to sample an index from a probability array
-    preds = np.asarray(preds).astype('float64')
-    preds = np.log(preds) / temperature
-    exp_preds = np.exp(preds)
-    preds = exp_preds / np.sum(exp_preds)
-    probas = np.random.multinomial(1, preds, 1)
-    return np.argmax(probas)
-
-
 def on_epoch_end(epoch, logs):
     # Function invoked at end of each epoch. Prints generated text.
     print()
@@ -50,6 +40,62 @@ def on_epoch_end(epoch, logs):
         print()
 
 
+def sample(preds, temperature=1.0):
+    # helper function to sample an index from a probability array
+    preds = np.asarray(preds).astype('float64')
+    preds = np.log(preds) / temperature
+    exp_preds = np.exp(preds)
+    preds = exp_preds / np.sum(exp_preds)
+    probas = np.random.multinomial(1, preds, 1)
+    return np.argmax(probas)
+
+
+def model_prob_predict(preds, word_correct, token_to_index, temperature=1.0):
+    # helper function to get conditional probabilities
+    preds = np.asarray(preds).astype('float64')
+    preds = np.log(preds) / temperature
+    exp_preds = np.exp(preds)
+    preds = exp_preds / np.sum(exp_preds)
+    probas = np.random.multinomial(1, preds, 1)
+    return probas[token_to_index[word_correct]]
+
+
+def next_word_prob(model, sentence, word, index_to_token, token_to_index, max_len = 100):
+    '''Get the probabilitie of the next word given a sentence
+    Args:
+        model: is a pre-trained model
+        sentence: array of string, is the input of the model to predict the next word
+        word: string, is the word to obtain probabilitie
+        index_to_token: dictionary of index (int) to token
+        token_to_index: dictionary of token to index (int)
+        max_len: dimension of max input to model, by default max_len=100
+    Returns:
+        float, conditional probabilitie of the next word
+    '''
+    ## Generate of the next word
+    last_char = ''
+    word_generate = ''
+    prob_word = 1
+    while last_char != ':' and last_char != '>':
+        x_pred = np.zeros((1, max_len))
+        for t, token in enumerate(sentence):
+            if len(sentence) < max_len:
+                x_pred[0, max_len - len(sentence) + t] = token_to_index[token]
+            else:
+                x_pred[0, t] = token_to_index[token]
+        preds = model.predict(x_pred, verbose=0)[0]
+        next_index = sample(preds) # default temperature = 1.0 
+        next_token = index_to_token[next_index+1] # dict starting at 1
+        next = index_to_token[np.argmax(preds)+1]
+        sentence = sentence[1:] + [next_token]
+        word_generate += next_token
+        last_char = next_token[-1]
+        prob_word = prob_word*model_prob_predict(preds, word, token_to_index)
+
+    #print('palabra generada--- {}'.format(" ".join(word_generate)))
+    return prob_word
+
+
 def next_word_generate(model, sentence, index_to_token, token_to_index, max_len = 100):
     '''Generate of the next word like a string
     Args:
@@ -59,7 +105,7 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
         token_to_index: dictionary of token to index (int)
         max_len: dimension of max input to model, by default max_len=100
     Returns:
-        Array with string tokens
+        String with generate word
     '''
     ## Generate of the next word
     last_char = ''
@@ -113,14 +159,14 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
             words = words_array[start_index: start_index + i + 1]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += np.log(conditional_prob_wordi(word_i, words, words_array))
+            word_i = words_array[start_index + i + 1]
+            ppl += np.log(next_word_prob(model, sentence, word_i, index_to_token, token_to_index))
         else:
             words = words_array[start_index: start_index + step_t]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
-            ppl += np.log(conditional_prob_wordi(word_i, words, words_array))
+            word_i = words_array[start_index + i + 1]
+            ppl += np.log(next_word_prob(model, sentence, word_i, index_to_token, token_to_index))
             start_index += 1
 
     return -ppl/Ntest
