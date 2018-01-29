@@ -76,7 +76,7 @@ def next_word_prob(model, sentence, word, index_to_token, token_to_index, max_le
     last_char = ''
     word_generate = ''
     prob_word = 1
-    while last_char != ':' and last_char != '>':
+    for token in word:
         x_pred = np.zeros((1, max_len))
         for t, token in enumerate(sentence):
             if len(sentence) < max_len:
@@ -90,7 +90,8 @@ def next_word_prob(model, sentence, word, index_to_token, token_to_index, max_le
         sentence = sentence[1:] + [next_token]
         word_generate += next_token
         last_char = next_token[-1]
-        prob_word = prob_word*model_prob_predict(preds, word, token_to_index)
+
+        prob_word = prob_word*model_prob_predict(preds, token, token_to_index)
 
     #print('palabra generada--- {}'.format(" ".join(word_generate)))
     return prob_word
@@ -160,12 +161,14 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = words_array[start_index + i + 1]
+            word_i = get_processed_text(word_i) if word_i[0] != '<' else : word_i
             ppl += np.log(next_word_prob(model, sentence, word_i, index_to_token, token_to_index))
         else:
             words = words_array[start_index: start_index + step_t]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
             word_i = words_array[start_index + i + 1]
+            word_i = get_processed_text(word_i) if word_i[0] != '<' else : word_i 
             ppl += np.log(next_word_prob(model, sentence, word_i, index_to_token, token_to_index))
             start_index += 1
 
