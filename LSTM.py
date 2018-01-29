@@ -26,6 +26,10 @@ quantity_word:
 quantity_syllable:
     Fracción de Sílabas a considerar en el Vocabulario (default=0)
 
+epochs:
+    Épocas de entrenamiento (default=10)
+    
+
 Modo de Uso (Ejemplo):
 !python3 LSTM.py --quantity_word 0 --quantity_syllable 1 --epochs 20
 
@@ -49,7 +53,7 @@ parser.add_argument('-qs','--quantity_syllable',
 
 parser.add_argument('-epo','--epochs',
                     type=int, default=10,
-                    help='Épocas (default=10)')
+                    help='Épocas de entrenamiento (default=10)')
 
 args = parser.parse_args()
 
