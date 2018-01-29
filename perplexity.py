@@ -155,7 +155,7 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
     Ntest = len(words_array)
     start_index = 0
     ppl = 0
-    for i in range(1, len(words_array) - step_t - 1):
+    for i in range(1, len(words_array) - step_t - 2):
         if i < step_t:
             words = words_array[start_index: start_index + i + 1]
             token_test = get_processed_text(token_to_string(words), selectors)
