@@ -117,18 +117,14 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
         #start_index
         if i < step_t:
             words = words_array[start_index: start_index + i + 1]
-            print(words)
             token_test = get_processed_text(token_to_string(words), selectors)
-            print(token_test)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            print(sentence)
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             ppl += conditional_prob_wordi(word_i, words_array, corpus)#np.log(conditional_prob_wordi(word_i, words, corpus))
         else:
             words = words_array[start_index: start_index + step_t]
             token_test = get_processed_text(token_to_string(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
-            print(sentence)
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             ppl += conditional_prob_wordi(word_i, words_array, corpus)#np.log(conditional_prob_wordi(word_i, words, corpus))
             start_index += 1
@@ -150,11 +146,10 @@ def conditional_prob_wordi(word_i_processed, words, corpus):
     p_word = 0
     p_context = 0
 
+    print(' '.join(words[1:]+[word_i_processed]))
 
     if len(indexes) == 0:
         return 0#0.001
-
-    print(' '.join(words[1:]+[word_i_processed]))
 
     for i in indexes:
         p_context += 1
