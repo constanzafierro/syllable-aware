@@ -105,7 +105,6 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
 
     token_test = get_processed_text(corpus, selectors)
-    print(token_test)
     words_array = get_array_words(corpus, only_word)
     Ntest = len(words_array)
 
@@ -117,12 +116,14 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
             words = words_array[start_index: start_index + i + 1]
             token_test = get_processed_text(' '.join(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
+            print(sentence)
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             ppl += np.log(conditional_prob_wordi(word_i, words, corpus))
         else:
             words = words_array[start_index: start_index + step_t]
             token_test = get_processed_text(' '.join(words), selectors)
             sentence = token_test if len(token_test) < step_t else token_test[-step_t:]
+            print(sentence)
             word_i = next_word_generate(model, sentence, index_to_token, token_to_index)
             ppl += conditional_prob_wordi(word_i, words, corpus)#np.log(conditional_prob_wordi(word_i, words, corpus))
             start_index += 1
