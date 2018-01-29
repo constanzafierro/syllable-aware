@@ -53,7 +53,7 @@ def token_to_string(tokens):
     punctuation_sign = set(map_punctuation)
     for i, token in enumerate(tokens):
         if token in punctuation_sign:
-            tokens[i] = map_punctuation[token]
+            tokens[i] = map_punctuation[token] + ' '
         else:
             tokens[i] = token.replace('-', '').replace(':', ' ')
     return ''.join(tokens)
