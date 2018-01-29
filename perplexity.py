@@ -1,7 +1,11 @@
 import kmp as km
 import numpy as np
 from process_text import *
+from string import punctuation
 
+
+def strip_punctuation(sting):
+    return ''.join(c for c in string if c not in punctuation)
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
@@ -95,6 +99,8 @@ def test_eval(model, corpus, selectors, step_t = 3):
     Returns:
         Array with string tokens
     '''
+
+    corpus = strip_punctuation(corpus)
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
     Ntest = len(get_processed_text(corpus, only_word))
 
