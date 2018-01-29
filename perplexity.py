@@ -63,7 +63,7 @@ def next_word_generate(model, sentence, index_to_token, token_to_index, max_len 
     ## Generate of the next word
     last_char = ''
     word_generate = ''
-    while last_char != ':':
+    while last_char != ':' and last_char != '>':
         x_pred = np.zeros((1, max_len))
         for t, token in enumerate(sentence):
             if len(sentence) < max_len:
@@ -101,11 +101,11 @@ def test_eval(model, corpus, selectors, token_to_index, index_to_token, step_t =
         Array with string tokens
     '''
 
-    corpus = strip_punctuation(corpus)
+#    corpus = strip_punctuation(corpus)
     only_word = get_selectors(corpus, quantity_word = 1.0, quantity_syllable = 0.0)
 
     token_test = get_processed_text(corpus, selectors)
-
+    print(token_test)
     words_array = get_array_words(corpus, only_word)
     Ntest = len(words_array)
 
