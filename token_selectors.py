@@ -48,6 +48,18 @@ def get_next_word(string, begining_at):
     return string[begining_at:begining_at+j] if j != -1 else string[begining_at:]
 
 
+def token_to_string(tokens):
+    map_punctuation = {'<ai>':'¿', '<ci>' : '?', '<pt>' : '.', '<nl>' : '\n', '<cm>' : ','}
+    punctuation_sign = set(map_punctuation)
+    string = ''
+    for i, token in enumerate(tokens):
+        if token in punctuation_sign:
+            tokens[i] = map_punctuation[token]
+        else:
+            token[i] = token.replace('-', '').replace(':', ' ')
+    return ''.join(tokens)
+
+
 def get_list_words(corpus, sign_to_ignore, word_to_ignore):
     '''Returns the list of words in the corpus.'''
     no_newline = corpus.split('\n')
@@ -161,6 +173,7 @@ class CharacterSelector(TokenSelector): # letter
         letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
         letters += letters.upper()
         self.accepted_chars = set(letters)
+        self.frequent = self.accepted_chars
 
     def select(self, corpus, i, tokens_selected):
         if corpus[i] in self.accepted_chars:
