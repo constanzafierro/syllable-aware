@@ -1,7 +1,9 @@
 # coding: utf-8
 import numpy as np
 import random
-np.random.seed(42)
+
+seed = 42
+np.random.seed(seed)
 
 from process_text import *
 
