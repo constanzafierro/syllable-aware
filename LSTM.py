@@ -55,6 +55,14 @@ Arguments
     Number of units in the LSTM layer (default=512)
 
 
+--dropout:
+    Dropout (default=0.3)
+
+
+--recurrent_dropout:
+    Recurrent dropout (default=0.3)
+
+
 --learning_rate:
     Learning Rate (default=0.01)
 
@@ -69,12 +77,12 @@ Arguments
     
 Example:
 
-!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --learning_rate 0.01 --implementation 2
+!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --dropout 0.3 --recurrent_dropout 0.3 --learning_rate 0.01 --implementation 2
 
 
 Short version:
 
-!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -lr 0.01 -imp 2
+!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -d 0.3 -rd 0.3 -lr 0.01 -imp 2
 
 '''
 
@@ -140,6 +148,18 @@ parser.add_argument('-lu','--lstm_units',
                     type=int,
                     default=512,
                     help='Cantidad de unidades en la capa LSTM (default=512)')
+
+
+parser.add_argument('-d','--dropout',
+                    type=float,
+                    default=0.3,
+                    help='Dropout (default=0.3)')
+
+
+parser.add_argument('-rd','--recurrent_dropout',
+                    type=float,
+                    default=0.3,
+                    help='Recurrent dropout (default=0.3)')
 
 
 parser.add_argument('-lr','--learning_rate',
@@ -215,6 +235,12 @@ if args.workers != None:
 if args.lstm_units != None:
     lstm_units = args.lstm_units
 
+if args.dropout != None:
+    dropout = args.dropout
+
+if args.recurrent_dropout != None:
+    recurrent_dropout = args.recurrent_dropout
+
 if args.learning_rate != None:
     learning_rate = args.learning_rate  
 
@@ -227,23 +253,43 @@ if args.unroll != None:
 ################################################################################
 
 if train_size<0 or train_size>1:
-    print('1')
-    raise ValueError 
+    print('Check Train Size!')
+    raise ValueError
+    
+if dropout<0 or dropout>1:
+    print('Check Dropout!')
+    raise ValueError
 
-if epochs<0 or batch_size<0 or lstm_units<0:
-    print('2')
+if recurrent_dropout<0 or recurrent_dropout>1:
+    print('Check Recurrent Dropout!')
+    raise ValueError
+    
+if epochs<0:
+    print('Check Epochs!')
+    raise ValueError
+    
+ if batch_size<0:
+    print('Check Batch Size!')
+    raise ValueError
+    
+ if lstm_units<0:
+    print('Check LSTM Units!')
     raise ValueError
 
 if learning_rate<0:
-    print('3')
+    print('Check Learning Rate!')
     raise ValueError
 
-if quantity_word<0 or quantity_syllable<0:
-    print('4')
+if quantity_word<0:
+    print('Check Quantity Word!')
+    raise VauleError
+    
+if quantity_syllable<0:
+    print('Check Quantity Syllable!')
     raise VauleError
 
 if implementation<1 or implementation>2:
-    print('5')
+    print('Check Implementation!')
     raise VauleError
 
 ################################################################################
