@@ -1,3 +1,8 @@
+# coding: utf-8
+import numpy as np
+import random
+np.random.seed(42)
+
 from process_text import *
 
 from generators import GeneralGenerator
@@ -9,8 +14,6 @@ from keras.optimizers import RMSprop
 from keras.models import load_model
 
 from math import ceil
-import numpy as np
-import random
 import sys
 
 import time
