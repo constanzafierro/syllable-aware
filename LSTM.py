@@ -268,11 +268,11 @@ if epochs<0:
     print('Check Epochs!')
     raise ValueError
     
- if batch_size<0:
+if batch_size<0:
     print('Check Batch Size!')
     raise ValueError
     
- if lstm_units<0:
+if lstm_units<0:
     print('Check LSTM Units!')
     raise ValueError
 
