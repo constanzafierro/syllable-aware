@@ -14,50 +14,69 @@ import random
 import sys
 
 import time
+import argparse
 
 '''
-Argumentos (Opcionales)
+Arguments
 
 
-*** Ambos valores deben estar entre 0 y 1 ***
-
-quantity_word:
-    Fracción de Palabras a considerar en el Vocabulario (default=1)
+--infile:
+    Input File (required)
     
-quantity_syllable:
-    Fracción de Sílabas a considerar en el Vocabulario (default=0)
-
-
-*** Valores deben ser enteros positivos ***
-
-epochs:
-    Épocas de entrenamiento (default=10)
     
-batch_size:
-    Tamaño de los batches (default=128)
+--quantity_word:
+    Fraction (or quantity) of Words to consider in the Vocabulary (default=1)
+    
+    
+--quantity_syllable:
+    Fraction (or quantity) of Syllables to be considered in the Vocabulary (default=0)
 
-lstm_units:
-    Cantidad de unidades en la capa LSTM (default=128)
+
+--train_size:
+    Fraction of the data to consider for the Train Set (default=0.8)
     
 
-Modo de Uso (Ejemplo):
-!python3 LSTM.py --quantity_word 0.4 --quantity_syllable 0.7 --epochs 20 --batch_size 128 --lstm_units 128
+--epochs:
+    Epochs (default=60)
+    
+    
+--batch_size:
+    Batch Size (default=128)
 
-Modo de Uso (Abreviado)
-!python3 LSTM.py -qw 0.4 -qs 0.7 -epo 20 -bs 128 -lu
+
+--workers
+    Maximum number of processes to spin up (default=2)
+    
+    
+--lstm_units:
+    Number of units in the LSTM layer (default=512)
+
+
+--learning_rate:
+    Learning Rate (default=0.01)
+
+
+--implementation:
+    Implementation [1 or 2]. Must be 2 for GPU (default=2)
+
+
+--unroll:
+    Unroll LSTM (default=False)
+
+    
+Example:
+
+!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --learning_rate 0.01 --implementation 2
+
+
+Short version:
+
+!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -lr 0.01 -imp 2
 
 '''
 
 ################################################################################
 ## PARSER
-
-import argparse
-
-################################################################################
-
-
-## Hiperparameters
-
 
 # Embeddings
 
