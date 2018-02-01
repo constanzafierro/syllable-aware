@@ -375,7 +375,7 @@ def build_model(len_voc, lstm_units=128, learning_rate=0.01,
     
     optimizer = RMSprop(lr=learning_rate)
     
-    model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['top_k_categorical_accuracy'])
     
     return model
 
