@@ -66,7 +66,7 @@ Arguments
 
 
 --learning_rate:
-    Learning Rate (default=0.01)
+    Learning Rate (default=0.001)
 
 
 --implementation:
@@ -79,12 +79,12 @@ Arguments
     
 Example:
 
-!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --dropout 0.3 --recurrent_dropout 0.3 --learning_rate 0.01 --implementation 2
+!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --dropout 0.3 --recurrent_dropout 0.3 --learning_rate 0.001 --implementation 2
 
 
 Short version:
 
-!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -d 0.3 -rd 0.3 -lr 0.01 -imp 2
+!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -d 0.3 -rd 0.3 -lr 0.001 -imp 2
 
 '''
 
@@ -166,7 +166,7 @@ parser.add_argument('-rd','--recurrent_dropout',
 
 parser.add_argument('-lr','--learning_rate',
                     type=float,
-                    default=0.01,
+                    default=0.001,
                     help='Learning Rate (default=0.01)')
 
 
