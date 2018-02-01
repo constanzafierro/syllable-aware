@@ -86,8 +86,18 @@ embedding_dim = 300
 
 ################################################################################
 
+example = '''\n Example:\n
 
-parser = argparse.ArgumentParser(description='Hyperparameters')
+!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --learning_rate 0.01 --implementation 2
+
+\n Short version: \n
+
+!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -lr 0.01 -imp 2
+
+\n'''
+
+parser = argparse.ArgumentParser(description='Hyperparameters',
+                                 epilog=example)
 
 
 ## Input File
