@@ -3,7 +3,7 @@ from process_text import *
 from generators import GeneralGenerator
 from keras.callbacks import LambdaCallback
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Embedding
+from keras.layers import Dense, Activation, Embedding, Dropout
 from keras.layers import LSTM
 from keras.optimizers import RMSprop
 from keras.models import load_model
@@ -48,57 +48,184 @@ Modo de Uso (Abreviado)
 
 '''
 
+################################################################################
+## PARSER
+
 import argparse
 
-parser = argparse.ArgumentParser()
+################################################################################
 
+
+## Hiperparameters
+
+
+# Embeddings
+
+max_len = 100
+embedding_dim = 300
+
+
+################################################################################
+
+
+parser = argparse.ArgumentParser(description='Hyperparameters')
+
+
+## Input File
+parser.add_argument('-i', '--infile',
+                    type=argparse.FileType('r', encoding='UTF-8'),
+                    required=True,
+                    help='Input File')
+
+
+## Vocabulario
 parser.add_argument('-qw','--quantity_word',
-                    type=float, default=1,
-                    help='Fracción de Palabras a considerar en el Vocabulario (default=1)')
+                    type=float,
+                    default=1,
+                    help='Fracción (o cantidad) de Palabras a considerar en el Vocabulario (default=1)')
+
 
 parser.add_argument('-qs','--quantity_syllable',
-                    type=float, default=0,
-                    help='Fracción de Sílabas a considerar en el Vocabulario (default=0)')
+                    type=float,
+                    default=0,
+                    help='Fracción (o cantidad) de Sílabas a considerar en el Vocabulario (default=0)')
+
+## Training
+parser.add_argument('-ts','--train_size',
+                    type=float,
+                    default=0.8,
+                    help='Fracción a utilizar para el Train Set (default=0.8)')
 
 
 parser.add_argument('-epo','--epochs',
-                    type=int, default=10,
-                    help='Épocas de entrenamiento (default=10)')
+                    default=60,
+                    type=int,
+                    help='Épocas de entrenamiento (default=60)')
+
 
 parser.add_argument('-bs','--batch_size',
-                    type=int, default=128,
+                    type=int,
+                    default=128,
                     help='Tamaño de los batches (default=128)')
 
+
+parser.add_argument('-wrk','--workers',
+                    type=int,
+                    default=2,
+                    help='Maximum number of processes to spin up (default=2)')
+
+## Model (LSTM)
 parser.add_argument('-lu','--lstm_units',
-                    type=int, default=128,
-                    help='Cantidad de unidades en la capa LSTM (default=128)')
+                    type=int,
+                    default=512,
+                    help='Cantidad de unidades en la capa LSTM (default=512)')
 
 
-args = parser.parse_args()
-
-# Vocabulario
-quantity_word = args.quantity_word
-quantity_syllable = args.quantity_syllable
-
-# Entrenamiento
-epochs = args.epochs
-batch_size = args.batch_size
-
-# Modelo
-lstm_units = args.lstm_units
+parser.add_argument('-lr','--learning_rate',
+                    type=float,
+                    default=0.01,
+                    help='Learning Rate (default=0.01)')
 
 
-if quantity_word > 1 or quantity_word < 0 or quantity_syllable >1 or quantity_syllable <0:
-  print('Ambos valores deben estar entre 0 y 1')
-  raise ValueError 
-    
-if epochs < 0 or batch_size < 0 or lstm_units < 0:
-  print('Se debe ingresar un entero mayor a cero')
-  raise ValueError 
+parser.add_argument('-imp','--implementation',
+                    type=int,
+                    default=2,
+                    help='Implementation [1 or 2]. Must be 2 for GPU (default=2)')
 
-print(' \n\n\n\n\n quantity_word = {} \nquantity_syllable = {} \n\n\n\n\n'.format(quantity_word, quantity_syllable))
+
+parser.add_argument('-unr','--unroll',
+                    action='store_true',
+                    default=False,
+                    help='Unroll LSTM (default=False)')
 
 ##
+args = parser.parse_args()
+
+################################################################################
+
+## Prints
+
+print('\n'*2)
+
+for arg in vars(args):
+    if arg == 'infile':
+        print( '{:30} {}'.format(arg, vars(args)[arg].name) )
+    else:
+        print( '{:30} {}'.format(arg, vars(args)[arg]) )
+
+print('\n'*2)
+
+
+################################################################################
+
+# Corpus
+
+if args.infile != None:
+    path_to_file = args.infile.name
+    corpus = args.infile.read().lower()
+
+
+# Vocabulario
+
+if args.quantity_word != None:
+    quantity_word = args.quantity_word
+
+if args.quantity_syllable != None:
+    quantity_syllable = args.quantity_syllable
+
+
+# Entrenamiento
+
+if args.train_size != None:
+    train_size = args.train_size
+
+if args.epochs != None:
+    epochs = args.epochs
+
+if args.batch_size != None:
+    batch_size = args.batch_size
+
+if args.workers != None:
+    workers = args.workers
+
+
+# Modelo
+
+if args.lstm_units != None:
+    lstm_units = args.lstm_units
+
+if args.learning_rate != None:
+    learning_rate = args.learning_rate  
+
+if args.implementation != None:
+    implementation = args.implementation
+
+if args.unroll != None:
+    unroll = args.unroll
+
+################################################################################
+
+if train_size<0 or train_size>1:
+    print('1')
+    raise ValueError 
+
+if epochs<0 or batch_size<0 or lstm_units<0:
+    print('2')
+    raise ValueError
+
+if learning_rate<0:
+    print('3')
+    raise ValueError
+
+if quantity_word<0 or quantity_syllable<0:
+    print('4')
+    raise VauleError
+
+if implementation<1 or implementation>2:
+    print('5')
+    raise VauleError
+
+################################################################################
 
 
 def sample(preds, temperature=1.0):
@@ -182,16 +309,54 @@ def preprocessing(*args, **kwargs):
     
     return string_tokens, string_voc, token_to_index, index_to_token, ind_corpus, len_train, ind_corpus_train, ind_corpus_test, voc
 
-## Agrego unroll=True, implementation=2 a capa LSTM para ejecutarlo en google colaboratory (usando GPU)
-def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=False):
-    # build the model: a single LSTM
-    print('Build model...')
-    model = Sequential()
-    model.add(Embedding(input_dim=len_voc+1, output_dim=embedding_dim, input_length=max_len, mask_zero=True))
-    model.add(LSTM(lstm_units, unroll=unroll, implementation=implementation)) #
-    model.add(Dense(len_voc))
-    model.add(Activation('softmax'))
+
+#def build_model(len_voc, lstm_units=128, learning_rate=0.01, max_len=100, embedding_dim=300, implementation=2, unroll=False):
+#    # build the model: a single LSTM
+#    print('Build model...')
+#    model = Sequential()
+#    model.add(Embedding(input_dim=len_voc+1, output_dim=embedding_dim, input_length=max_len, mask_zero=True))
+#    model.add(LSTM(lstm_units, unroll=unroll, implementation=implementation)) #
+#    model.add(Dense(len_voc))
+#    model.add(Activation('softmax'))
+#    optimizer = RMSprop(lr=learning_rate)
+#    model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+#    
+#    return model
+
+
+def build_model(len_voc, lstm_units=128, learning_rate=0.01,
+                dropout=0.3, recurrent_dropout=0.3, seed=42,
+                max_len=100, embedding_dim=300,
+                implementation=2, unroll=False):
+    
+    embedding = Embedding(input_dim=len_voc+1,
+                          output_dim=embedding_dim,
+                          input_length=max_len,
+                          mask_zero=True)
+    
+    lstm_1 = LSTM(lstm_units,
+                  recurrent_dropout=recurrent_dropout,
+                  return_sequences=True,
+                  unroll=unroll,
+                  implementation=implementation)
+    
+    dropout = Dropout(dropout, seed=seed)
+    
+    lstm_2 = LSTM(lstm_units,
+                  recurrent_dropout=recurrent_dropout,
+                  unroll=unroll,
+                  implementation=implementation)
+    
+    dense = Dense(len_voc, activation='softmax')
+    
+    model = Sequential([embedding,
+                        lstm_1,
+                        dropout,
+                        lstm_2,
+                        dense])
+    
     optimizer = RMSprop(lr=learning_rate)
+    
     model.compile(loss='categorical_crossentropy', optimizer=optimizer)
     
     return model
@@ -259,35 +424,37 @@ def accuracyTest(model, string_tokens, max_len, verbose=False, *args, **kwargs):
     return accuracy
 
 
+################################
+## Hiperparameters
+
+len_voc = 20000
+
+# Embeddings
+
+max_len = 100
+embedding_dim = 300
+
+# LSTM
+
+lstm_units = 512
+dropout = 0.3
+recurrent_dropout = 0.3
+seed = 42
+implementation=2 # Must be 2 for GPU
+unroll=False
+
+# Training
+
+learning_rate = 0.01
+workers=2
+train_size = 0.8
+################################
+
+
 ## MAIN
 
 # Path al documento  = Usando doc Overfitting !!
 path_to_file = 'data/horoscopo_test_overfitting.txt'
-
-
-## Hiperparameters
-
-# Embeddings
-max_len=100
-embedding_dim=300
-
-# LSTM
-#lstm_units = 128 #ingresado en argparser
-learning_rate=0.01
-implementation=2 # Must be 2 for GPU
-unroll=False
-
-# Train
-#epochs=10 #ingresado en argparser
-#batch_size=128 #ingresado en argparser
-workers=2 # 2 en Google Colaboratory (?)
-
-
-## Caso 1: Vocabulario consiste en Solamente Palabras
-
-#quantity_word = 1 #ingresado en argparser
-#quantity_syllable = 0 #ingresado en argparser
-train_size = 0.8
 
 
 # Argumentos para función preprocessing
