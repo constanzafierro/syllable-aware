@@ -444,38 +444,10 @@ def accuracyTest(model, string_tokens, max_len, verbose=False, *args, **kwargs):
     
     return accuracy
 
-
-################################
-## Hiperparameters
-
-len_voc = 20000
-
-# Embeddings
-
-max_len = 100
-embedding_dim = 300
-
-# LSTM
-
-lstm_units = 512
-dropout = 0.3
-recurrent_dropout = 0.3
-seed = 42
-implementation=2 # Must be 2 for GPU
-unroll=False
-
-# Training
-
-learning_rate = 0.01
-workers=2
-train_size = 0.8
 ################################
 
 
 ## MAIN
-
-# Path al documento  = Usando doc Overfitting !!
-path_to_file = 'data/horoscopo_test_overfitting.txt'
 
 
 # Argumentos para función preprocessing
@@ -491,18 +463,33 @@ print(string_voc)
 
 
 ## build model
-model = build_model(len_voc=len(voc), lstm_units=lstm_units, learning_rate=learning_rate,
-                    max_len=max_len, embedding_dim=embedding_dim, implementation=implementation,
-                    unroll=unroll)
+model = build_model(len_voc=len(voc),
+                    lstm_units=lstm_units,
+                    learning_rate=learning_rate,
+                    dropout=dropout,
+                    recurrent_dropout=recurrent_dropout,
+                    seed=seed,
+                    max_len=max_len,
+                    embedding_dim=embedding_dim,
+                    implementation=implementation,
+                    unroll=unroll):
 
 # Model Summary
 print(model.summary())
 
 
 ## run model
-#ind_corpus_train
+
 t_i = time.time()
-model = run_model(model, ind_corpus_train, voc, epochs=epochs, batch_size=batch_size, max_len=max_len, workers=workers)
+
+model = run_model(model,
+                  ind_corpus_train,
+                  voc,
+                  epochs=epochs,
+                  batch_size=batch_size,
+                  max_len=max_len,
+                  workers=workers)
+
 t_f = time.time() - t_i
 print('\n'*5 + 'Elapsed Time : ', t_f)
 
