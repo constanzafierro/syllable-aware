@@ -1,13 +1,42 @@
 # coding: utf-8
+
+################################################################################
+
+## Setting Seed for Reproducibility
+
+import os
 import numpy as np
 import random
 
-seed = 42
-np.random.seed(seed)
+import tensorflow as tf
+
+# Setting PYTHONHASHSEED for determinism was not listed anywhere for TensorFlow,
+# but apparently it is necessary for the Theano backend
+# (https://github.com/fchollet/keras/issues/850).
+
+os.environ['PYTHONHASHSEED'] = '0'
+fixed_seed_num = 0 # must be the same as PYTHONHASHSEED
+
+np.random.seed(fixed_seed_num)
+random.seed(fixed_seed_num)
+
+# Limit operation to 1 thread for deterministic results.
+
+session_conf = tf.ConfigProto(intra_op_parallelism_threads=1,
+                              inter_op_parallelism_threads=1
+                             )
+
+from keras import backend as K
+
+tf.set_random_seed(fixed_seed_num)
+sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+K.set_session(sess)
+
+################################################################################
 
 from process_text import *
-
 from generators import GeneralGenerator
+
 from keras.callbacks import LambdaCallback
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Embedding, Dropout
@@ -20,6 +49,7 @@ import sys
 
 import time
 import argparse
+
 
 '''
 Arguments
