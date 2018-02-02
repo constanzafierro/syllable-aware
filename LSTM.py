@@ -521,7 +521,7 @@ model = build_model(len_voc=len(voc),
                     max_len=max_len,
                     embedding_dim=embedding_dim,
                     implementation=implementation,
-                    unroll=unroll)
+                    unroll=False)
 
 # Model Summary
 print(model.summary())
