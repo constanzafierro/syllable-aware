@@ -72,7 +72,7 @@ Arguments
     
 
 --epochs:
-    Epochs (default=60)
+    Epochs (default=300)
     
     
 --batch_size:
@@ -80,7 +80,7 @@ Arguments
 
 
 --workers
-    Maximum number of processes to spin up (default=2)
+    Maximum number of processes to spin up (default=1) [for reproducibility]
     
     
 --lstm_units:
@@ -102,19 +102,15 @@ Arguments
 --implementation:
     Implementation [1 or 2]. Must be 2 for GPU (default=2)
 
-
---unroll:
-    Unroll LSTM (default=False)
-
     
 Example:
 
-!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 20 --batch_size 128 --workers 2 --lstm_units 512 --dropout 0.3 --recurrent_dropout 0.3 --learning_rate 0.001 --implementation 2
+!python3 LSTM.py --infile 'data/horoscopo_test_overfitting.txt' --quantity_word 0.4 --quantity_syllable 0.7 --train_size 0.8 --epochs 300 --batch_size 128 --workers 1 --lstm_units 512 --dropout 0.3 --recurrent_dropout 0.3 --learning_rate 0.001 --implementation 2
 
 
 Short version:
 
-!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 20 -bs 128 -wrk 2 -lu 512 -d 0.3 -rd 0.3 -lr 0.001 -imp 2
+!python3 LSTM.py -i 'data/horoscopo_test_overfitting.txt' -qw 1 -qs 0 -ts 0.8 -epo 300 -bs 128 -wrk 1 -lu 512 -d 0.3 -rd 0.3 -lr 0.001 -imp 2
 
 '''
 
@@ -205,12 +201,6 @@ parser.add_argument('-imp','--implementation',
                     default=2,
                     help='Implementation [1 or 2]. Must be 2 for GPU (default=2)')
 
-
-parser.add_argument('-unr','--unroll',
-                    action='store_true',
-                    default=False,
-                    help='Unroll LSTM (default=False)')
-
 ##
 args = parser.parse_args()
 
@@ -278,9 +268,6 @@ if args.learning_rate != None:
 
 if args.implementation != None:
     implementation = args.implementation
-
-if args.unroll != None:
-    unroll = args.unroll
 
 ################################################################################
 
@@ -423,10 +410,10 @@ def preprocessing(*args, **kwargs):
 #    return model
 
 
-def build_model(len_voc, lstm_units=128, learning_rate=0.01,
-                dropout=0.3, recurrent_dropout=0.3, seed=42,
+def build_model(len_voc, lstm_units=512, learning_rate=0.001,
+                dropout=0.3, recurrent_dropout=0.3, seed=0,
                 max_len=100, embedding_dim=300,
-                implementation=2, unroll=False):
+                implementation=1, unroll=False):
     
     embedding = Embedding(input_dim=len_voc+1,
                           output_dim=embedding_dim,
@@ -461,7 +448,7 @@ def build_model(len_voc, lstm_units=128, learning_rate=0.01,
     return model
 
 
-def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=100, workers=1):
+def run_model(model, ind_corpus_train, voc, epochs=300, batch_size=128, max_len=100, workers=1):
     # train model
     print('Training model')
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
