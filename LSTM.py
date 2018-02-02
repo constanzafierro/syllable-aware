@@ -37,7 +37,6 @@ K.set_session(sess)
 from process_text import *
 from generators import GeneralGenerator
 
-from keras.callbacks import LambdaCallback
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Embedding, Dropout
 from keras.layers import LSTM
