@@ -15,10 +15,10 @@ import tensorflow as tf
 # (https://github.com/fchollet/keras/issues/850).
 
 os.environ['PYTHONHASHSEED'] = '0'
-fixed_seed_num = 0 # must be the same as PYTHONHASHSEED
+seed = 0 # must be the same as PYTHONHASHSEED
 
-np.random.seed(fixed_seed_num)
-random.seed(fixed_seed_num)
+np.random.seed(seed)
+random.seed(seed)
 
 # Limit operation to 1 thread for deterministic results.
 
@@ -28,7 +28,7 @@ session_conf = tf.ConfigProto(intra_op_parallelism_threads=1,
 
 from keras import backend as K
 
-tf.set_random_seed(fixed_seed_num)
+tf.set_random_seed(seed)
 sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 K.set_session(sess)
 
