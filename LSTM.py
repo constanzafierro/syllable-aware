@@ -442,7 +442,8 @@ def run_model(model, ind_corpus_train, voc, epochs=20, batch_size=128, max_len=1
         train_gen.generator(),
         train_gen.steps_per_epoch,
         epochs=epochs,
-        workers=workers
+        workers=workers,
+        shuffle=False
         #callbacks=[print_callback]
     )
     return model
