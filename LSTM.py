@@ -139,43 +139,43 @@ parser.add_argument('-i', '--infile',
 parser.add_argument('-qw','--quantity_word',
                     type=float,
                     default=1,
-                    help='Fracción (o cantidad) de Palabras a considerar en el Vocabulario (default=1)')
+                    help='Fraction (or quantity) of Words to consider in the Vocabulary (default=1)')
 
 
 parser.add_argument('-qs','--quantity_syllable',
                     type=float,
                     default=0,
-                    help='Fracción (o cantidad) de Sílabas a considerar en el Vocabulario (default=0)')
+                    help='Fraction (or quantity) of Syllables to be considered in the Vocabulary (default=0)')
 
 ## Training
 parser.add_argument('-ts','--train_size',
                     type=float,
                     default=0.8,
-                    help='Fracción a utilizar para el Train Set (default=0.8)')
+                    help='Fraction of the data to consider for the Train Set (default=0.8)')
 
 
 parser.add_argument('-epo','--epochs',
-                    default=60,
+                    default=300,
                     type=int,
-                    help='Épocas de entrenamiento (default=60)')
+                    help='Epochs (default=300)')
 
 
 parser.add_argument('-bs','--batch_size',
                     type=int,
                     default=128,
-                    help='Tamaño de los batches (default=128)')
+                    help='Batch Size (default=128)')
 
 
 parser.add_argument('-wrk','--workers',
                     type=int,
                     default=2,
-                    help='Maximum number of processes to spin up (default=2)')
+                    help='Maximum number of processes to spin up (default=1) [for reproducibility]')
 
 ## Model (LSTM)
 parser.add_argument('-lu','--lstm_units',
                     type=int,
                     default=512,
-                    help='Cantidad de unidades en la capa LSTM (default=512)')
+                    help='Number of units in the LSTM layer (default=512)')
 
 
 parser.add_argument('-d','--dropout',
@@ -193,7 +193,7 @@ parser.add_argument('-rd','--recurrent_dropout',
 parser.add_argument('-lr','--learning_rate',
                     type=float,
                     default=0.001,
-                    help='Learning Rate (default=0.01)')
+                    help='Learning Rate (default=0.001)')
 
 
 parser.add_argument('-imp','--implementation',
