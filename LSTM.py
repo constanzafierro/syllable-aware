@@ -411,7 +411,6 @@ def run_model(model, ind_corpus_train, voc, epochs=300, batch_size=128, max_len=
     print('Training model')
     train_gen = GeneralGenerator(batch_size, ind_corpus_train, voc, max_len)
     #val_gen = GeneralGenerator(batch_size, ind_val_tokens, voc, max_len)
-    print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 
     model_output = model.fit_generator(
         train_gen.generator(),
@@ -419,7 +418,6 @@ def run_model(model, ind_corpus_train, voc, epochs=300, batch_size=128, max_len=
         epochs=epochs,
         workers=workers,
         shuffle=False
-        #callbacks=[print_callback]
     )
     return model
 
