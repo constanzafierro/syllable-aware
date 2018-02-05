@@ -48,70 +48,79 @@ from math import ceil
 import sys
 
 import time
-import argparse
-
 
 ################################################################################
 ## Parameters
 
-'''
-Parameters
+
+## Input Files
 
 
-path_to_file:
-    Input File (required)
-    
-    
-quantity_word:
-    Fraction (or quantity) of Words to consider in the Vocabulary (default=1)
-    
-    
-quantity_syllable:
-    Fraction (or quantity) of Syllables to be considered in the Vocabulary (default=0)
+path_to_file = 'data/horoscopo_test_overfitting.txt'
 
 
-train_size:
-    Fraction of the data to consider for the Train Set (default=0.8)
-    
-
-epochs:
-    Epochs (default=300)
-    
-    
-batch_size:
-    Batch Size (default=128)
+## Vocabulario
 
 
-workers
-    Maximum number of processes to spin up (default=1) [for reproducibility]
-    
-    
-lstm_units:
-    Number of units in the LSTM layer (default=512)
+# Fraction (or quantity) of Words to consider in the Vocabulary (default=1)
+quantity_word = 1
 
 
-dropout:
-    Dropout (default=0.3)
+# Fraction (or quantity) of Syllables to be considered in the Vocabulary (default=0)
+quantity_syllable = 0
 
 
-recurrent_dropout:
-    Recurrent dropout (default=0.3)
+## Training
 
 
-learning_rate:
-    Learning Rate (default=0.001)
+# Fraction of the data to consider for the Train Set (default=0.8)
+train_size = 1
 
 
-implementation:
-    Implementation [1 or 2]. Must be 2 for GPU (default=2)
+# Epochs (default=300)
+epochs = 300
+
+
+# Batch Size (default=128)
+batch_size = 128
+
+
+# Maximum number of processes to spin up (default=1) [for reproducibility]
+workers = 1
+
+
+## Model (LSTM)
+
+
+# Number of units in the LSTM layer (default=512)
+lstm_units = 512
+
+
+# Dropout (default=0.3)
+dropout = 0.3
+
+
+# Recurrent dropout (default=0.3)
+recurrent_dropout = 0.3
+
+
+# Learning Rate (default=0.001)
+learning_rate = 0.001
+
+
+# Implementation [1 or 2]. Must be 2 for GPU (default=2)
+implementation = 2
 
 
 # Embeddings
-
 max_len = 100
 embedding_dim = 300
 
-'''
+
+################################################################################
+## Corpus
+
+corpus = open(path_to_file, 'r').read().lower()
 
 ################################################################################
 
