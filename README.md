@@ -27,7 +27,9 @@ mv spanish_billion_words ./data/
 
 ## Create Environment (example name = venv1)
 
-`conda create -n venv1 python=3.6 theano=1.0 anaconda`
+```
+conda create -n venv1 python=3.6 theano=1.0 anaconda
+```
 
 ## Activate Environment
 `source activate venv1`
@@ -68,7 +70,9 @@ Edit keras.json, and change the field "backend" to "theano"
 
 ## Install Tensorflow-GPU 1.4.0 (because there is CUDA Toolkit 8.0)
 
-`pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp35-cp35m-linux_x86_64.whl
+```
+pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp35-cp35m-linux_x86_64.whl
+```
 
 ---
 
