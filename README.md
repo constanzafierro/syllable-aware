@@ -70,4 +70,15 @@ Edit keras.json, and change the field "backend" to "theano"
 
 `pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp35-cp35m-linux_x86_64.whl
 
+---
+
+## Extras
+
+```
+conda install -n venv1 mkl
+conda install -n venv1 mkl-service
+conda install -n venv1 -c conda-forge blas
+conda install -n venv1 -c anaconda pygpu
+```
+
 
