@@ -25,6 +25,7 @@ mv spanish_billion_words ./data/
 
 # Conda Environment
 
+
 ## Create Environment (example name = venv1)
 
 ```
@@ -32,17 +33,23 @@ conda create -n venv1 python=3.6 theano=1.0 anaconda
 ```
 
 ## Activate Environment
-`source activate venv1`
+
+```
+source activate venv1
+```
 
 ## Theano Install
+
 ```
 pip install theano --upgrade
 ```
 
 ## Keras Install
+
 ```
 pip install keras --upgrade
 ```
+
 ## Switch KERAS Backend to Theano
 
 Keras Documentation: [Switching from one backend to another](https://keras.io/backend/#switching-from-one-backend-to-another)
