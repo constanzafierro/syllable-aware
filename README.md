@@ -1,3 +1,19 @@
+# TO DO
+
+Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
+
+
+Crear main() (Extraer class main() desde process_corpus.py )
+
+
+Renombrar process_corpus.py ----> A utils.py
+
+
+
+
+
+
+
 # Data
 
 ## Syllable-aware tests
