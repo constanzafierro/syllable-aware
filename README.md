@@ -9,3 +9,11 @@ http://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/clean_corpus.tar.bz2
 
 
 from http://crscardellino.me/SBWCE/
+
+## getData
+
+wget http://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/clean_corpus.tar.bz2
+
+tar xf clean_corpus.tar.bz2
+
+mv clean_corpus ./data/
