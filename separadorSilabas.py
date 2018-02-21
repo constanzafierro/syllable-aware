@@ -1,5 +1,5 @@
 def silabas(word, sep='-'):
-    """Devuelve la palabra introducida separada en sílabas
+    """Devuelve la palabra introducida separada en silabas
     separadas por el caracter 'sep', por defecto '-'.
     No introducir signos de puntuación."""
     word = word.lower()
