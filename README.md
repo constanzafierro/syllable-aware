@@ -27,10 +27,42 @@ mv spanish_billion_words ./data/
 
 ## Create Environment (example name = venv1)
 
-`conda create -n venv1 python=3.6 anaconda`
+`conda create -n venv1 python=3.6 theano=1.0 anaconda`
 
 ## Activate Environment
 `source activate venv1`
+
+## Theano Install
+```
+pip install theano --upgrade
+```
+
+## Keras Install
+```
+pip install keras --upgrade
+```
+## Switch KERAS Backend to Theano
+
+Keras Documentation: [Switching from one backend to another](https://keras.io/backend/#switching-from-one-backend-to-another)
+
+
+```
+cd ~/.keras/
+nano keras.json
+
+```
+
+Edit keras.json, and change the field "backend" to "theano"
+
+```
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "theano"
+}
+```
+
 
 ## Install Tensorflow-GPU
 `pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0-cp36-cp36m-linux_x86_64.whl`
