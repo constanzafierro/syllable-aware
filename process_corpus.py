@@ -19,12 +19,13 @@ def get_freq_syllables(freq_word, dict_word, to_ignore):
     freq_syll = dict()
     for k,v in freq_word.items():
         if k in to_ignore:
-            pass
-
-        try:
-            syllables = dict_word[k]
-        except KeyError:
             continue
+
+        syllables = dict_word[k]
+#        try:
+#            syllables = dict_word[k]
+#        except KeyError:
+#            continue
 
         for s in syllables:
             if s in freq_syll:
@@ -34,12 +35,14 @@ def get_freq_syllables(freq_word, dict_word, to_ignore):
     return freq_syll
 
 
-def add_space_file(path_in, path_out):
+def preprocessing_file(path_in, path_out, to_ignore):
     with open(path_out, 'w') as f1:
         with open(path_in) as f2:
             for line in f2:
-                s = re.sub('([.,;:¿¡!?"()\´])', r' \1 ', line)
+                s = re.sub('([.,;:¿¡!?"()//\´-])', r' \1 ', line)
                 s = re.sub('\s{2,}', ' ', s)
+                rx = '[' + re.escape(''.join(to_ignore)) + ']'
+                s = re.sub(rx, '', s)
                 f1.write(s+'\n')
 
 
@@ -73,7 +76,7 @@ def get_characters(syllable, middle = '-', end = ':'):
     return s
 
 
-def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':'):
+def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':', sign_not_syllable = '<sns>', verbose = False):
     if word in to_ignore:
         return dict_word
 
@@ -81,22 +84,29 @@ def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':'):
         try:
             dict_word[word] = get_syllables(word, middle, end)
         except TypeError:
-            print("word not considered for syllables: '{}'".format(word))
+            if verbose:
+                print("Word not considered for function word_to_syll: '{}'".format(word))
+            dict_word[word] = [sign_not_syllable]
     return dict_word
 
 
-def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end=':'):
+def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end=':', sign_not_syllable = '<sns>'):
     if word in to_ignore:
         return dict_syll
-    try:
-        syllables = dict_word[word]
-    except KeyError:
-        print("word not exist in dictionary: '{}'".format(word))
-        return dict_syll
 
+#    try:
+#        syllables = dict_word[word]
+#    except KeyError:
+#        print("word not exist in dictionary: '{}'".format(word))
+#        return dict_syll
+
+    syllables = dict_word[word]
     for syll in syllables:
         if syll not in dict_syll:
-            dict_syll[syll] = get_characters(syll, middle, end)
+            if syll == sign_not_syllable:
+                dict_syll[word] = get_characters(word, middle, end)
+            else:
+                dict_syll[syll] = get_characters(syll, middle, end)
 
     return dict_syll
 
@@ -110,6 +120,7 @@ def tokenize_corpus(path_file, to_ignore = []):
         for line in f1:
             words = line.lower().split()
             for w in words:
+                w = w.strip()
                 dict_word = word_to_syll(w, dict_word, to_ignore)
                 dict_syll = syll_to_charac(w, dict_syll, dict_word, to_ignore)
                 freq_word = get_freq_words(w, freq_word, to_ignore)
@@ -147,7 +158,7 @@ class TokenSelector():
         self.word_to_ignore = word_to_ignore
 
         # Punctuation
-        self.map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '"':'<qt>'}
+        self.map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
         self.punctuation = set(self.map_punctuation)
 
         # Character
@@ -187,29 +198,7 @@ class TokenSelector():
 ############################### END CLASS TOKEN SELECTOR ######################
 
 
-def main(flag):
-    path_in = 'reclamos_cl.txt'
-    path_out = 'reclamos_cl_add_space.txt'
-
-    if flag:
-        add_space_file(path_in, path_out)
-
-    tokenSelector = TokenSelector()
-    tokenSelector.get_dictionary(path_out)
-    tokenSelector.get_frequent(quantity_word = 1.0, quantity_syll = 0.0)
-    #print(tokenSelector.syllables)
-
-    token_selected = []
-    with open(path_out) as f1:
-        for line in f1:
-            words = line.split()
-            for token in words:
-                tokenSelector.select(token, token_selected)
-
-    sequence_length = len(token_selected)
-    print(Lprime(token_selected,sequence_length), len(token_selected))
-
-
+############################### CALCULATE L MAX ###############################
 
 def Lprime(token_selected, sequence_length):
     tokens_len = []
@@ -229,5 +218,52 @@ def Lprime(token_selected, sequence_length):
 
     return maxL
 
+############################### END CALCULATE L MAX ###########################
+
+def main():
+    flag = False
+
+    path_in = './data/icm14_es/train.txt'
+    path_out = './data/icm14_es/train_add_space.txt'
+
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+
+    if flag:
+        preprocessing_file(path_in, path_out, to_ignore)
+
+    sign_to_ignore = [i for i in to_ignore]
+    tokenSelector = TokenSelector(sign_to_ignore = sign_to_ignore)
+    tokenSelector.get_dictionary(path_out)
+
+    tw = [30, 60, 100, 300, 600, 1000, 3000, 6000]
+    totalt = 10000
+    sequence_length = [100, 500, 1000, 2500, 5000]
+
+    print('='*50)
+    print('corpus to proccess : {}'.format(path_in))
+    print('vocabulary  word size = {} \t vocabulary syllables size = {}'.format(len(tokenSelector.dict_word), len(tokenSelector.dict_syll)))
+
+    for sl in sequence_length:
+
+        print('='*50)
+        print('sequence length = {}'.format(sl))
+
+        for t in tw:
+            q_word = t
+            q_syll = totalt - t
+            tokenSelector.get_frequent(quantity_word = q_word, quantity_syll = q_syll)
+            #print(tokenSelector.syllables)
+
+            token_selected = []
+            with open(path_out) as f1:
+                for line in f1:
+                    words = line.lower().split()
+                    for token in words:
+                        token = token.strip()
+                        tokenSelector.select(token, token_selected)
+
+            print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(q_word, q_syll, Lprime(token_selected,sl) ))
+
+
 if __name__ == '__main__':
-    main(False)
+    main()

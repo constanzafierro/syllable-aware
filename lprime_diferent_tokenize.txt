@@ -1,0 +1,53 @@
+==================================================
+corpus to proccess : ./data/icm14_es/train.txt
+vocabulary  word size = 26893 	 vocabulary syllables size = 3586
+==================================================
+sequence length = 100
+number of words = 30 	 number of syllables = 9970 	 Lprime = 256
+number of words = 60 	 number of syllables = 9940 	 Lprime = 255
+number of words = 100 	 number of syllables = 9900 	 Lprime = 249
+number of words = 300 	 number of syllables = 9700 	 Lprime = 242
+number of words = 600 	 number of syllables = 9400 	 Lprime = 217
+number of words = 1000 	 number of syllables = 9000 	 Lprime = 215
+number of words = 3000 	 number of syllables = 7000 	 Lprime = 179
+number of words = 6000 	 number of syllables = 4000 	 Lprime = 162
+==================================================
+sequence length = 500
+number of words = 30 	 number of syllables = 9970 	 Lprime = 1154
+number of words = 60 	 number of syllables = 9940 	 Lprime = 1120
+number of words = 100 	 number of syllables = 9900 	 Lprime = 1093
+number of words = 300 	 number of syllables = 9700 	 Lprime = 1006
+number of words = 600 	 number of syllables = 9400 	 Lprime = 936
+number of words = 1000 	 number of syllables = 9000 	 Lprime = 885
+number of words = 3000 	 number of syllables = 7000 	 Lprime = 765
+number of words = 6000 	 number of syllables = 4000 	 Lprime = 683
+==================================================
+sequence length = 1000
+number of words = 30 	 number of syllables = 9970 	 Lprime = 2192
+number of words = 60 	 number of syllables = 9940 	 Lprime = 2145
+number of words = 100 	 number of syllables = 9900 	 Lprime = 2092
+number of words = 300 	 number of syllables = 9700 	 Lprime = 1950
+number of words = 600 	 number of syllables = 9400 	 Lprime = 1818
+number of words = 1000 	 number of syllables = 9000 	 Lprime = 1684
+number of words = 3000 	 number of syllables = 7000 	 Lprime = 1459
+number of words = 6000 	 number of syllables = 4000 	 Lprime = 1310
+==================================================
+sequence length = 2500
+number of words = 30 	 number of syllables = 9970 	 Lprime = 5267
+number of words = 60 	 number of syllables = 9940 	 Lprime = 5167
+number of words = 100 	 number of syllables = 9900 	 Lprime = 5060
+number of words = 300 	 number of syllables = 9700 	 Lprime = 4728
+number of words = 600 	 number of syllables = 9400 	 Lprime = 4348
+number of words = 1000 	 number of syllables = 9000 	 Lprime = 4075
+number of words = 3000 	 number of syllables = 7000 	 Lprime = 3503
+number of words = 6000 	 number of syllables = 4000 	 Lprime = 3105
+==================================================
+sequence length = 5000
+number of words = 30 	 number of syllables = 9970 	 Lprime = 10321
+number of words = 60 	 number of syllables = 9940 	 Lprime = 10162
+number of words = 100 	 number of syllables = 9900 	 Lprime = 9950
+number of words = 300 	 number of syllables = 9700 	 Lprime = 9272
+number of words = 600 	 number of syllables = 9400 	 Lprime = 8534
+number of words = 1000 	 number of syllables = 9000 	 Lprime = 7915
+number of words = 3000 	 number of syllables = 7000 	 Lprime = 6735
+number of words = 6000 	 number of syllables = 4000 	 Lprime = 6047
