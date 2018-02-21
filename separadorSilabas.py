@@ -1,4 +1,3 @@
-# coding=utf-8
 def silabas(word, sep='-'):
     '''Devuelve la palabra introducida separada en silabas
     separadas por el caracter 'sep', por defecto '-'.
