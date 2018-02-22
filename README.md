@@ -24,7 +24,7 @@ Agregar modelo al main
 
 ### perplexity.py
 
-Modificar perplexity.py para incorporar Clases TokenSelector.py, lstmClass.py
+Modificar perplexity.py para incorporar Clases TokenSelector.py, lstmClass.py, etc
 
 Editar perplexity.py y eliminar métodos no utilizados ( o guardarlos momentaneamente en un archivo txt )
 
