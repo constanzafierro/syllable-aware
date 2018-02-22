@@ -1,12 +1,12 @@
 # TO DO
 
-Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
+[DONE] Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
 
+[DONE] Crear Clase utils.py con las funciones de preprocess_corpus.py.
+
+Modificar encabezados de los archivos para incluir clases utils.py y TokenSelector.py en los imports
 
 Crear main() (Extraer class main() desde process_corpus.py )
-
-
-Renombrar process_corpus.py ----> A utils.py
 
 
 
