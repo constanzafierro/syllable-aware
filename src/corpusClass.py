@@ -26,10 +26,11 @@ class Corpus:
         self.tokenSelector.get_dictionary(self.path_to_file)
 
 
-    def select_tokens(self, quantity_word, quantity_syllables):
-        
-        self.tokenSelector.get_frequent(quantity_word = quantity_word,
-                                        quantity_syll = quantity_syllable)
+    def select_tokens(self, quantity_word, quantity_syllable):
+        self.quantity_word = quantity_word
+        self.quantity_syllable = quantity_syllable
+        self.tokenSelector.get_frequent(quantity_word = self.quantity_word,
+                                        quantity_syll = self.quantity_syllable)
 
         self.token_selected = []
         with open(self.path_to_file) as f1:
