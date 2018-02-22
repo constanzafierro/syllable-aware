@@ -1,3 +1,10 @@
+# STATUS
+
+LSTM.py  **[Broken]**
+
+perplexity.py **[Broken]** 
+
+
 # TODO list
 
 ### Clase TokenSelector
