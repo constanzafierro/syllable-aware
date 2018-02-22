@@ -1,4 +1,4 @@
-import TokenSelector
+from TokenSelector import TokenSelector
 from utils import Lprime
 
 
