@@ -18,7 +18,7 @@ class Corpus:
         self.sign_to_ignore = sign_to_ignore
         self.word_to_ignore = word_to_ignore
 
-        self.tokenSelector(final_char = self.final_char,
+        self.tokenSelector = TokenSelector(final_char = self.final_char,
                            inter_char = self.inter_char,
                            sign_to_ignore = self.sign_to_ignore,
                            word_to_ignore= self.word_to_ignore)
