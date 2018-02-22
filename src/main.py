@@ -1,5 +1,5 @@
 from utils import preprocessing_file, Lprime
-import TokenSelector
+from TokenSelector import TokenSelector
 
 
 def main():
