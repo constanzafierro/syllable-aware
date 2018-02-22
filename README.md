@@ -2,22 +2,24 @@
 
 ### Clase TokenSelector
 
-*[DONE]* Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
+**[DONE]** Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
 
 
 ### Clase utils
 
-*[DONE]* Crear Clase utils.py con las funciones de preprocess_corpus.py.
+**[DONE]** Crear Clase utils.py con las funciones de preprocess_corpus.py.
 
 
 ### Modificar "imports" en Encabezados
 
-Modificar encabezados de los archivos para incluir clases utils.py y TokenSelector.py en los imports
+**[DONE]** Modificar encabezados de los archivos para incluir clases utils.py y TokenSelector.py en los imports
 
 
 ### Crear main
 
-Crear main() (Extraer class main() desde process_corpus.py )
+**[DONE]** Extraer class main() desde process_corpus.py y moverla a un archivo main.py
+
+Agregar modelo al main
 
 
 ### perplexity.py
@@ -28,6 +30,10 @@ Editar perplexity.py y eliminar métodos no utilizados ( o guardarlos momentanea
 
 Mover a clase utils.py los métodos no relacionados con el cálculo de la perplexity
 
+
+### Clase Generators
+
+Ajustar clase Generators.py para utilizar L y Lprima
 
 
 ---
