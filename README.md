@@ -1,8 +1,8 @@
 # STATUS
 
-LSTM.py  <span style="color:red"> **[Broken]** </span>
+LSTM.py  **[Broken]**
 
-perplexity.py <span style="color:red"> **[Broken]** </span>
+perplexity.py  **[Broken]**
 
 
 # TODO list
