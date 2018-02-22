@@ -1,3 +1,6 @@
+from utils import tokenize_corpus, get_most_frequent
+
+
 class TokenSelector():
 
     def __init__(self, final_char=':', inter_char='-', sign_to_ignore=[], word_to_ignore=[]):
