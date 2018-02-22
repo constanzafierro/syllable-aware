@@ -83,5 +83,6 @@ class Model:
                              shuffle = False)
     
     
-  def summary(self):    
+  def summary(self):
+    
     return self.summary
