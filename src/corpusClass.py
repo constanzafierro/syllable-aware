@@ -1,4 +1,5 @@
-from process_corpus import *
+import TokenSelector
+from utils import Lprime
 
 
 class Corpus:
@@ -27,6 +28,7 @@ class Corpus:
 
 
     def select_tokens(self, quantity_word, quantity_syllable):
+        
         self.quantity_word = quantity_word
         self.quantity_syllable = quantity_syllable
         self.tokenSelector.get_frequent(quantity_word = self.quantity_word,
@@ -44,7 +46,9 @@ class Corpus:
     def calculateLprime(self, sequent_length):
         self.lprime = Lprime(token_selected, sequent_length)
     
+    
     def dictionaries_token_index(self):
+        
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
