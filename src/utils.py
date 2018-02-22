@@ -3,7 +3,7 @@ import operator
 from separadorSilabas import silabas
 
 
-def get_freq_words(word, freq_word, to_ignore):
+def get_freq_words(word, freq_word, to_ignore = []):
     if word in to_ignore:
         return freq_word
 
@@ -15,7 +15,7 @@ def get_freq_words(word, freq_word, to_ignore):
     return freq_word
 
 
-def get_freq_syllables(freq_word, dict_word, to_ignore):
+def get_freq_syllables(freq_word, dict_word, to_ignore =  []):
     freq_syll = dict()
     for k,v in freq_word.items():
         if k in to_ignore:
@@ -35,7 +35,7 @@ def get_freq_syllables(freq_word, dict_word, to_ignore):
     return freq_syll
 
 
-def preprocessing_file(path_in, path_out, to_ignore):
+def preprocessing_file(path_in, path_out, to_ignore = []):
     with open(path_out, 'w') as f1:
         with open(path_in) as f2:
             for line in f2:
