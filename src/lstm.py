@@ -1,11 +1,13 @@
 # coding: utf-8
 
+
 ## Setting Seed for Reproducibility
 import os
 import numpy as np
 import random
 
 # import tensorflow as tf
+
 
 os.environ['PYTHONHASHSEED'] = '1' # https://github.com/fchollet/keras/issues/850
 seed = 1 # must be the same as PYTHONHASHSEED
@@ -20,12 +22,11 @@ random.seed(seed)
 # sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 # K.set_session(sess)
 
-## Imports
-from lstmClass import Model
-from corpusClass import Corpus
-from corpusClass import *
 
-from utils import preprocessing_file
+## Imports
+from .lstmClass import Model
+from .corpusClass import Corpus
+from .utils import preprocessing_file
 
 import time
 
@@ -39,7 +40,7 @@ path_out = '../data/horoscopo_test_overfitting_add_space.txt'
 print('\n Preprocess - Add Spaces \n')
 
 to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
-sign_to_ignore = [i for i in to_ignore]
+signs_to_ignore = [i for i in to_ignore]
 
 map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
 letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
@@ -82,7 +83,6 @@ L = 100  # sequence_length
 
 
 ## Init Corpus
-#  TODO: Agregar (si requiere) preprocesamiento al texto y agregar sign_to_ignore
 
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file = path_to_file,
@@ -90,7 +90,7 @@ corpus = Corpus(path_to_file = path_to_file,
                 final_char = ':',
                 final_punc = '>',
                 inter_char = '-',
-                signs_to_ignore = sign_to_ignore,
+                signs_to_ignore = signs_to_ignore,
                 words_to_ignore = [],
                 map_punctuation = map_punctuation,
                 letters = letters

@@ -92,6 +92,7 @@ class Corpus:
 
         self.train_set = self.ind_corpus[0:len_train] # indexes
         self.eval_set = self.ind_corpus[len_train:] # indexes
+
         self.vocabulary_train = set(self.train_set) # indexes
         self.vocabulary_eval = set(self.eval_set) # indexes
 
@@ -148,6 +149,9 @@ class Corpus:
 
             else:
                 tokens.append(token)
+
+        self.vocabulary_train = set(self.train_set) # indexes
+        self.vocabulary_eval = set(self.eval_set) # indexes
 
         self.train_ATPW = words_train_set / len(self.train_set)
         self.eval_ATPW = words_eval_set / len(self.eval_set)
