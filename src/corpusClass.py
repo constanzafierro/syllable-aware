@@ -66,7 +66,7 @@ class Corpus:
         self.vocabulary_test = set(self.test_set) # indexes
 
 
-    def split_train_eval(val_percentage, token_split, min_len = 0):
+    def split_train_eval(self, val_percentage, token_split, min_len = 0):
 
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
