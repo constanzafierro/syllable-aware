@@ -22,14 +22,34 @@ random.seed(seed)
 
 ## Imports
 from lstmClass import Model
-
 from corpusClass import Corpus
 from corpusClass import *
 
+from utils import preprocessing_file
+
 import time
 
+
 ## Path to File
-path_to_file = '../data/horoscopo_test_overfitting.txt'
+
+path_in = '../data/horoscopo_test_overfitting.txt'
+path_out = '../data/horoscopo_test_overfitting_add_space.txt'
+
+
+print('\n Preprocess - Add Spaces \n')
+
+to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+sign_to_ignore = [i for i in to_ignore]
+
+add_space = True
+
+if add_space:
+    preprocessing_file(path_in = path_in,
+                       path_out = path_out,
+                       to_ignore = to_ignore
+                       )
+
+path_to_file = path_out
 
 
 ## Hyperparameters
@@ -40,7 +60,7 @@ recurrent_dropout = 0.3 #0
 dropout = 0.3 #0
 dropout_seed = 0
 
-train_size = 0.8
+train_size = 0.8 # 1
 batch_size = 128
 epochs = 100 #300
 
@@ -61,17 +81,13 @@ L = 100  # sequence_length
 ## Init Corpus
 #  TODO: Agregar (si requiere) preprocesamiento al texto y agregar sign_to_ignore
 
-to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
-sign_to_ignore = [i for i in to_ignore] # TODO: (*)
-
-
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file = path_to_file,
                 train_size = train_size,
                 final_char = ':',
                 final_punc = '>',
                 inter_char = '-',
-                sign_to_ignore = [], # TODO: (*)
+                sign_to_ignore = sign_to_ignore,
                 word_to_ignore = []
                 )
 
