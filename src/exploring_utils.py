@@ -232,4 +232,3 @@ if test == 17:
                  )
     s = {'atracción': ['a-', 'trac-', 'ción:']}
     assert s == dict_word
-
