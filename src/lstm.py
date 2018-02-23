@@ -23,7 +23,6 @@ random.seed(seed)
 ## Imports
 from lstmClass import Model
 
-
 from corpusClass import Corpus
 from corpusClass import *
 
