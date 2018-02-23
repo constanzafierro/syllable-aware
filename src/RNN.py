@@ -1,7 +1,7 @@
 import keras
 
 
-class Model:
+class RecurrentLSTM:
 
     def __init__(self,
                  vocab_size,

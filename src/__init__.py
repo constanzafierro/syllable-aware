@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 
 
-from . import corpusClass
-from . import generators
+from . import Corpus
+from . import Generators
 from . import separadorSilabas
 from . import TokenSelector
 from . import utils

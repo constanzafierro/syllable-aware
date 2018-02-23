@@ -1,6 +1,6 @@
 from .TokenSelector import TokenSelector
 from .utils import Lprime, ending_tokens_index
-from .generators import GeneralGenerator
+from .Generators import GeneralGenerator
 
 
 import random # TODO: We must set a seed !!

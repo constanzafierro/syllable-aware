@@ -5,7 +5,16 @@ from . import test
 
 
 # Also importable from root
+
 from .src import utils
 from .src import separadorSilabas
-from .src.separadorSilabas import silabas
+
+from .src import TokenSelector
+from .src import Generators
+from .src import Corpus
+
+from .src import RNN
+
+from .src import perplexity
+
 from .test import test_utils

@@ -24,8 +24,10 @@ random.seed(seed)
 
 
 ## Imports
-from .lstmClass import Model
-from .corpusClass import Corpus
+
+from .RNN import RecurrentLSTM
+
+from .Corpus import Corpus
 from .utils import preprocessing_file
 
 import time
@@ -118,14 +120,14 @@ vocabulary = corpus.vocabulary_as_index
 
 ## Init Model
 print('\n Init Model \n')
-model = Model(vocab_size = len(vocabulary),
-              embedding_dim = D,
-              hidden_dim = D,
-              input_length = Lprima,
-              recurrent_dropout = recurrent_dropout,
-              dropout = dropout,
-              seed = dropout_seed
-              )
+model = RecurrentLSTM(vocab_size = len(vocabulary),
+                      embedding_dim = D,
+                      hidden_dim = D,
+                      input_length = Lprima,
+                      recurrent_dropout = recurrent_dropout,
+                      dropout = dropout,
+                      seed = dropout_seed
+                      )
 
 
 ## Model Summary
