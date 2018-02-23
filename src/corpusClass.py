@@ -114,17 +114,18 @@ class Corpus:
 
 
     def get_generators(self, batch_size):
-        self.generator_train = GeneralGenerator(batch_size 
+        train_generator = GeneralGenerator(batch_size 
                                                 ind_tokens = self.train_set,
                                                 vocabulary = self.vocabulary,
                                                 max_len = self.lprime,
                                                 split_symbol_index = self.tokensplit,
                                                 count_to_split=-1
                                                )
-        self.generator_eval = GeneralGenerator(batch_size 
+        eval_generator = GeneralGenerator(batch_size 
                                                 ind_tokens = self.eval_set,
                                                 vocabulary = self.vocabulary,
                                                 max_len = self.lprime,
                                                 split_symbol_index = self.tokensplit,
                                                 count_to_split=-1
                                                )
+        return train_generator, eval_generator
