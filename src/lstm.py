@@ -28,7 +28,6 @@ from corpusClass import *
 
 import time
 
-
 ## Path to File
 path_to_file = '../syllable-aware/data/horoscopo_test_overfitting.txt'
 
@@ -60,6 +59,7 @@ L = 100  # sequence_length
 
 
 ## Init Corpus
+#  TODO: Agregar (si requiere) preprocesamiento al texto y agregar sign_to_ignore
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file = path_to_file,
                 train_size = train_size,
