@@ -3,6 +3,7 @@
 LSTM.py  **[Broken]**
 
 notebooks **[Broken]**
+
 (Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
 
 
