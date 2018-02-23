@@ -1,9 +1,9 @@
 # coding: utf-8
 from separadorSilabas import silabas
-from utils import *
+from utils import preprocessing_file, get_syllables, get_characters, get_freq_words, word_to_syll
 
 
-test = 16
+test = 17
 
 
 # Silabas
