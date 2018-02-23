@@ -45,10 +45,16 @@ class TokenSelector():
 
     def get_frequent(self, quantity_word, quantity_syll):
 
-        self.words = get_most_frequent(self.freq_word, quantity_word, to_ignore=[])
+        self.words = get_most_frequent(freq_dict = self.freq_word,
+                                       quantity = quantity_word,
+                                       to_ignore = []
+                                       )
 
         # count syllables ignoring most frequent words
-        self.syllables = get_most_frequent(self.freq_syll, quantity_syll, to_ignore=[w for w in self.words])
+        self.syllables = get_most_frequent(freq_dict =  self.freq_syll,
+                                           quantity = quantity_syll,
+                                           to_ignore = [w for w in self.words]
+                                           )
 
 
     def select(self, token, tokens_selected):
