@@ -170,7 +170,7 @@ def Lprime(token_selected, sequence_length):
 
 def ending_tokens_index(token_to_index, ends):
     token_end = []
-    for k,v in token_to_index :
+    for k,v in token_to_index.items() :
         if k[-1] in ends:
             token_end.append(v)
     return token_end
