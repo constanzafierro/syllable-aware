@@ -1,7 +1,7 @@
 import re
 import operator
-
 from separadorSilabas import silabas
+from keras import keras.backend as K
 
 
 def get_freq_words(word, freq_word, to_ignore = []):
@@ -182,5 +182,6 @@ def metric_pp(average_TPW):
             bpt = K.scalar_mul(average_TPW, cross_entropy)
         else:
             bpt = K.mul(average_TPW, cross_entropy)
-        perplexity = K.pow(2.0, bpt)
+        pp = K.pow(2.0, bpt)
+        return pp
     return perplexity
