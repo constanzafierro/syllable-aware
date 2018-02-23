@@ -1,19 +1,24 @@
 from TokenSelector import TokenSelector
-from utils import Lprime
+from utils import Lprime, ending_tokens_index
 from generators import GeneralGenerator
+
+
+import random
+# We must set a seed !!
 
 
 class Corpus:
   
     def __init__(self,
-               path_to_file,
-               train_size,
-               final_char=':',
-               final_punc='>',
-               inter_char='-',
-               sign_to_ignore=[],
-               word_to_ignore=[]):
-        
+                 path_to_file,
+                 train_size,
+                 final_char=':',
+                 final_punc='>',
+                 inter_char='-',
+                 sign_to_ignore=[],
+                 word_to_ignore=[]
+                 ):
+
         self.path_to_file = path_to_file
         self.train_size = train_size
         self.final_char = final_char
@@ -23,9 +28,10 @@ class Corpus:
         self.word_to_ignore = word_to_ignore
 
         self.tokenSelector = TokenSelector(final_char = self.final_char,
-                           inter_char = self.inter_char,
-                           sign_to_ignore = self.sign_to_ignore,
-                           word_to_ignore= self.word_to_ignore)
+                                           inter_char = self.inter_char,
+                                           sign_to_ignore = self.sign_to_ignore,
+                                           word_to_ignore = self.word_to_ignore
+                                           )
 
         self.tokenSelector.get_dictionary(self.path_to_file)
 
@@ -34,20 +40,23 @@ class Corpus:
         
         self.quantity_word = quantity_word
         self.quantity_syllable = quantity_syllable
+
         self.tokenSelector.get_frequent(quantity_word = self.quantity_word,
-                                        quantity_syll = self.quantity_syllable)
+                                        quantity_syll = self.quantity_syllable
+                                        )
 
         self.token_selected = []
+
         with open(self.path_to_file) as f1:
                 for line in f1:
                     words = line.lower().split()
                     for token in words:
                         token = token.strip()
-                        tokenSelector.select(token, self.token_selected)
+                        self.tokenSelector.select(token, self.token_selected)
 
 
     def calculateLprime(self, sequent_length):
-        self.lprime = Lprime(token_selected, sequent_length)
+        self.lprime = Lprime(self.token_selected, sequent_length)
     
     
     def dictionaries_token_index(self):
@@ -79,6 +88,7 @@ class Corpus:
 
         self.train_set = []
         self.eval_set = []
+
         tokens = []
 
         self.token_selected = self.token_selected if self.token_selected[-1] == token_split else aux + [token_split]
@@ -109,23 +119,26 @@ class Corpus:
             else:
                 tokens.append(token)
 
-        self.train_ATPW = words_train_set / len(train_set)
-        self.eval_ATPW = words_eval_set / len(eval_set)
+        self.train_ATPW = words_train_set / len(self.train_set)
+        self.eval_ATPW = words_eval_set / len(self.eval_set)
 
 
     def get_generators(self, batch_size):
-        train_generator = GeneralGenerator(batch_size 
+
+        train_generator = GeneralGenerator(batch_size,
                                            ind_tokens = self.train_set,
                                            vocabulary = self.vocabulary,
                                            max_len = self.lprime,
                                            split_symbol_index = self.tokensplit,
-                                           count_to_split=-1
-                                          )
-        eval_generator = GeneralGenerator(batch_size 
+                                           count_to_split = -1
+                                           )
+
+        eval_generator = GeneralGenerator(batch_size,
                                           ind_tokens = self.eval_set,
                                           vocabulary = self.vocabulary,
                                           max_len = self.lprime,
                                           split_symbol_index = self.tokensplit,
-                                          count_to_split=-1
-                                         )
+                                          count_to_split = -1
+                                          )
+
         return train_generator, eval_generator
