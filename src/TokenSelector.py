@@ -1,6 +1,12 @@
 from utils import tokenize_corpus, get_most_frequent
 
 
+# TODO: Testear métodos y clases ...
+# TODO: Pasar Punctuation y Characters como inputs de TokenSelector
+# TODO: Implementar dichas modificaciones a los inputs en la clase Corpus
+# TODO: Agregar dichas modificaciones a lstm.py y posteriormente a main.py
+
+
 class TokenSelector():
 
     def __init__(self,
@@ -19,7 +25,7 @@ class TokenSelector():
         self.map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
         self.punctuation = set(self.map_punctuation)
 
-        # Character
+        # Characters
         letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
         letters += letters.upper()
 
