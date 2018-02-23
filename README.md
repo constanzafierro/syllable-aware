@@ -7,7 +7,10 @@ notebooks **[Broken]**
 (Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
 
 
-# TODO list
+CLASE CORPUS ! ***[Leer TODO List !! ]***
+
+
+# TODO List
 
 ### Clase corpusClass
 
@@ -21,6 +24,8 @@ Hay un **tokens = []** que está definido en **split_train_eval**
 (en caso de agregarle **self.**, no estaría disponible para **dictionaries_token_index** sino hasta llamar a **split_train_eval**)
 
 En el método **split_train_eval**, en la definición de **self.token_selected**, en **else aux + [token_split]**, ***aux** no está definido en ninguna parte*
+
+---
 
 ### Clase TokenSelector
 
