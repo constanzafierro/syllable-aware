@@ -13,13 +13,14 @@ notebooks **[Broken]**
 
 En la clase **corpusClass.py**, en los metodos **dictionaries_token_index** y **split_train_eval**, en la definición del **self.ind_corpus**,
 
-Verificar a qué corresponde **self.tokens** en ' for token in self.tokens '
+*Verificar a qué corresponde **self.tokens** en **' for token in self.tokens '***
 
 **self.tokens** no está definido en ninguna parte del código.
 
 Hay un **tokens = []** que está definido en **split_train_eval**
 (en caso de agregarle **self.**, no estaría disponible para **dictionaries_token_index** sino hasta llamar a **split_train_eval**)
 
+En el método **split_train_eval**, en la definición de **self.token_selected**, en **else aux + [token_split]**, ***aux** no está definido en ninguna parte*
 
 ### Clase TokenSelector
 

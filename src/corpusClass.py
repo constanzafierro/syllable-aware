@@ -55,9 +55,9 @@ class Corpus:
                         self.tokenSelector.select(token, self.token_selected)
 
 
-    def calculateLprime(self, sequent_length):
+    def calculateLprime(self, sequence_length):
 
-        self.lprime = Lprime(self.token_selected, sequent_length)
+        self.lprime = Lprime(self.token_selected, sequence_length)
     
     
     def dictionaries_token_index(self):

@@ -1,6 +1,8 @@
 from utils import preprocessing_file, Lprime
 from TokenSelector import TokenSelector
 
+#TODO: ver si es útil escribir el código en función del Corpus (en vez de TokenSelector)
+
 
 def main():
     
@@ -50,3 +52,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
