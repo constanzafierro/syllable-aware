@@ -1,12 +1,11 @@
 # coding: utf-8
 from separadorSilabas import silabas
-from utils import preprocessing_file, get_syllables, get_characters, get_freq_words, word_to_syll
+from utils import preprocessing_file, get_syllables, get_characters, get_freq_words, word_to_syll,syll_to_charac
+
+test = 18
 
 
-test = 17
-
-
-# Silabas
+# silabas
 
 if test == 0: #error
     word = 'Ññ'
@@ -75,6 +74,8 @@ if test == 6: #error
                        )
 
 
+# get_syllables
+
 if test == 7: #error
     word = 'Ññ'
     answer = get_syllables(word = word,
@@ -112,6 +113,9 @@ if test == 10: #error
                            end = ':'
                            )
 
+
+# get_characters
+
 if test == 11:
     syllable = 'palabra'
     s = ['p-', 'a-', 'l-', 'a-', 'b-', 'r-', 'a-']
@@ -142,6 +146,8 @@ if test == 13:
     assert answer == s
 
 
+# get_freq_words
+
 if test == 14:
     freq_word = dict()
     word1 = 'hola'
@@ -169,6 +175,8 @@ if test == 14:
     s3 = {'hola': 2, 'chabelalaila': 1}
     assert s3 == freq_word
 
+
+# word_to_syll
 
 if test == 15:
     dict_word = dict()
@@ -232,3 +240,35 @@ if test == 17:
                  )
     s = {'atracción': ['a-', 'trac-', 'ción:']}
     assert s == dict_word
+
+
+# syll_to_charac
+
+if test == 18:
+
+    dict_syll = dict()
+    dict_word = dict()
+    word1 = 'hola'
+    word2 = 'chabelalaila'
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+
+    syll_to_charac(word = word1,
+                   dict_syll = dict_syll,
+                   dict_word = dict_word,
+                   to_ignore = to_ignore,
+                   middle='-',
+                   end=':',
+                   sign_not_syllable='<sns>'
+                   )
+
+    syll_to_charac(word=word2,
+                   dict_syll = dict_syll,
+                   dict_word = dict_word,
+                   to_ignore = to_ignore,
+                   middle='-',
+                   end=':',
+                   sign_not_syllable='<sns>'
+                   )
+
+    print(dict_word)
+    print(dict_syll)

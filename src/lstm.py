@@ -29,7 +29,7 @@ from corpusClass import *
 import time
 
 ## Path to File
-path_to_file = '../syllable-aware/data/horoscopo_test_overfitting.txt'
+path_to_file = '../data/horoscopo_test_overfitting.txt'
 
 
 ## Hyperparameters

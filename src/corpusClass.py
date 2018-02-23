@@ -5,9 +5,6 @@ from generators import GeneralGenerator
 
 import random # TODO: We must set a seed !!
 
-# TODO: (1) Check self.ind_corpus in dictionaries_token_index > self.tokens (unresolved reference)
-# TODO: (2) Check self.ind_corpus in split_train_eval > self.tokens (unresolved reference)
-# TODO: (3) Check self.token_selected in split_train_eval > aux (unresolved reference)
 
 class Corpus:
   
@@ -68,7 +65,7 @@ class Corpus:
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
         self.indice_ends = ending_tokens_index(self.token_to_index, [self.final_char, self.final_punc])
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
-        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes TODO: (1)
+        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
         self.vocabulary_as_index = set(self.ind_corpus) # vocabualry as index
  
         len_train = int(len(self.ind_corpus)*self.train_size)
@@ -86,7 +83,7 @@ class Corpus:
         self.indice_ends = ending_tokens_index(self.token_to_index, [self.final_char, self.final_punc])
 
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
-        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes TODO: (2)
+        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
         self.vocabulary_as_index = set(self.ind_corpus) # vocabualry as index
 
         self.train_set = []
@@ -94,7 +91,7 @@ class Corpus:
 
         tokens = []
 
-        self.token_selected = self.token_selected if self.token_selected[-1] == token_split else self.token_selected + [token_split] # TODO: (3)
+        self.token_selected = self.token_selected if self.token_selected[-1] == token_split else self.token_selected + [token_split]
 
         self.tokensplit = self.token_to_index[token_split]
 
