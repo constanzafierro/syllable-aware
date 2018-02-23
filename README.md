@@ -13,6 +13,7 @@
 
 ### Testear las clases
 
+### Crear archivo requirements.txt
 
 ### main
 
