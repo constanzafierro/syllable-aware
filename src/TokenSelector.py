@@ -58,11 +58,13 @@ class TokenSelector():
             tokens_selected.append(self.map_punctuation[token])
 
         elif token in self.dict_word:
+
             if token in self.words:
                 tokens_selected.append(token + self.final_char)
 
             else:
                 for s in self.dict_word[token]:
+
                     if s in self.syllables:
                         tokens_selected.append(s)
 
