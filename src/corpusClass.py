@@ -56,6 +56,7 @@ class Corpus:
 
 
     def calculateLprime(self, sequent_length):
+
         self.lprime = Lprime(self.token_selected, sequent_length)
     
     
