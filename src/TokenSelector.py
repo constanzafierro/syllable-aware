@@ -9,16 +9,16 @@ class TokenSelector():
     def __init__(self,
                  final_char,
                  inter_char,
-                 sign_to_ignore,
-                 word_to_ignore,
+                 signs_to_ignore,
+                 words_to_ignore,
                  map_punctuation,
                  letters
                  ):
 
         self.final_char = final_char
         self.inter_char = inter_char
-        self.sign_to_ignore = sign_to_ignore
-        self.word_to_ignore = word_to_ignore
+        self.signs_to_ignore = signs_to_ignore
+        self.words_to_ignore = words_to_ignore
 
         # Punctuation
         self.map_punctuation = map_punctuation
@@ -31,7 +31,7 @@ class TokenSelector():
     def get_dictionary(self, path_file):
 
         to_ignore = [i for i in self.punctuation]
-        to_ignore = to_ignore + self.sign_to_ignore + self.word_to_ignore
+        to_ignore = to_ignore + self.signs_to_ignore + self.words_to_ignore
 
         self.dict_word, self.dict_syll, self.freq_word, self.freq_syll = tokenize_corpus(path_file = path_file,
                                                                                          to_ignore = to_ignore

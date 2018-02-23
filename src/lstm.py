@@ -41,6 +41,9 @@ print('\n Preprocess - Add Spaces \n')
 to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 sign_to_ignore = [i for i in to_ignore]
 
+map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
+letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
+
 add_space = True
 
 if add_space:
@@ -87,8 +90,10 @@ corpus = Corpus(path_to_file = path_to_file,
                 final_char = ':',
                 final_punc = '>',
                 inter_char = '-',
-                sign_to_ignore = sign_to_ignore,
-                word_to_ignore = []
+                signs_to_ignore = sign_to_ignore,
+                words_to_ignore = [],
+                map_punctuation = map_punctuation,
+                letters = letters
                 )
 
 

@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/TokenSelector.py" afterPath="$PROJECT_DIR$/src/TokenSelector.py" />
+      <change beforePath="$PROJECT_DIR$/src/corpusClass.py" afterPath="$PROJECT_DIR$/src/corpusClass.py" />
+      <change beforePath="$PROJECT_DIR$/src/lstm.py" afterPath="$PROJECT_DIR$/src/lstm.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,25 +22,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2925">
-              <caret line="195" column="53" lean-forward="true" selection-start-line="195" selection-start-column="53" selection-end-line="195" selection-end-column="53" />
+            <state relative-caret-position="180">
+              <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="corpusClass.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/corpusClass.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,18 +37,30 @@
       <file leaf-file-name="TokenSelector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TokenSelector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="19" lean-forward="true" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="34" />
+            <state relative-caret-position="495">
+              <caret line="33" column="65" lean-forward="false" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="corpusClass.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/corpusClass.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="36" column="71" lean-forward="false" selection-start-line="36" selection-start-column="71" selection-end-line="36" selection-end-column="71" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-135">
-              <caret line="23" column="27" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+            <state relative-caret-position="1365">
+              <caret line="93" column="31" lean-forward="false" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -76,7 +79,6 @@
     <findStrings>
       <find>get_arra</find>
       <find>aux</find>
-      <find>word_to_ignore</find>
       <find>ind_corpus_train</find>
       <find>split</find>
       <find>split_train_eval</find>
@@ -88,7 +90,6 @@
       <find>eval</find>
       <find>loss</find>
       <find>los</find>
-      <find>sign_to_ignore</find>
       <find>tokenSelector</find>
       <find>Lprime</find>
       <find>GeneralGenerator</find>
@@ -99,6 +100,9 @@
       <find>preprocessing_file</find>
       <find>get_most_frequent</find>
       <find>to_ignore</find>
+      <find>sign_to_ignore</find>
+      <find>word_to_ignore</find>
+      <find>words_to_ignore</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -117,7 +121,6 @@
         <option value="$PROJECT_DIR$/src/LSTM.py" />
         <option value="$PROJECT_DIR$/data/test_exploring_utils_spaces.txt" />
         <option value="$PROJECT_DIR$/src/main.py" />
-        <option value="$PROJECT_DIR$/src/lstm.py" />
         <option value="$PROJECT_DIR$/src/exploring_utils.py" />
         <option value="$PROJECT_DIR$/test/__init__.py" />
         <option value="$PROJECT_DIR$/src/__init__.py" />
@@ -125,9 +128,10 @@
         <option value="$PROJECT_DIR$/src/perplexity.py" />
         <option value="$PROJECT_DIR$/src/generators.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/utils.py" />
+        <option value="$PROJECT_DIR$/src/lstm.py" />
         <option value="$PROJECT_DIR$/src/corpusClass.py" />
         <option value="$PROJECT_DIR$/src/TokenSelector.py" />
-        <option value="$PROJECT_DIR$/src/utils.py" />
       </list>
     </option>
   </component>
@@ -648,7 +652,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519422362718</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary=".">
+      <created>1519422574596</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1519422574596</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TodoView">
@@ -942,39 +953,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lstm.py">
+    <entry file="file://$PROJECT_DIR$/src/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="23" column="27" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="180">
+          <caret line="45" column="20" lean-forward="true" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TokenSelector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="true" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="34" />
+        <state relative-caret-position="495">
+          <caret line="33" column="65" lean-forward="false" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/corpusClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state relative-caret-position="540">
+          <caret line="36" column="71" lean-forward="false" selection-start-line="36" selection-start-column="71" selection-end-line="36" selection-end-column="71" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.py">
+    <entry file="file://$PROJECT_DIR$/src/lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2925">
-          <caret line="195" column="53" lean-forward="true" selection-start-line="195" selection-start-column="53" selection-end-line="195" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1365">
+          <caret line="93" column="31" lean-forward="false" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>

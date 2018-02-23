@@ -14,8 +14,8 @@ class Corpus:
                  final_char=':',
                  final_punc='>',
                  inter_char='-',
-                 sign_to_ignore=[],
-                 word_to_ignore=[],
+                 signs_to_ignore=[],
+                 words_to_ignore=[],
                  map_punctuation={'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
                  letters='aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
                  ):
@@ -25,16 +25,16 @@ class Corpus:
         self.final_char = final_char
         self.final_punc = final_punc
         self.inter_char = inter_char
-        self.sign_to_ignore = sign_to_ignore
-        self.word_to_ignore = word_to_ignore
+        self.signs_to_ignore = signs_to_ignore
+        self.words_to_ignore = words_to_ignore
         self.map_punctuation = map_punctuation
         self.letters = letters
 
 
         self.tokenSelector = TokenSelector(final_char = self.final_char,
                                            inter_char = self.inter_char,
-                                           sign_to_ignore = self.sign_to_ignore,
-                                           word_to_ignore = self.word_to_ignore,
+                                           signs_to_ignore = self.signs_to_ignore,
+                                           words_to_ignore = self.words_to_ignore,
                                            map_punctuation = self.map_punctuation,
                                            letters = self.letters
                                            )
