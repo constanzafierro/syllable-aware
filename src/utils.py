@@ -5,11 +5,13 @@ from .separadorSilabas import silabas
 
 
 def get_freq_words(word, freq_word, to_ignore = []):
+
     if word in to_ignore:
         return freq_word
 
     if word in freq_word:
         freq_word[word] += 1
+
     else:
         freq_word[word] = 1
 
@@ -17,7 +19,9 @@ def get_freq_words(word, freq_word, to_ignore = []):
 
 
 def get_freq_syllables(freq_word, dict_word, to_ignore = []):
+
     freq_syll = dict()
+
     for k,v in freq_word.items():
         if k in to_ignore:
             continue
@@ -29,22 +33,29 @@ def get_freq_syllables(freq_word, dict_word, to_ignore = []):
 #            continue
 
         for s in syllables:
+
             if s in freq_syll:
                 freq_syll[s] += v
+
             else:
                 freq_syll[s] = v
+
     return freq_syll
 
 
 def preprocessing_file(path_in, path_out, to_ignore = []):
+
     if not os.path.exists(path_in):
         raise TypeError("File not exists {0}".format(path_in))
+
     if not os.path.exists(path_out):
         raise TypeError("File not exists {0}".format(path_out))
 
     with open(path_out, 'w') as f1:
         with open(path_in) as f2:
+
             for line in f2:
+
                 s = re.sub('([.,;:¿¡!?"()//\´-])', r' \1 ', line)
                 s = re.sub('\s{2,}', ' ', s)
                 rx = '[' + re.escape(''.join(to_ignore)) + ']'
@@ -53,6 +64,7 @@ def preprocessing_file(path_in, path_out, to_ignore = []):
 
 
 def get_syllables(word, middle, end):
+
     '''Uses separadorSilabas to form a list of syllables
     Raises TypeError:
          if word is not separable i.e. if it's not a spanish word
@@ -63,15 +75,19 @@ def get_syllables(word, middle, end):
     Returns:
         List with syllables
     '''
+
     word_syllables = silabas(word).split('-')
     word_syllables = [word + middle for word in word_syllables]
     word_syllables[-1] = word_syllables[-1][0:-1] + end
+
     return word_syllables
 
 
 def get_characters(syllable, middle = '-', end = ':'):
+
     letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
     s = []
+
     for letter in syllable:
         if letter in letters:
             s += [letter + middle]
@@ -83,6 +99,7 @@ def get_characters(syllable, middle = '-', end = ':'):
 
 
 def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':', sign_not_syllable = '<sns>', verbose = False):
+
     if word in to_ignore:
         return dict_word
 
@@ -93,10 +110,12 @@ def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':', sign_not_
             if verbose:
                 print("Word not considered for function word_to_syll: '{}'".format(word))
             dict_word[word] = [sign_not_syllable]
+
     return dict_word
 
 
 def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end=':', sign_not_syllable = '<sns>'):
+
     if word in to_ignore:
         return dict_syll
 
@@ -107,8 +126,11 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end='
 #        return dict_syll
 
     syllables = dict_word[word]
+
     for syll in syllables:
+
         if syll not in dict_syll:
+
             if syll == sign_not_syllable:
                 dict_syll[word] = get_characters(word, middle, end)
             else:
@@ -117,25 +139,30 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end='
     return dict_syll
 
 
-def tokenize_corpus(path_file, to_ignore = []):
+def tokenize_corpus(path_file, to_ignore):
+
     dict_word = dict()
     dict_syll = dict()
     freq_word = dict()
 
     with open(path_file, 'r') as f1:
+
         for line in f1:
             words = line.lower().split()
+
             for w in words:
                 w = w.strip()
                 dict_word = word_to_syll(w, dict_word, to_ignore)
                 dict_syll = syll_to_charac(w, dict_syll, dict_word, to_ignore)
                 freq_word = get_freq_words(w, freq_word, to_ignore)
+
     freq_syll = get_freq_syllables(freq_word, dict_word, to_ignore)
 
     return dict_word, dict_syll, freq_word, freq_syll
 
 
-def get_most_frequent(freq_dict, quantity, to_ignore = []):
+def get_most_frequent(freq_dict, quantity, to_ignore):
+
     '''Selects most frequent tokens.
     Args:
         freq_dict: list of tokens and frequent in corpus from where to select
@@ -143,29 +170,36 @@ def get_most_frequent(freq_dict, quantity, to_ignore = []):
     Returns:
         set of length less than or equal to quantity (percentage*len(different tokens)) containing the most frequent tokens
     '''
+
     most_freq = set()
     max_tokens = int(len(freq_dict)*quantity) if quantity <= 1 else quantity
     #order = sorted(freq_dict.items(), key=freq_dict.get, reverse=True)
+
     for token, freq in sorted(freq_dict.items(), key=operator.itemgetter(1), reverse=True):
         if len(most_freq) < max_tokens:
            if token not in to_ignore:
                 most_freq.add(token)
+
     return most_freq
 
 
 def Lprime(token_selected, sequence_length):
+
     tokens_len = []
     count_tokens = 0
     maxL = 0
 
     for token in token_selected:
         count_tokens += 1
+
         if token[-1] == ':' or token[-1] == '>':
             tokens_len.append(count_tokens)
             count_tokens = 0
+
         if len(tokens_len) == sequence_length:
             Lpocket = sum(tokens_len)
             tokens_len = tokens_len[1:]
+
             if Lpocket > maxL:
                 maxL = Lpocket
 
@@ -173,9 +207,12 @@ def Lprime(token_selected, sequence_length):
 
 
 def ending_tokens_index(token_to_index, ends):
+
     token_end = []
+
     for k,v in token_to_index.items() :
         if k[-1] in ends:
             token_end.append(v)
+
     return token_end
 

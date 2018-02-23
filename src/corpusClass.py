@@ -35,8 +35,8 @@ class Corpus:
                                            inter_char = self.inter_char,
                                            sign_to_ignore = self.sign_to_ignore,
                                            word_to_ignore = self.word_to_ignore,
-                                           map_punctuation=self.map_punctuation,
-                                           letters=self.letters
+                                           map_punctuation = self.map_punctuation,
+                                           letters = self.letters
                                            )
 
         self.tokenSelector.get_dictionary(self.path_to_file)
@@ -63,12 +63,16 @@ class Corpus:
                     for token in words:
                         token = token.strip()
 
-                        self.tokenSelector.select(token, self.token_selected)
+                        self.tokenSelector.select(token = token,
+                                                  tokens_selected = self.token_selected
+                                                  )
 
 
     def calculateLprime(self, sequence_length):
 
-        self.lprime = Lprime(self.token_selected, sequence_length)
+        self.lprime = Lprime(token_selected = self.token_selected,
+                             sequence_length = sequence_length
+                             )
     
     
     def dictionaries_token_index(self):

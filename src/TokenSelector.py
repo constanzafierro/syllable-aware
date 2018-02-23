@@ -38,7 +38,9 @@ class TokenSelector():
         to_ignore = [i for i in self.punctuation]
         to_ignore = to_ignore + self.sign_to_ignore + self.word_to_ignore
 
-        self.dict_word, self.dict_syll, self.freq_word, self.freq_syll = tokenize_corpus(path_file, to_ignore=to_ignore)
+        self.dict_word, self.dict_syll, self.freq_word, self.freq_syll = tokenize_corpus(path_file = path_file,
+                                                                                         to_ignore = to_ignore
+                                                                                         )
 
 
     def get_frequent(self, quantity_word, quantity_syll):
