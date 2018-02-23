@@ -34,6 +34,8 @@ class Corpus:
 
         self.tokenSelector.get_dictionary(self.path_to_file)
 
+        self.tokensplit = -1 # for get_generators
+
 
     def select_tokens(self, quantity_word, quantity_syllable):
         
@@ -70,9 +72,9 @@ class Corpus:
  
         len_train = int(len(self.ind_corpus)*self.train_size)
         self.train_set = self.ind_corpus[0:len_train] # indexes
-        self.test_set = self.ind_corpus[len_train:] # indexes
+        self.eval_set = self.ind_corpus[len_train:] # indexes
         self.vocabulary_train = set(self.train_set) # indexes
-        self.vocabulary_test = set(self.test_set) # indexes
+        self.vocabulary_eval = set(self.eval_set) # indexes
 
 
     def split_train_eval(self, val_percentage, token_split, min_len = 0):

@@ -40,7 +40,7 @@ recurrent_dropout = 0.3 #0
 dropout = 0.3 #0
 dropout_seed = 0
 
-train_size = 1 #0.8
+train_size = 0.8
 batch_size = 128
 epochs = 100 #300
 
