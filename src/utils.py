@@ -4,7 +4,7 @@ import os
 from .separadorSilabas import silabas
 
 
-def get_freq_words(word, freq_word, to_ignore = []):
+def get_freq_words(word, freq_word, to_ignore):
 
     if word in to_ignore:
         return freq_word
@@ -18,7 +18,7 @@ def get_freq_words(word, freq_word, to_ignore = []):
     return freq_word
 
 
-def get_freq_syllables(freq_word, dict_word, to_ignore = []):
+def get_freq_syllables(freq_word, dict_word, to_ignore):
 
     freq_syll = dict()
 
@@ -43,7 +43,7 @@ def get_freq_syllables(freq_word, dict_word, to_ignore = []):
     return freq_syll
 
 
-def preprocessing_file(path_in, path_out, to_ignore = []):
+def preprocessing_file(path_in, path_out, to_ignore):
 
     if not os.path.exists(path_in):
         raise TypeError("File not exists {0}".format(path_in))
@@ -83,29 +83,32 @@ def get_syllables(word, middle, end):
     return word_syllables
 
 
-def get_characters(syllable, middle = '-', end = ':'):
+def get_characters(token, middle, end):
 
     letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
     s = []
 
-    for letter in syllable:
+    for letter in token:
         if letter in letters:
             s += [letter + middle]
 
-    if syllable[-1] == end:
+    if token[-1] == end:
         s[-1] = s[-1].replace(middle, end)
 
     return s
 
 
-def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':', sign_not_syllable = '<sns>', verbose = False):
+def word_to_syll(word, dict_word, to_ignore, middle, end, sign_not_syllable, verbose):
 
     if word in to_ignore:
         return dict_word
 
     if word not in dict_word:
         try:
-            dict_word[word] = get_syllables(word, middle, end)
+            dict_word[word] = get_syllables(word = word,
+                                            middle = middle,
+                                            end = end
+                                            )
         except TypeError:
             if verbose:
                 print("Word not considered for function word_to_syll: '{}'".format(word))
@@ -114,7 +117,7 @@ def word_to_syll(word, dict_word, to_ignore = [], middle='-', end=':', sign_not_
     return dict_word
 
 
-def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end=':', sign_not_syllable = '<sns>'):
+def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_syllable):
 
     if word in to_ignore:
         return dict_syll
@@ -132,9 +135,15 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore = [], middle='-', end='
         if syll not in dict_syll:
 
             if syll == sign_not_syllable:
-                dict_syll[word] = get_characters(word, middle, end)
+                dict_syll[word] = get_characters(token = word,
+                                                 middle = middle,
+                                                 end = end
+                                                 )
             else:
-                dict_syll[syll] = get_characters(syll, middle, end)
+                dict_syll[syll] = get_characters(token = syll,
+                                                 middle = middle,
+                                                 end = end
+                                                 )
 
     return dict_syll
 
@@ -150,13 +159,36 @@ def tokenize_corpus(path_file, to_ignore):
         for line in f1:
             words = line.lower().split()
 
-            for w in words:
-                w = w.strip()
-                dict_word = word_to_syll(w, dict_word, to_ignore)
-                dict_syll = syll_to_charac(w, dict_syll, dict_word, to_ignore)
-                freq_word = get_freq_words(w, freq_word, to_ignore)
+            for word in words:
+                word = word.strip()
 
-    freq_syll = get_freq_syllables(freq_word, dict_word, to_ignore)
+                dict_word = word_to_syll(word = word,
+                                         dict_word = dict_word,
+                                         to_ignore = to_ignore,
+                                         middle = '-',
+                                         end = ':',
+                                         sign_not_syllable = '<sns>',
+                                         verbose = False
+                                         )
+
+                dict_syll = syll_to_charac(word = word,
+                                           dict_syll = dict_syll,
+                                           dict_word = dict_word,
+                                           to_ignore = to_ignore,
+                                           middle = '-',
+                                           end = ':',
+                                           sign_not_syllable = '<sns>'
+                                           )
+
+                freq_word = get_freq_words(word = word,
+                                           freq_word = freq_word,
+                                           to_ignore = to_ignore
+                                           )
+
+    freq_syll = get_freq_syllables(freq_word = freq_word,
+                                   dict_word = dict_word,
+                                   to_ignore = to_ignore
+                                   )
 
     return dict_word, dict_syll, freq_word, freq_syll
 
@@ -167,6 +199,7 @@ def get_most_frequent(freq_dict, quantity, to_ignore):
     Args:
         freq_dict: list of tokens and frequent in corpus from where to select
         quantity: number that indicates the elements to be select from the list, if it's between [0,1] it's used as percentage
+        to_ignore: array of elements to ignore
     Returns:
         set of length less than or equal to quantity (percentage*len(different tokens)) containing the most frequent tokens
     '''
