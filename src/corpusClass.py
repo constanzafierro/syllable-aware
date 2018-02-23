@@ -8,6 +8,7 @@ class Corpus:
                path_to_file,
                train_size,
                final_char=':',
+               final_punc='>',
                inter_char='-',
                sign_to_ignore=[],
                word_to_ignore=[]):
@@ -15,6 +16,7 @@ class Corpus:
         self.path_to_file = path_to_file
         self.train_size = train_size
         self.final_char = final_char
+        self.final_punc = final_punc
         self.inter_char = inter_char
         self.sign_to_ignore = sign_to_ignore
         self.word_to_ignore = word_to_ignore
@@ -67,7 +69,9 @@ class Corpus:
 
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
+
         self.indice_ends = ending_tokens_index(self.token_to_index, [self.final_char, self.final_punc])
+
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
         self.ind_corpus = [self.token_to_index[token] for token in self.tokens] # corpus as indexes
         self.vocabulary_as_index = set(self.ind_corpus) # vocabualry as index
@@ -78,17 +82,31 @@ class Corpus:
 
         self.token_selected = self.token_selected if self.token_selected[-1] == token_split else aux + [token_split]
 
-        tokensplit = self.token_to_index[token_split]
+        self.tokensplit = self.token_to_index[token_split]
+
+        words_train_set = 0
+        words_eval_set = 0
+        qw = 0
+
         for token in self.ind_corpus:
-            if token == tokensplit:
+            if token in self.indice_ends:
+                qw += 1
+            if token == self.tokensplit:
                 if len(tokens) < min_len:
                     tokens = []
                     continue
                 p = random.choice(range(0, 100))
                 if p < val_percentage:
-                    self.eval_set += tokens + [tokensplit]
+                    self.eval_set += tokens + [self.tokensplit]
+                    words_eval_set += qw + 1
+                    qw = 0
                 else:
-                    self.train_set += tokens + [tokensplit]
+                    self.train_set += tokens + [self.tokensplit]
+                    words_train_set += qw + 1
+                    qw = 0
                 tokens = []
             else:
                 tokens.append(token)
+
+        self.train_ATPW = words_train_set / len(train_set)
+        self.eval_ATPW = words_eval_set / len(eval_set)
