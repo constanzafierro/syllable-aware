@@ -61,5 +61,37 @@ workers = 1 # default 1
 
 callbacks = [] # https://keras.io/callbacks/
 
+##
+
+## Model
+
+from lstmClass import Model
+
+model = Model(vocab_size = len(vocabulary),
+              embedding_dim = D,
+              hidden_dim = D,
+              input_length = Lprima,
+              recurrent_dropout = recurrent_dropout,
+              dropout = dropout,
+              seed = seed)
+
+
+print(model.summary())
+
+
+optimizer = 'rmsprop' #'adam'
+
+metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
+
+
+model.build(optimizer = optimizer,
+            metrics = metrics)
+
+
+train_generator = GeneralGenerator(batch_size = batch_size,
+                                   ind_tokens = ind_corpus_train,
+                                   vocabulary = vocabulary,
+                                   max_len = Lprima)
+
 
 
