@@ -15,7 +15,8 @@
 
 ### Crear archivo requirements.txt
 
-### main
+
+### main --> Crear Main en Root
 
 * Testear modelo en lstm.py
 
