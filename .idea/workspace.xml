@@ -23,8 +23,8 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="210" column="23" lean-forward="true" selection-start-line="210" selection-start-column="23" selection-end-line="210" selection-end-column="29" />
+            <state relative-caret-position="90">
+              <caret line="6" column="90" lean-forward="true" selection-start-line="6" selection-start-column="90" selection-end-line="6" selection-end-column="90" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -96,9 +96,9 @@
       <find>ending_tokens_index</find>
       <find>tokenize</find>
       <find>tokenize_corpus</find>
-      <find>get_most_frequent</find>
       <find>preprocessing_file</find>
       <find>get_characters</find>
+      <find>get_most_frequent</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -207,7 +207,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last.edited.regexp" value="Sample Text" />
+    <property name="last.edited.regexp" value="" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -634,7 +634,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519420959417</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary=".">
+      <created>1519422091401</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1519422091402</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TodoView">
@@ -956,8 +963,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3150">
-          <caret line="210" column="23" lean-forward="true" selection-start-line="210" selection-start-column="23" selection-end-line="210" selection-end-column="29" />
+        <state relative-caret-position="90">
+          <caret line="6" column="90" lean-forward="true" selection-start-line="6" selection-start-column="90" selection-end-line="6" selection-end-column="90" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

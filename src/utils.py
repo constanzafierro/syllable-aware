@@ -4,6 +4,9 @@ import os
 from .separadorSilabas import silabas
 
 
+# TODO: Agregar 'docstrings' a cada método explicando inputs y outputs o su comportamiento
+
+
 def get_freq_words(word, freq_word, to_ignore):
 
     if word in to_ignore:
