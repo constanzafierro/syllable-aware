@@ -560,6 +560,7 @@ if __name__ == '__main__':
     sys.path.append("..")
 
     from src.separadorSilabas import silabas
+
     from src.utils import preprocessing_file
     from src.utils import get_syllables
     from src.utils import get_characters
