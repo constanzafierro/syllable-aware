@@ -135,7 +135,7 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_
         if syll not in dict_syll:
 
             if syll == sign_not_syllable:
-                dict_syll[word] = get_characters(token = word+end,
+                dict_syll[word] = get_characters(token = word + end,
                                                  middle = middle,
                                                  end = end
                                                  )
