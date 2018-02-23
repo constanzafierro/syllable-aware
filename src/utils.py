@@ -51,9 +51,6 @@ def preprocessing_file(path_in, path_out, to_ignore):
     if not os.path.exists(path_in):
         raise TypeError("File not exists {0}".format(path_in))
 
-    if not os.path.exists(path_out):
-        raise TypeError("File not exists {0}".format(path_out))
-
     with open(path_out, 'w') as f1:
         with open(path_in) as f2:
 
@@ -138,7 +135,7 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_
         if syll not in dict_syll:
 
             if syll == sign_not_syllable:
-                dict_syll[word] = get_characters(token = word,
+                dict_syll[word] = get_characters(token = word+end,
                                                  middle = middle,
                                                  end = end
                                                  )
