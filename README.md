@@ -12,11 +12,11 @@
 ### Testear las clases
 
 
-### Crear main
+### main
 
 * Testear modelo en lstm.py
 
-* Agregar modelo al main
+* Agregar modelo al main y testear el main
 
 
 ### perplexity
