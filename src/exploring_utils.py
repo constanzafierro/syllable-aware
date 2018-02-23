@@ -3,7 +3,7 @@ from separadorSilabas import silabas
 from utils import *
 
 
-test = 16
+test = 1
 
 
 # Silabas
@@ -15,6 +15,13 @@ if test == 0: #error
 
 
 if test == 1:
+    word = 'palabra'
+    s = 'pa-la-bra'
+    answer = silabas(word, sep='-')
+    assert answer == s
+
+
+if test == 2:
     word = 'atracción'
     s = 'a-trac-ción'
     answer = silabas(word, sep='-')
@@ -22,13 +29,13 @@ if test == 1:
 
 
 
-if test == 2: #error
+if test == 3: #error
     word = ' '
     answer = silabas(word, sep='-')
     print(answer)
 
 
-if test == 3: #error
+if test == 4: #error
     word = '-'
     answer = silabas(word, sep='-')
     print(answer)
@@ -36,7 +43,7 @@ if test == 3: #error
 
 # preprocesing_file
 
-if test == 4:
+if test == 5:
     text = 'hola.' + '\ncómo estás?' + '\ntan helado que estai Juan!'
     s = 'hola' + ' . ' + '\ncómo estás' + ' ? ' + '\ntan helado que estai Juan' +' '*2 + '\n'
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
@@ -56,7 +63,7 @@ if test == 4:
     assert processed == s
 
 
-if test == 5: #error
+if test == 6: #error
     path_in = '../test/data/None.txt'
     path_out = '../test/data/test_exploring_utils_spaces.txt'
 
@@ -68,7 +75,7 @@ if test == 5: #error
                        )
 
 
-if test == 6: #error
+if test == 7: #error
     word = 'Ññ'
     answer = get_syllables(word = word,
                            middle = '-',
@@ -77,7 +84,7 @@ if test == 6: #error
     print(answer)
 
 
-if test == 7:
+if test == 8:
     word = 'palabra'
     s = ['pa-', 'la-', 'bra:']
     answer = get_syllables(word = word,
@@ -87,7 +94,7 @@ if test == 7:
     assert answer == s
 
 
-if test == 8: #error
+if test == 9: #error
     word = 'atracción'
     s = ['a-', 'trac-', 'ción:']
     answer = get_syllables(word = word,
@@ -98,14 +105,14 @@ if test == 8: #error
 
 
 
-if test == 9: #error
+if test == 10: #error
     word = ' '
     answer = get_syllables(word = word,
                            middle = '-',
                            end = ':'
                            )
 
-if test == 10:
+if test == 11:
     syllable = 'palabra'
     s = ['p-', 'a-', 'l-', 'a-', 'b-', 'r-', 'a-']
     answer = get_characters(syllable = syllable,
@@ -115,7 +122,7 @@ if test == 10:
     assert answer == s
 
 
-if test == 11:
+if test == 12:
     syllable = 'pa-' + 'bra:'
     s = ['p-', 'a-', 'b-', 'r-', 'a:']
     answer = get_characters(syllable = syllable,
@@ -125,7 +132,7 @@ if test == 11:
     assert answer == s
 
 
-if test == 12:
+if test == 13:
     syllable = ' ' + ' ' + ',.!' +'1'
     s = []
     answer = get_characters(syllable = syllable,
@@ -135,7 +142,7 @@ if test == 12:
     assert answer == s
 
 
-if test == 13:
+if test == 14:
     freq_word = dict()
     word1 = 'hola'
     word2 = 'chabelalaila'
@@ -163,7 +170,7 @@ if test == 13:
     assert s3 == freq_word
 
 
-if test == 14:
+if test == 15:
     dict_word = dict()
 
     word1 = 'hola'
@@ -193,7 +200,7 @@ if test == 14:
     assert s2 == dict_word
 
 
-if test == 15:
+if test == 16:
     word= 'atracción'
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 
