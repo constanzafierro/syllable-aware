@@ -2,8 +2,6 @@ import re
 import operator
 from .separadorSilabas import silabas
 
-#from keras import backend as K
-
 
 def get_freq_words(word, freq_word, to_ignore = []):
     if word in to_ignore:
@@ -175,14 +173,3 @@ def ending_tokens_index(token_to_index, ends):
             token_end.append(v)
     return token_end
 
-
-def metric_pp(average_TPW):
-    def perplexity(y_true, y_pred):
-        cross_entropy = K.categorical_crossentropy(y_true, y_pred)
-        if K.backend() == 'tensorflow':
-            bpt = K.scalar_mul(average_TPW, cross_entropy)
-        else:
-            bpt = K.mul(average_TPW, cross_entropy)
-        pp = K.pow(2.0, bpt)
-        return pp
-    return perplexity
