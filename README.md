@@ -1,66 +1,63 @@
 # STATUS
 
-LSTM.py  **[Broken]**
+*  **[FAIL]** lstm.py  --> Requiere solucionar bug en corpusClass.py
 
-notebooks **[Broken]**
+* **[Broken]** notebooks (Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
 
-(Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
-
-
-CLASE CORPUS ! ***[Leer TODO List !! ]***
+* CLASE CORPUS ! ***[Leer TODO List !! ]***
 
 
 # TODO List
 
 ### Clase corpusClass
 
-En la clase **corpusClass.py**, en los metodos **dictionaries_token_index** y **split_train_eval**, en la definición del **self.ind_corpus**,
+* En la clase **corpusClass.py**, en los metodos **dictionaries_token_index** y **split_train_eval**, en la definición del **self.ind_corpus**,
 
-*Verificar a qué corresponde **self.tokens** en **' for token in self.tokens '***
+* *Verificar a qué corresponde **self.tokens** en **' for token in self.tokens '***
 
-**self.tokens** no está definido en ninguna parte del código.
+* **self.tokens** no está definido en ninguna parte del código.
 
-Hay un **tokens = []** que está definido en **split_train_eval**
+* Hay un **tokens = []** que está definido en **split_train_eval**
 (en caso de agregarle **self.**, no estaría disponible para **dictionaries_token_index** sino hasta llamar a **split_train_eval**)
 
-En el método **split_train_eval**, en la definición de **self.token_selected**, en **else aux + [token_split]**, ***aux** no está definido en ninguna parte*
+* En el método **split_train_eval**, en la definición de **self.token_selected**, en **else aux + [token_split]**, ***aux** no está definido en ninguna parte*
 
 ---
 
 ### Clase TokenSelector
 
-**[DONE]** Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
+* **[DONE]** Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
 
 
 ### Clase utils
 
-**[DONE]** Crear Clase utils.py con las funciones de preprocess_corpus.py.
+* **[DONE]** Crear Clase utils.py con las funciones de preprocess_corpus.py.
 
 
 ### Modificar "imports" en Encabezados
 
-**[DONE]** Modificar encabezados de los archivos para incluir clases utils.py y TokenSelector.py en los imports
+* **[DONE]** Modificar encabezados de los archivos para incluir clases utils.py y TokenSelector.py en los imports
 
 
 ### Crear main
 
-**[DONE]** Extraer class main() desde process_corpus.py y moverla a un archivo main.py
+* **[DONE]** Extraer class main() desde process_corpus.py y moverla a un archivo main.py
 
-Agregar modelo al main
+* **[DONE]** Crear modelo en lstm.py utilizando clases corpusClass y lstmClass
+
+* Testear modelo en lstm.py
+
+* Agregar modelo al main
 
 
-### perplexity.py
+### perplexity
 
-Modificar perplexity.py para incorporar Clases TokenSelector.py, lstmClass.py, etc
-
-Editar perplexity.py y eliminar métodos no utilizados ( o guardarlos momentaneamente en un archivo txt )
-
-Mover a clase utils.py los métodos no relacionados con el cálculo de la perplexity
+* Implementar perplexity
 
 
 ### Clase Generators
 
-Ajustar clase Generators.py para utilizar L y Lprima
+* Ajustar clase Generators.py para utilizar L y Lprima
 
 
 ---
@@ -160,5 +157,5 @@ conda install -n venv1 mkl-service
 conda install -n venv1 -c conda-forge blas
 conda install -n venv1 -c anaconda pygpu
 ```
-
+conda install -n venv1 openblas
 
