@@ -5,52 +5,72 @@ import sys
 class TestUtils(unittest.TestCase):
 
     def test_silabas(self):
+
         word = 'palabra'
         syll_true = 'pa-la-bra'
         answer = silabas(word, sep='-')
+
         self.assertEqual(syll_true, answer)
+
 
         word = 'paralelepipedo'
         syll_true = 'pa-ra-le-le-pi-pe-do'
         answer = silabas(word, sep='-')
+
         self.assertEqual(syll_true, answer)
+
 
         word = 'atención'
         syll_true = 'a-ten-ción'
         answer = silabas(word, sep='-')
+
         self.assertEqual(syll_true, answer)
+
 
         word = 'atracción'
         syll_true = 'a-trac-ción'
         answer = silabas(word, sep='-')
+
         self.assertEqual(syll_true, answer)
+
 
         word = 'Ññ'
         with self.assertRaises(TypeError) as context:
             silabas(word, sep='-')
+
         self.assertTrue('Estructura de sílaba incorrecta en la palabra' in str(context.exception))
+
 
         word = 'specific'
         with self.assertRaises(TypeError) as context:
             silabas(word, sep='-')
+
         self.assertTrue('Estructura de sílaba incorrecta en la palabra' in str(context.exception))
+
 
         word = 'status'
         with self.assertRaises(TypeError) as context:
             silabas(word, sep='-')
+
         self.assertTrue('Estructura de sílaba incorrecta en la palabra' in str(context.exception))
+
 
         word = ' '
         with self.assertRaises(TypeError) as context:
             silabas(word, sep='-')
+
         self.assertTrue('No se reconoce el carácter' in str(context.exception))
+
 
         word = '-'
         with self.assertRaises(TypeError) as context:
             silabas(word, sep='-')
+
         self.assertTrue('No se reconoce el carácter' in str(context.exception))
 
+
     def test_preprocessing(self):
+
         text = 'hola.' + '\ncómo estás?' + '\ntan helado que estai Juan!'
         s = 'hola' + ' . ' + '\ncómo estás' + ' ? ' + '\ntan helado que estai Juan' + ' ' * 2 + '\n'
         to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
@@ -66,7 +86,9 @@ class TestUtils(unittest.TestCase):
                            to_ignore=to_ignore
                            )
 
-        processed = open(path_out, 'r').read()
+        file = open(path_out, 'r')
+        processed = file.read()
+
         self.assertEqual(s, processed)
 
         path_in = './data/None.txt'
@@ -81,14 +103,18 @@ class TestUtils(unittest.TestCase):
                                to_ignore=to_ignore
                                )
         self.assertTrue('File not exists' in str(context.exception))
+        file.close()
+
 
     def test_get_syllable(self):
+
         word = 'palabra'
         syll_true = ['pa-', 'la-', 'bra:']
         answer = get_syllables(word=word,
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(syll_true, answer)
 
 
@@ -98,7 +124,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(syll_true, answer)
+
 
         word = 'atención'
         syll_true = ['a-','ten-','ción:']
@@ -106,7 +134,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(syll_true, answer)
+
 
         word = 'atracción'
         syll_true = ['a-','trac-','ción:']
@@ -114,15 +144,19 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(syll_true, answer)
 
+
     def test_get_characters(self):
+
         word = 'palabra:'
         char_true = ['p-', 'a-', 'l-', 'a-', 'b-', 'r-', 'a:']
         answer = get_characters(token=word,
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
 
 
@@ -132,7 +166,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
+
 
         word = 'atención:'
         char_true = ['a-','t-', 'e-', 'n-','c-', 'i-', 'ó-', 'n:']
@@ -140,7 +176,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
+
 
         word = 'atracción:'
         char_true = ['a-','t-', 'r-', 'a-', 'c-', 'c-', 'i-', 'ó-', 'n:']
@@ -148,7 +186,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
+
 
         syll = 'ca-'
         char_true = ['c-', 'a-']
@@ -156,7 +196,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
+
 
         syll = 'pre-'
         char_true = ['p-', 'r-', 'e-']
@@ -164,7 +206,9 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
+
 
         syll = 'post:'
         char_true = ['p-', 'o-', 's-', 't:']
@@ -172,32 +216,45 @@ class TestUtils(unittest.TestCase):
                                middle='-',
                                end=':'
                                )
+
         self.assertEqual(char_true, answer)
 
+
     def test_get_freq_words(self):
+
         freq_word = dict()
         word1 = 'hola'
+
         freq_word = get_freq_words(word1, freq_word, to_ignore=[])
         self.assertEqual(freq_word, {word1:1})
+
         freq_word = get_freq_words(word1, freq_word, to_ignore=[])
         self.assertEqual(freq_word, {word1:2})
+
         freq_word = get_freq_words(word1, freq_word, to_ignore=[])
         self.assertEqual(freq_word, {word1:3})
 
+
         word2 = 'como'
+
         freq_word = get_freq_words(word2, freq_word, to_ignore=[])
         self.assertEqual(freq_word, {word1:3, word2:1})
+
         freq_word = get_freq_words(word2, freq_word, to_ignore=[])
         self.assertEqual(freq_word, {word1:3, word2:2})
+
         freq_word = get_freq_words(word2, freq_word, to_ignore=[])
         self.assertEqual(freq_word, {word1:3, word2:3})
 
+
     def test_get_freq_syllables(self):
+
         freq_word = {'hola':5, 'la':2, 'como':3}
         dict_word = {'hola':['ho-','la:'], 'la':['la:'], 'como':['co-','mo:']}
 
         freq_syll = get_freq_syllables(freq_word, dict_word, to_ignore=[])
         freq_syll_true = {'co-':3, 'ho-':5, 'la:':7, 'mo:':3}
+
         self.assertEqual(freq_syll, freq_syll_true)
 
 
@@ -206,7 +263,9 @@ class TestUtils(unittest.TestCase):
 
         freq_syll = get_freq_syllables(freq_word, dict_word, to_ignore=[])
         freq_syll_true = {'a-':10,'co-':3, 'ho-':5, 'la:':7, 'mo:':13}
+
         self.assertEqual(freq_syll, freq_syll_true)
+
 
     def test_word_to_syll(self):
 
@@ -220,6 +279,7 @@ class TestUtils(unittest.TestCase):
                                  verbose=False
                                  )
         dict_word_true = {'hola':['ho-','la:']}
+
         self.assertEqual(dict_word, dict_word_true)
 
 
@@ -232,6 +292,7 @@ class TestUtils(unittest.TestCase):
                                  verbose=False
                                  )
         dict_word_true = {'hola':['ho-','la:'], 'la':['la:']}
+
         self.assertEqual(dict_word, dict_word_true)
 
 
@@ -244,7 +305,9 @@ class TestUtils(unittest.TestCase):
                                  verbose=False
                                  )
         dict_word_true = {'hola':['ho-','la:'], 'la':['la:']}
+
         self.assertEqual(dict_word, dict_word_true)
+
 
         word = 'como'
         dict_word = word_to_syll(word, dict_word,
@@ -255,7 +318,9 @@ class TestUtils(unittest.TestCase):
                                  verbose=False
                                  )
         dict_word_true = {'como':['co-','mo:'], 'hola':['ho-','la:'], 'la':['la:']}
+
         self.assertEqual(dict_word, dict_word_true)
+
 
         word = 'status'
         dict_word = word_to_syll(word, dict_word,
@@ -266,7 +331,9 @@ class TestUtils(unittest.TestCase):
                                  verbose=False
                                  )
         dict_word_true = {'como':['co-','mo:'], 'hola':['ho-','la:'], 'la':['la:'], 'status':['<sns>']}
+
         self.assertEqual(dict_word, dict_word_true)
+
 
         word = 'palindromo'
         to_ignore = [word]
@@ -278,7 +345,9 @@ class TestUtils(unittest.TestCase):
                                  verbose=False
                                  )
         dict_word_true = {'como':['co-','mo:'], 'hola':['ho-','la:'], 'la':['la:'], 'status':['<sns>']}
+
         self.assertEqual(dict_word, dict_word_true)
+
 
     def test_syll_to_charac(self):
 
@@ -294,7 +363,9 @@ class TestUtils(unittest.TestCase):
                                    sign_not_syllable='<sns>'
                                    )
         dict_syll_true = {'ho-':['h-', 'o-'], 'la:':['l-', 'a:']}
+
         self.assertEqual(dict_syll, dict_syll_true)
+
 
         word = 'la'
         dict_syll = syll_to_charac(word,
@@ -306,7 +377,9 @@ class TestUtils(unittest.TestCase):
                                    sign_not_syllable='<sns>'
                                    )
         dict_syll_true = {'ho-': ['h-', 'o-'], 'la:': ['l-', 'a:']}
+
         self.assertEqual(dict_syll, dict_syll_true)
+
 
         word = 'status'
         dict_syll = syll_to_charac(word,
@@ -318,7 +391,9 @@ class TestUtils(unittest.TestCase):
                                    sign_not_syllable='<sns>'
                                    )
         dict_syll_true = {'ho-': ['h-', 'o-'], 'la:': ['l-', 'a:'], 'status':['s-', 't-', 'a-', 't-', 'u-', 's:']}
+
         self.assertEqual(dict_syll, dict_syll_true)
+
 
         word = 'casa'
         to_ignore = [word]
@@ -331,6 +406,7 @@ class TestUtils(unittest.TestCase):
                                    sign_not_syllable='<sns>'
                                    )
         dict_syll_true = {'ho-': ['h-', 'o-'], 'la:': ['l-', 'a:'], 'status': ['s-', 't-', 'a-', 't-', 'u-', 's:']}
+
         self.assertEqual(dict_syll, dict_syll_true)
 
 
@@ -378,83 +454,111 @@ class TestUtils(unittest.TestCase):
                           'tu:':2,
                           'y:':2
                           }
+
         self.assertEqual(dict_word, dict_word_true)
         self.assertEqual(dict_syll, dict_syll_true)
         self.assertEqual(freq_word, freq_word_true)
         self.assertEqual(freq_syll, freq_syll_true)
 
+
     def test_get_most_frequent(self):
+
         freq_dict = {'hola':1, 'como':5, 'estás':6, 'bien':2, 'mal':10}
         quantity = 0.4
         to_ignore = []
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'estás', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
+
 
         quantity = 0.8
         to_ignore = []
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'bien', 'como', 'estás', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
+
 
         quantity = 2
         to_ignore = []
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'estás', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
+
 
         quantity = 4
         to_ignore = []
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'bien', 'como', 'estás', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
+
 
         quantity = 5
         to_ignore = []
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'bien', 'como', 'estás', 'hola', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
+
 
         quantity = 1
         to_ignore = []
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'bien', 'como', 'estás', 'hola', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
+
 
         quantity = 5
         to_ignore = ['hola', 'bien']
         most_freq = get_most_frequent(freq_dict, quantity, to_ignore=to_ignore)
         most_freq_true = {'como', 'estás', 'mal'}
+
         self.assertEqual(most_freq, most_freq_true)
 
+
     def test_lprime(self):
+
         token_selected = ['ho-', 'la:', '<cm>', 'co-', 'mo:', 'es-', 'tás:', '<sp>', 'pa-', 'ra-', 'le-', 'le-', 'pi-',
                           'pe-', 'do:']
         sequence_length = 1
         lprime = Lprime(token_selected, sequence_length)
+
         self.assertEqual(lprime, 7)
+
 
         sequence_length = 2
         lprime = Lprime(token_selected, sequence_length)
+
         self.assertEqual(lprime, 8)
+
 
         token_selected = ['ho-', 'la:', '<cm>', 'co-', 'mo:', 'es-', 'tás:', '<sp>']
         sequence_length = 2
         lprime = Lprime(token_selected, sequence_length)
+
         self.assertEqual(lprime, 4)
 
+
     def test_ending_tokens_index(self):
+
         token_to_index = {'hola:':1, 'co-':2, 'mo:':3, 'es-':4, 'tas:':5, '<pt>':6,
                           'hola:': 1, 'co-': 2, 'mo:': 3}
         ends = [':', '>']
         ending = ending_tokens_index(token_to_index, ends)
         ending_true = [1, 3, 5, 6]
+
         self.assertEqual(ending, ending_true)
 
 
 
 if __name__ == '__main__':
+
     sys.path.append("..")
+
     from src.separadorSilabas import silabas
     from src.utils import preprocessing_file
     from src.utils import get_syllables
@@ -467,4 +571,5 @@ if __name__ == '__main__':
     from src.utils import get_most_frequent
     from src.utils import Lprime
     from src.utils import ending_tokens_index
+
     unittest.main()

@@ -25,18 +25,17 @@ random.seed(seed)
 
 ## Imports
 
-from .RNN import RecurrentLSTM
-
-from .Corpus import Corpus
-from .utils import preprocessing_file
+from src.RNN import RecurrentLSTM
+from src.Corpus import Corpus
+from src.utils import preprocessing_file
 
 import time
 
 
 ## Path to File
 
-path_in = '../data/horoscopo_test_overfitting.txt'
-path_out = '../data/horoscopo_test_overfitting_add_space.txt'
+path_in = './data/horoscopo_test_overfitting.txt'
+path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
 
 print('\n Preprocess - Add Spaces \n')
@@ -44,7 +43,7 @@ print('\n Preprocess - Add Spaces \n')
 to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 signs_to_ignore = [i for i in to_ignore]
 
-map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
+map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
 letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
 
 add_space = True

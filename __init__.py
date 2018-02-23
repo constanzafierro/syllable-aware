@@ -18,3 +18,5 @@ from .src import RNN
 from .src import perplexity
 
 from .test import test_utils
+
+from .src.RNN import RecurrentLSTM

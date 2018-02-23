@@ -27,6 +27,7 @@ class Corpus:
         self.inter_char = inter_char
         self.signs_to_ignore = signs_to_ignore
         self.words_to_ignore = words_to_ignore
+
         self.map_punctuation = map_punctuation
         self.letters = letters
 
