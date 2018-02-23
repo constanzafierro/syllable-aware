@@ -132,7 +132,8 @@ ti = time.time()
 model.fit(generator = train_generator,
           epochs = epochs,
           workers = workers,
-          callbacks = callbacks)
+          callbacks = callbacks
+          )
 
 
 tf = time.time()
