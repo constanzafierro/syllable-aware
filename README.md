@@ -9,6 +9,11 @@ notebooks **[Broken]**
 
 # TODO list
 
+### Clase corpusClass
+
+En la clase corpusClass.py, en los metodos **dictionaries_token_index** y **split_train_eval**, en la definición del **self.ind_corpus**, verificar a qué corresponde **self.tokens** en ' for token in self.tokens '. **self.tokens** no está definido en ninguna parte del codigo
+
+
 ### Clase TokenSelector
 
 **[DONE]** Crear Clase TokenSelector (Extraer class TokenSelector() desde process_corpus.py)
