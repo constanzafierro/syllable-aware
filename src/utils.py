@@ -18,7 +18,7 @@ def get_freq_words(word, freq_word, to_ignore = []):
     return freq_word
 
 
-def get_freq_syllables(freq_word, dict_word, to_ignore =  []):
+def get_freq_syllables(freq_word, dict_word, to_ignore = []):
     freq_syll = dict()
     for k,v in freq_word.items():
         if k in to_ignore:
