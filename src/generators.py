@@ -11,8 +11,8 @@ class GeneralGenerator():
                  ind_tokens,
                  vocabulary,
                  max_len,
-                 split_symbol_index=-1,
-                 count_to_split=-1
+                 split_symbol_index,
+                 count_to_split
                  ):
 
         '''Generates X,Y batches dynamically.
