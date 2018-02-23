@@ -1,5 +1,6 @@
 import re
 import operator
+import os
 from .separadorSilabas import silabas
 
 
@@ -36,6 +37,11 @@ def get_freq_syllables(freq_word, dict_word, to_ignore = []):
 
 
 def preprocessing_file(path_in, path_out, to_ignore = []):
+    if not os.path.exists(path_in):
+        raise TypeError("File not exists {0}".format(path_in))
+    if not os.path.exists(path_out):
+        raise TypeError("File not exists {0}".format(path_out))
+
     with open(path_out, 'w') as f1:
         with open(path_in) as f2:
             for line in f2:
