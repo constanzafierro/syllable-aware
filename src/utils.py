@@ -1,6 +1,9 @@
 import re
 import operator
+
 from separadorSilabas import silabas
+
+from keras import backend as K
 
 
 def get_freq_words(word, freq_word, to_ignore = []):
