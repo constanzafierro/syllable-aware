@@ -56,10 +56,13 @@ class Corpus:
         self.token_selected = []
 
         with open(self.path_to_file) as f1:
+
                 for line in f1:
                     words = line.lower().split()
+
                     for token in words:
                         token = token.strip()
+
                         self.tokenSelector.select(token, self.token_selected)
 
 
