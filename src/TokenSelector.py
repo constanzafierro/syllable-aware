@@ -1,4 +1,4 @@
-from utils import tokenize_corpus, get_most_frequent
+from .utils import tokenize_corpus, get_most_frequent
 
 
 # TODO: Testear métodos y clases ...
@@ -14,7 +14,7 @@ class TokenSelector():
                  inter_char='-',
                  sign_to_ignore=[],
                  word_to_ignore=[],
-                 map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
+                 map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
                  letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
                  ):
 

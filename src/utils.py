@@ -1,6 +1,6 @@
 import re
 import operator
-from separadorSilabas import silabas
+from .separadorSilabas import silabas
 
 #from keras import backend as K
 
