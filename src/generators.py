@@ -1,6 +1,8 @@
 import numpy as np
 import random
 
+# TODO: We must set a seed !!
+
 class GeneralGenerator():
     def __init__(self, batch_size, ind_tokens, vocabulary, max_len, split_symbol_index=-1, count_to_split=-1):
         '''Generates X,Y batches dynamically.
