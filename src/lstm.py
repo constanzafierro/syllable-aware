@@ -1,38 +1,26 @@
 # coding: utf-8
 
-
 ## Setting Seed for Reproducibility
-
 import os
 import numpy as np
 import random
 
-#import tensorflow as tf
+# import tensorflow as tf
 
-# Setting PYTHONHASHSEED for determinism was not listed anywhere for TensorFlow,
-# but apparently it is necessary for the Theano backend
-# (https://github.com/fchollet/keras/issues/850).
-
-os.environ['PYTHONHASHSEED'] = '1'
+os.environ['PYTHONHASHSEED'] = '1' # https://github.com/fchollet/keras/issues/850
 seed = 1 # must be the same as PYTHONHASHSEED
 
 np.random.seed(seed)
 random.seed(seed)
 
-# Limit operation to 1 thread for deterministic results.
-
+## Limit operation to 1 thread for deterministic results.
 # session_conf = tf.ConfigProto( intra_op_parallelism_threads = 1 , inter_op_parallelism_threads = 1 )
-
 # from keras import backend as K
-
 # tf.set_random_seed(seed)
 # sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
-
 # K.set_session(sess)
 
-
 ## Imports
-
 from lstmClass import Model
 
 from corpusClass import Corpus
@@ -41,12 +29,38 @@ from corpusClass import *
 import time
 
 
-## Corpus
-
+## Path to File
 path_to_file = '../syllable-aware/data/horoscopo_test_overfitting.txt'
 
-train_size = 1 # 0.8
 
+## Hyperparameters
+
+D = 512 #
+
+recurrent_dropout = 0.3 #0
+dropout = 0.3 #0
+dropout_seed = 0
+
+train_size = 1 #0.8
+batch_size = 128
+epochs = 100 #300
+
+optimizer = 'rmsprop' #'adam'
+metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
+
+workers = 1 # default 1
+callbacks = [] # https://keras.io/callbacks/
+
+T = 6000 # quantity of tokens
+
+quantity_word = 30
+quantity_syllable = T - quantity_word
+
+L = 100  # sequence_length
+
+
+## Init Corpus
+print('\n Init Corpus \n')
 corpus = Corpus(path_to_file = path_to_file,
                 train_size = train_size,
                 final_char = ':',
@@ -58,49 +72,26 @@ corpus = Corpus(path_to_file = path_to_file,
 
 
 ## Tokenization
-
-T = 6000 # quantity of tokens
-
-quantity_word = 30
-quantity_syllable = T - quantity_word
-
+print('\n Select Tokens \n')
 corpus.select_tokens(quantity_word = quantity_word,
                      quantity_syllable = quantity_syllable
                      )
 
 
 ## L prime
-
-L = 100  # en el main está como sequence_length, en el mail está como L
-
+print('\n L prime \n')
 corpus.calculateLprime(sequence_length = L)
-
 Lprima = corpus.lprime
 
 
-## LSTM Model
-
-D = 512
-
-recurrent_dropout = 0.3
-dropout = 0.3
-dropout_seed = 0
-
-batch_size = 128
-epochs = 100
-
-workers = 1 # default 1
-
-callbacks = [] # https://keras.io/callbacks/
-
-
-## Diccionarios (vocabulario, indexaciones , etc)
-
+## Dictionaries Token-Index
+print('\n Dictionaries Token - Index \n')
 corpus.dictionaries_token_index()
 vocabulary = corpus.vocabulary_as_index
 
 
-## Model
+## Init Model
+print('\n Init Model \n')
 model = Model(vocab_size = len(vocabulary),
               embedding_dim = D,
               hidden_dim = D,
@@ -110,23 +101,25 @@ model = Model(vocab_size = len(vocabulary),
               seed = dropout_seed
               )
 
+
+## Model Summary
+print('\n Model Summary \n')
 print(model.summary())
 
-optimizer = 'rmsprop' #'adam'
-metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
+## Build Model
+print('\n Build Model \n')
 model.build(optimizer = optimizer,
             metrics = metrics
             )
 
 
 ## Generators
-
+print('\n Get Generators \n')
 train_generator, eval_generator = corpus.get_generators(batch_size = batch_size)
 
 
 ## Training
-
 print('\n Training \n')
 ti = time.time()
 
