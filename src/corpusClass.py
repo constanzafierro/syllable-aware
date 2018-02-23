@@ -1,5 +1,6 @@
 from TokenSelector import TokenSelector
 from utils import Lprime
+from generators import GeneralGenerator
 
 
 class Corpus:
@@ -110,3 +111,20 @@ class Corpus:
 
         self.train_ATPW = words_train_set / len(train_set)
         self.eval_ATPW = words_eval_set / len(eval_set)
+
+
+    def get_generators(self, batch_size):
+        self.generator_train = GeneralGenerator(batch_size 
+                                                ind_tokens = self.train_set,
+                                                vocabulary = self.vocabulary,
+                                                max_len = self.lprime,
+                                                split_symbol_index = self.tokensplit,
+                                                count_to_split=-1
+                                               )
+        self.generator_eval = GeneralGenerator(batch_size 
+                                                ind_tokens = self.eval_set,
+                                                vocabulary = self.vocabulary,
+                                                max_len = self.lprime,
+                                                split_symbol_index = self.tokensplit,
+                                                count_to_split=-1
+                                               )
