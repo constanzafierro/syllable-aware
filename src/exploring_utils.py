@@ -1,6 +1,6 @@
 # coding: utf-8
 from separadorSilabas import silabas
-from utils import preprocessing_file, get_syllables, get_characters, get_freq_words, word_to_syll,syll_to_charac
+from utils import preprocessing_file, get_syllables, get_characters, get_freq_words, word_to_syll, syll_to_charac
 
 test = 18
 
@@ -250,24 +250,25 @@ if test == 18:
     dict_word = dict()
     word1 = 'hola'
     word2 = 'chabelalaila'
+
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 
     syll_to_charac(word = word1,
                    dict_syll = dict_syll,
                    dict_word = dict_word,
                    to_ignore = to_ignore,
-                   middle='-',
-                   end=':',
-                   sign_not_syllable='<sns>'
+                   middle = '-',
+                   end = ':',
+                   sign_not_syllable = '<sns>'
                    )
 
-    syll_to_charac(word=word2,
+    syll_to_charac(word = word2,
                    dict_syll = dict_syll,
                    dict_word = dict_word,
                    to_ignore = to_ignore,
-                   middle='-',
-                   end=':',
-                   sign_not_syllable='<sns>'
+                   middle = '-',
+                   end = ':',
+                   sign_not_syllable = '<sns>'
                    )
 
     print(dict_word)
