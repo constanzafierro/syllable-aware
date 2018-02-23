@@ -39,7 +39,7 @@ class Corpus:
                                            letters = self.letters
                                            )
 
-        self.tokenSelector.get_dictionary(self.path_to_file)
+        self.tokenSelector.get_dictionary(path_file = self.path_to_file)
 
         self.tokensplit = -1 # for get_generators
 
