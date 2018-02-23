@@ -147,8 +147,6 @@ def get_most_frequent(freq_dict, quantity, to_ignore = []):
     return most_freq
 
 
-############################### CALCULATE L MAX ###############################
-
 def Lprime(token_selected, sequence_length):
     tokens_len = []
     count_tokens = 0
@@ -167,4 +165,21 @@ def Lprime(token_selected, sequence_length):
 
     return maxL
 
-############################### END CALCULATE L MAX ############################
+
+def ending_tokens_index(token_to_index, ends):
+    token_end = []
+    for k,v in token_to_index :
+        if k[-1] in ends:
+            token_end.append(v)
+    return token_end
+
+
+def metric_pp(average_TPW):
+    def perplexity(y_true, y_pred):
+        cross_entropy = K.categorical_crossentropy(y_true, y_pred)
+        if K.backend() == 'tensorflow':
+            bpt = K.scalar_mul(average_TPW, cross_entropy)
+        else:
+            bpt = K.mul(average_TPW, cross_entropy)
+        perplexity = K.pow(2.0, bpt)
+    return perplexity

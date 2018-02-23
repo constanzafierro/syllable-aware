@@ -51,6 +51,7 @@ class Corpus:
         
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
+        self.indice_ends = ending_tokens_index(self.token_to_index, [self.final_char, self.final_punc])
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
         self.ind_corpus = [self.token_to_index[token] for token in self.tokens] # corpus as indexes
         self.vocabulary_as_index = set(self.ind_corpus) # vocabualry as index
@@ -60,3 +61,34 @@ class Corpus:
         self.test_set = self.ind_corpus[len_train:] # indexes
         self.vocabulary_train = set(self.train_set) # indexes
         self.vocabulary_test = set(self.test_set) # indexes
+
+
+    def split_train_eval(val_percentage, token_split, min_len = 0):
+
+        self.vocabulary = set(self.token_selected)
+        self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
+        self.indice_ends = ending_tokens_index(self.token_to_index, [self.final_char, self.final_punc])
+        self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
+        self.ind_corpus = [self.token_to_index[token] for token in self.tokens] # corpus as indexes
+        self.vocabulary_as_index = set(self.ind_corpus) # vocabualry as index
+
+        self.train_set = []
+        self.eval_set = []
+        tokens = []
+
+        self.token_selected = self.token_selected if self.token_selected[-1] == token_split else aux + [token_split]
+
+        tokensplit = self.token_to_index[token_split]
+        for token in self.ind_corpus:
+            if token == tokensplit:
+                if len(tokens) < min_len:
+                    tokens = []
+                    continue
+                p = random.choice(range(0, 100))
+                if p < val_percentage:
+                    self.eval_set += tokens + [tokensplit]
+                else:
+                    self.train_set += tokens + [tokensplit]
+                tokens = []
+            else:
+                tokens.append(token)
