@@ -138,10 +138,10 @@ Edit keras.json, and change the field "backend" to "theano"
 ---
 
 
-## Install Tensorflow-GPU 1.4.0 (because there is CUDA Toolkit 8.0)
+## Install Tensorflow-GPU 1.4.0 (because there is CUDA Toolkit 8.0) para Python 3.6
 
 ```
-pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp35-cp35m-linux_x86_64.whl
+pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
 ```
 
 ---
