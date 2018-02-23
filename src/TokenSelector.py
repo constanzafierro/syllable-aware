@@ -13,7 +13,9 @@ class TokenSelector():
                  final_char=':',
                  inter_char='-',
                  sign_to_ignore=[],
-                 word_to_ignore=[]
+                 word_to_ignore=[],
+                 map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
+                 letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
                  ):
 
         self.final_char = final_char
@@ -22,15 +24,11 @@ class TokenSelector():
         self.word_to_ignore = word_to_ignore
 
         # Punctuation
-        self.map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
+        self.map_punctuation = map_punctuation
         self.punctuation = set(self.map_punctuation)
 
         # Characters
-        letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
-        letters += letters.upper()
-
-        self.accepted_chars = set(letters)
-        self.characters = self.accepted_chars
+        self.characters = set(letters)
 
 
     def get_dictionary(self, path_file):
@@ -60,6 +58,7 @@ class TokenSelector():
                         tokens_selected.append(s)
                     else:
                         for c in self.dict_syll[s]:
-                            tokens_selected.append(c)
+                            if c in self.characters:
+                                tokens_selected.append(c)
 
         return tokens_selected

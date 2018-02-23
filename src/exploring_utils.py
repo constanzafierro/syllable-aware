@@ -246,14 +246,16 @@ if test == 17:
 
 if test == 18:
 
-    dict_syll = dict()
-    dict_word = dict()
     word1 = 'hola'
     word2 = 'chabelalaila'
 
+    dict_syll = dict()
+    dict_word = {'hola':['ho-', 'la-'], 'chabelalaila':['cha-','be-','la-','lai-','la:']}
+
+
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 
-    syll_to_charac(word = word1,
+    dict_syll = syll_to_charac(word = word1,
                    dict_syll = dict_syll,
                    dict_word = dict_word,
                    to_ignore = to_ignore,
@@ -262,7 +264,7 @@ if test == 18:
                    sign_not_syllable = '<sns>'
                    )
 
-    syll_to_charac(word = word2,
+    dict_syll = syll_to_charac(word = word2,
                    dict_syll = dict_syll,
                    dict_word = dict_word,
                    to_ignore = to_ignore,
