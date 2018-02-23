@@ -3,34 +3,34 @@ from separadorSilabas import silabas
 from utils import *
 
 
-test = 13
+test = 16
 
 
 # Silabas
 
 if test == 0: #error
     word = 'Ññ'
-    answer = silabas(word)
+    answer = silabas(word, sep='-')
     print(answer)
 
 
 if test == 1:
     word = 'atracción'
     s = 'a-trac-ción'
-    answer = silabas(word)
+    answer = silabas(word, sep='-')
     assert answer == s
 
 
 
 if test == 2: #error
     word = ' '
-    answer = silabas(word)
+    answer = silabas(word, sep='-')
     print(answer)
 
 
 if test == 3: #error
     word = '-'
-    answer = silabas(word)
+    answer = silabas(word, sep='-')
     print(answer)
 
 
@@ -146,9 +146,7 @@ if test == 13:
                    to_ignore = to_ignore
                     )
     s1 = {'hola': 1}
-
     assert s1 == freq_word
-
 
     get_freq_words(word = word1,
                    freq_word = freq_word,
@@ -163,3 +161,51 @@ if test == 13:
                    )
     s3 = {'hola': 2, 'chabelalaila': 1}
     assert s3 == freq_word
+
+
+if test == 14:
+    dict_word = dict()
+
+    word1 = 'hola'
+    word2 = 'chabelalaila'
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+
+    word_to_syll(word = word1,
+                 dict_word = dict_word,
+                 to_ignore = to_ignore,
+                 middle = '-',
+                 end = ':',
+                 sign_not_syllable = '<sns>',
+                 verbose = False
+                 )
+    s1 = {'hola': ['ho-', 'la:']}
+    assert s1 == dict_word
+
+    word_to_syll(word = word2,
+                 dict_word = dict_word,
+                 to_ignore = to_ignore,
+                 middle = '-',
+                 end = ':',
+                 sign_not_syllable = '<sns>',
+                 verbose = False
+                 )
+    s2 = {'hola': ['ho-', 'la:'], 'chabelalaila': ['cha-', 'be-', 'la-', 'lai-', 'la:']}
+    assert s2 == dict_word
+
+
+if test == 15:
+    word= 'atracción'
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+
+    dict_word = dict()
+    word_to_syll(word = word,
+                 dict_word = dict_word,
+                 to_ignore = to_ignore,
+                 middle = '-',
+                 end = ':',
+                 sign_not_syllable = '<sns>',
+                 verbose = False
+                 )
+    s = {'atracción': ['a-', 'trac-', 'ción:']}
+    assert s == dict_word
+
