@@ -60,13 +60,18 @@ L = 100  # sequence_length
 
 ## Init Corpus
 #  TODO: Agregar (si requiere) preprocesamiento al texto y agregar sign_to_ignore
+
+to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+sign_to_ignore = [i for i in to_ignore] # TODO: (*)
+
+
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file = path_to_file,
                 train_size = train_size,
                 final_char = ':',
                 final_punc = '>',
                 inter_char = '-',
-                sign_to_ignore = [],
+                sign_to_ignore = [], # TODO: (*)
                 word_to_ignore = []
                 )
 
