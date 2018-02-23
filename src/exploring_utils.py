@@ -3,7 +3,7 @@ from separadorSilabas import silabas
 from utils import *
 
 
-test = 1
+test = 16
 
 
 # Silabas
@@ -201,6 +201,23 @@ if test == 15:
 
 
 if test == 16:
+    word= 'palabra'
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+
+    dict_word = dict()
+    word_to_syll(word = word,
+                 dict_word = dict_word,
+                 to_ignore = to_ignore,
+                 middle = '-',
+                 end = ':',
+                 sign_not_syllable = '<sns>',
+                 verbose = False
+                 )
+    s = {'palabra': ['pa-', 'la-', 'bra:']}
+    assert s == dict_word
+
+
+if test == 17:
     word= 'atracción'
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 
