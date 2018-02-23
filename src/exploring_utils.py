@@ -18,9 +18,8 @@ if test == 1:
     word = 'atracción'
     s = 'a-trac-ción'
     answer = silabas(word)
-    print(answer)
-    if answer == s:
-        print('OK!')
+    assert answer == s
+
 
 
 if test == 2: #error
@@ -54,8 +53,7 @@ if test == 4:
                        )
 
     processed = open(path_out, 'r').read()
-    if processed == s:
-        print('OK!')
+    assert processed == s
 
 
 if test == 5: #error
@@ -86,8 +84,7 @@ if test == 7:
                            middle = '-',
                            end = ':'
                            )
-    if answer == s:
-        print('OK!')
+    assert answer == s
 
 
 if test == 8: #error
@@ -97,8 +94,8 @@ if test == 8: #error
                            middle = '-',
                            end = ':'
                            )
-    if answer == s:
-        print('OK!')
+    assert answer == s
+
 
 
 if test == 9: #error
@@ -115,8 +112,7 @@ if test == 10:
                             middle = '-',
                             end = ':'
                             )
-    if answer == s:
-        print('OK!')
+    assert answer == s
 
 
 if test == 11:
@@ -126,8 +122,7 @@ if test == 11:
                             middle = '-',
                             end = ':'
                             )
-    if answer == s:
-        print('OK!')
+    assert answer == s
 
 
 if test == 12:
@@ -137,8 +132,7 @@ if test == 12:
                             middle = '-',
                             end = ':'
                             )
-    if answer == s:
-        print('OK!')
+    assert answer == s
 
 
 if test == 13:
@@ -147,20 +141,25 @@ if test == 13:
     word2 = 'chabelalaila'
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 
-    dict1 = get_freq_words(word = word1,
-                           freq_word = freq_word,
-                           to_ignore = to_ignore
-                           )
-    print(dict1)
+    get_freq_words(word = word1,
+                   freq_word = freq_word,
+                   to_ignore = to_ignore
+                    )
+    s1 = {'hola': 1}
 
-    dict2 = get_freq_words(word = word1,
-                           freq_word = freq_word,
-                           to_ignore = to_ignore
-                           )
-    print(dict2)
+    assert s1 == freq_word
 
-    dict3 = get_freq_words(word = word2,
-                           freq_word = freq_word,
-                           to_ignore = to_ignore
-                           )
-    print(dict3)
+
+    get_freq_words(word = word1,
+                   freq_word = freq_word,
+                   to_ignore = to_ignore
+                   )
+    s2 = {'hola': 2}
+    assert s2 == freq_word
+
+    get_freq_words(word = word2,
+                   freq_word = freq_word,
+                   to_ignore = to_ignore
+                   )
+    s3 = {'hola': 2, 'chabelalaila': 1}
+    assert s3 == freq_word
