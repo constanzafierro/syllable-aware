@@ -2,11 +2,6 @@ from .utils import tokenize_corpus, get_most_frequent
 
 
 # TODO: Testear métodos y clases ...
-# TODO: Pasar Punctuation y Characters como inputs de TokenSelector
-# TODO: Implementar dichas modificaciones a los inputs en la clase Corpus
-# TODO: Agregar dichas modificaciones a lstm.py y posteriormente a main.py
-
-# TODO: Agregar map_punctuation y letters como input a clase processCorpus.py
 
 
 class TokenSelector():
