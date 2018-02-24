@@ -90,9 +90,6 @@ def main():
                                  quantity_syllable=quantity_syllable
                                  )
 
-            #token_selected = corpus.token_selected
-            #print(token_selected)
-
             corpus.calculateLprime(sequence_length=sl)
             Lprima = corpus.lprime
             print(Lprima)
