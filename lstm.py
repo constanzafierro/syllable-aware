@@ -6,6 +6,8 @@ from src.Corpus import Corpus
 from src.utils import preprocessing_file
 import time
 
+import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
+
 ########################################################################################################################
 
 ## Setting Seed for Reproducibility
@@ -30,12 +32,13 @@ random.seed(seed)
 # K.set_session(sess)
 
 ########################################################################################################################
-
-## Path to File
+#
+# Path to File
 
 path_in = './data/horoscopo_test_overfitting.txt'
 path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
+# Pre processing
 
 print('\n Preprocess - Add Spaces \n')
 
@@ -76,13 +79,59 @@ dropout_seed = 0
 
 train_size = 0.8 # 1
 batch_size = 128
-epochs = 100 #300
+epochs = 300
 
 optimizer = 'rmsprop' #'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
 workers = 1 # default 1
-callbacks = [] # https://keras.io/callbacks/
+
+
+## Callbacks
+# https://keras.io/callbacks/
+
+out_directory_train_history = '../train_history/'
+out_directory_model = '../models/'
+out_model_pref = 'lstm_model_'
+
+time_pref = time.strftime('%y%m%d.%H%M')
+
+outfile = out_model_pref + time_pref + '.h5'
+
+# Checkpoint
+# https://keras.io/callbacks/#modelcheckpoint
+
+monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'categorical_accuracy', 'val_loss', etc
+
+
+checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outfile,
+                                             monitor=monitor_checkpoint,
+                                             verbose=1,
+                                             save_best_only=True, # TODO: Guardar cada K epochs, y Guardar el mejor
+                                             save_weights_only=False,
+                                             mode='auto',
+                                             period=1
+                                             )
+
+# https://keras.io/callbacks/#earlystopping
+
+monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'categorical_accuracy','val_loss', etc
+
+patience = 100# number of epochs with no improvement after which training will be stopped
+
+
+early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
+                                               min_delta=0,
+                                               patience=patience,
+                                               verbose=0,
+                                               mode='auto'
+                                               )
+
+# callbacks = [checkpoint, early_stopping]
+callbacks = []
+
+
+##
 
 T = 6000 # quantity of tokens
 
@@ -103,7 +152,8 @@ corpus = Corpus(path_to_file=path_to_file,
                 signs_to_ignore=signs_to_ignore,
                 words_to_ignore=[],
                 map_punctuation=map_punctuation,
-                letters=letters
+                letters=letters,
+                sign_not_syllable='<sns>'
                 )
 
 

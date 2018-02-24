@@ -17,7 +17,7 @@ def main():
 
     print('\n Preprocess - Add Spaces \n')
 
-    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­''' #TODO: Agregar simbolos //­
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­''' # TODO: Agregar simbolos //­
 
     signs_to_ignore = [i for i in to_ignore]
 
@@ -61,7 +61,8 @@ def main():
                     signs_to_ignore=signs_to_ignore,
                     words_to_ignore=[],
                     map_punctuation=map_punctuation,
-                    letters=letters
+                    letters=letters,
+                    sign_not_syllable='<sns>'
                     )
     print('\n Corpus Instantiated \n')
 
