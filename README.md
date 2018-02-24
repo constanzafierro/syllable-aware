@@ -4,7 +4,6 @@
 
 * **[Working]** main.py **Haven't been Tested yet !**
 
-
 * **[Broken]** notebooks (Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
 
 
