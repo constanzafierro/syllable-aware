@@ -66,7 +66,7 @@ def main():
 
     T_W = [30, 60, 100, 300, 600, 1000, 3000, 6000]
     Tmax = 10000 # Maximum number of Tokens (without considering characters)
-    sequence_length = [100, 500, 1000, 2500, 5000]
+    sequence_length = [50, 100, 500, 1000, 2500, 5000]
 
     print('='*50)
     print('Corpus to Process : {}'.format(path_to_file))
@@ -90,15 +90,16 @@ def main():
                                  quantity_syllable=quantity_syllable
                                  )
 
-            token_selected = corpus.token_selected
-            print(token_selected)
+            #token_selected = corpus.token_selected
+            #print(token_selected)
 
             corpus.calculateLprime(sequence_length=sl)
-            print(corpus.lprime)
+            Lprima = corpus.lprime
+            print(Lprima)
 
             print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
                                                                                            quantity_syllable,
-                                                                                           corpus.lprime
+                                                                                           Lprima
                                                                                            )
                   )
 
