@@ -12,13 +12,15 @@ class TestTokenSelector(unittest.TestCase):
         words_to_ignore = ['hola']
         map_punctuation = {'.':'<pt>', ',':'<cm>'}
         letters = 'abcdeábcdé'
+        sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char = final_char,
                                       inter_char = inter_char,
                                       signs_to_ignore = signs_to_ignore,
                                       words_to_ignore = words_to_ignore,
                                       map_punctuation = map_punctuation,
-                                      letters = letters
+                                      letters = letters,
+                                      sign_not_syllable = sign_not_syllable
                                       )
 
         self.assertEqual(tokenselector.final_char, final_char)
@@ -78,13 +80,15 @@ class TestTokenSelector(unittest.TestCase):
         words_to_ignore = []
         map_punctuation = {'.': '<pt>', ',': '<cm>', '\n':'<nl>'}
         letters = 'abcdeábcdé'
+        sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char=final_char,
                                       inter_char=inter_char,
                                       signs_to_ignore=signs_to_ignore,
                                       words_to_ignore=words_to_ignore,
                                       map_punctuation=map_punctuation,
-                                      letters=letters
+                                      letters=letters,
+                                      sign_not_syllable = sign_not_syllable
                                       )
 
         tokenselector.get_dictionary(path)
@@ -109,13 +113,15 @@ class TestTokenSelector(unittest.TestCase):
         words_to_ignore = []
         map_punctuation = {'.': '<pt>', ',': '<cm>', '\n': '<nl>'}
         letters = 'abcdeábcdé'
+        sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char=final_char,
                                       inter_char=inter_char,
                                       signs_to_ignore=signs_to_ignore,
                                       words_to_ignore=words_to_ignore,
                                       map_punctuation=map_punctuation,
-                                      letters=letters
+                                      letters=letters,
+                                      sign_not_syllable = sign_not_syllable
                                       )
 
         tokenselector.get_dictionary(path)
@@ -138,7 +144,7 @@ class TestTokenSelector(unittest.TestCase):
         quantity_word = 2
         quantity_syll = 6
 
-        text = 'hola , ¿ como estas ? \n hola \n bien y tu como estás ?'
+        text = 'hola , ¿ como estas ? \n hola \n bien y tu como estás ? status'
         path = './data/test_tokenSelector_getfrequent.txt'
         with open(path, 'w') as f: f.write(text)
 
@@ -147,14 +153,16 @@ class TestTokenSelector(unittest.TestCase):
         signs_to_ignore = ['?', '¿']
         words_to_ignore = []
         map_punctuation = {'.': '<pt>', ',': '<cm>', '\n': '<nl>'}
-        letters = 'abcdeábcdé'
+        letters = 'abcdeábcdé',
+        sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char=final_char,
                                       inter_char=inter_char,
                                       signs_to_ignore=signs_to_ignore,
                                       words_to_ignore=words_to_ignore,
                                       map_punctuation=map_punctuation,
-                                      letters=letters
+                                      letters=letters,
+                                      sign_not_syllable = sign_not_syllable
                                       )
 
         tokenselector.get_dictionary(path)
@@ -162,13 +170,14 @@ class TestTokenSelector(unittest.TestCase):
         tokenselector.get_frequent(quantity_word=quantity_word,
                                    quantity_syll=quantity_syll)
 
-        tokens = ['hola', 'como', 'estas', 'bien', 'bien', 'hola', 'tu', 'y', 'estás']
+        tokens = ['hola', 'como', 'estas', 'bien', 'bien', 'hola', 'tu', 'y', 'estás', 'status']
         token_selected = []
 
         for token in tokens:
             token_selected = tokenselector.select(token, token_selected)
 
-        token_selected_true = ['hola:', 'como:', 'es-', 'tas:', 'bien:', 'bien:', 'hola:', 'tu:', 'y:', 'es-', 'tás']
+        token_selected_true = ['hola:', 'como:', 'es-', 'tas:', 'bien:', 'bien:', 'hola:', 'tu:', 'y:', 'es-', 'tás', 's-',
+                               't-', 'a-', 'u-', 's:']
 
         self.assertTrue(token_selected, token_selected_true)
 

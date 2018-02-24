@@ -17,7 +17,8 @@ class Corpus:
                  signs_to_ignore=[],
                  words_to_ignore=[],
                  map_punctuation={'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
-                 letters='aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
+                 letters='aáeéoóíúiuübcdfghjklmnñopqrstvwxyz',
+                 sign_not_syllable = '<sns>'
                  ):
 
         self.path_to_file = path_to_file
@@ -31,13 +32,16 @@ class Corpus:
         self.map_punctuation = map_punctuation
         self.letters = letters
 
+        self.sign_not_syllable = sign_not_syllable
+
 
         self.tokenSelector = TokenSelector(final_char = self.final_char,
                                            inter_char = self.inter_char,
                                            signs_to_ignore = self.signs_to_ignore,
                                            words_to_ignore = self.words_to_ignore,
                                            map_punctuation = self.map_punctuation,
-                                           letters = self.letters
+                                           letters = self.letters,
+                                           sign_not_syllable = self.sign_not_syllable
                                            )
 
         self.tokenSelector.get_dictionary(path_file = self.path_to_file)

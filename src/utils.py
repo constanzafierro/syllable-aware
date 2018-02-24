@@ -148,7 +148,13 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_
     return dict_syll
 
 
-def tokenize_corpus(path_file, to_ignore):
+def tokenize_corpus(path_file,
+                    to_ignore,
+                    middle = '-',
+                    end = ':',
+                    sign_not_syllable = '<sns>',
+                    verbose = False
+                    ):
 
     dict_word = dict()
     dict_syll = dict()
@@ -165,19 +171,19 @@ def tokenize_corpus(path_file, to_ignore):
                 dict_word = word_to_syll(word = word,
                                          dict_word = dict_word,
                                          to_ignore = to_ignore,
-                                         middle = '-',
-                                         end = ':',
-                                         sign_not_syllable = '<sns>',
-                                         verbose = False
+                                         middle = middle,
+                                         end = end,
+                                         sign_not_syllable = sign_not_syllable,
+                                         verbose = verbose
                                          )
 
                 dict_syll = syll_to_charac(word = word,
                                            dict_syll = dict_syll,
                                            dict_word = dict_word,
                                            to_ignore = to_ignore,
-                                           middle = '-',
-                                           end = ':',
-                                           sign_not_syllable = '<sns>'
+                                           middle = middle,
+                                           end = end,
+                                           sign_not_syllable = sign_not_syllable
                                            )
 
                 freq_word = get_freq_words(word = word,

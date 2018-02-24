@@ -9,7 +9,8 @@ class TokenSelector():
                  signs_to_ignore,
                  words_to_ignore,
                  map_punctuation,
-                 letters
+                 letters,
+                 sign_not_syllable
                  ):
 
         self.final_char = final_char
@@ -24,6 +25,7 @@ class TokenSelector():
         # Characters
         self.characters = set(letters)
 
+        self.sign_not_syllable = sign_not_syllable
 
     def get_dictionary(self, path_file):
 
@@ -31,7 +33,10 @@ class TokenSelector():
         to_ignore = to_ignore + self.signs_to_ignore + self.words_to_ignore
 
         self.dict_word, self.dict_syll, self.freq_word, self.freq_syll = tokenize_corpus(path_file = path_file,
-                                                                                         to_ignore = to_ignore
+                                                                                         to_ignore = to_ignore,
+                                                                                         middle = self.inter_char,
+                                                                                         end = self.final_char,
+                                                                                         sign_not_syllable = self.sign_not_syllable
                                                                                          )
 
 
@@ -72,8 +77,13 @@ class TokenSelector():
                         tokens_selected.append(s)
 
                     else:
-                        for c in self.dict_syll[s]:
-                            if c in self.characters:
-                                tokens_selected.append(c)
+                        if s == self.sign_not_syllable:
+                            for c in self.dict_syll[token]:
+                                if c in self.characters:
+                                    tokens_selected.append(c)
+                        else:
+                            for c in self.dict_syll[s]:
+                                if c in self.characters:
+                                    tokens_selected.append(c)
 
         return tokens_selected
