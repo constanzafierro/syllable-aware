@@ -6,6 +6,8 @@ from src.Corpus import Corpus
 from src.utils import preprocessing_file
 import time
 
+import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
+
 ########################################################################################################################
 
 ## Setting Seed for Reproducibility
@@ -30,12 +32,13 @@ random.seed(seed)
 # K.set_session(sess)
 
 ########################################################################################################################
-
-## Path to File
+#
+# Path to File
 
 path_in = './data/horoscopo_test_overfitting.txt'
 path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
+# Pre processing
 
 print('\n Preprocess - Add Spaces \n')
 
@@ -85,8 +88,7 @@ workers = 1 # default 1
 
 
 ## Callbacks
-
-# Checkpoint
+# https://keras.io/callbacks/
 
 out_directory_train_history = '../train_history/'
 out_directory_model = '../models/'
@@ -96,9 +98,7 @@ time_pref = time.strftime('%y%m%d.%H%M')
 
 outfile = out_model_pref + time_pref + '.h5'
 
-
-import keras
-
+# Checkpoint
 # https://keras.io/callbacks/#modelcheckpoint
 
 monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'categorical_accuracy', 'val_loss', etc
@@ -117,7 +117,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
 
 monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'categorical_accuracy','val_loss', etc
 
-patience = 100 #  number of epochs with no improvement after which training will be stopped
+patience = 100 # number of epochs with no improvement after which training will be stopped
 
 
 early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
@@ -127,9 +127,8 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                mode='auto'
                                                )
 
-
-callbacks = [] # https://keras.io/callbacks/
 # callbacks = [checkpoint, early_stopping]
+callbacks = []
 
 
 ##
