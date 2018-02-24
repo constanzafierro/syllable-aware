@@ -90,6 +90,8 @@ def main():
                                  quantity_syllable=quantity_syllable
                                  )
 
+            token_selected = corpus.token_selected
+            print(token_selected)
 
             with open(path_out) as f1:
 
