@@ -13,10 +13,10 @@ from .src import TokenSelector
 from .src import Generators
 from .src import Corpus
 
-from .src import RNN
+#from .src import RNN
 
-from .src import perplexity
+#from .src import perplexity
 
 from .test import test_utils
 
-from .src.RNN import RecurrentLSTM
+#from .src.RNN import RecurrentLSTM

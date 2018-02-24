@@ -1,9 +1,6 @@
 from .utils import tokenize_corpus, get_most_frequent
 
 
-# TODO: Testear métodos y clases ...
-
-
 class TokenSelector():
 
     def __init__(self,
@@ -46,9 +43,15 @@ class TokenSelector():
                                        )
 
         # count syllables ignoring most frequent words
+
+        syll_to_ignore = []
+
+        for w in self.words:
+            syll_to_ignore += self.dict_word[w]
+
         self.syllables = get_most_frequent(freq_dict =  self.freq_syll,
                                            quantity = quantity_syll,
-                                           to_ignore = [w for w in self.words]
+                                           to_ignore = syll_to_ignore
                                            )
 
 
