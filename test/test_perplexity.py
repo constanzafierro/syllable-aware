@@ -7,11 +7,11 @@ class TestUtils(unittest.TestCase):
 
         avg_tpw = 5.0
 
-        perplexity_predict = metric_pp(avg_tpw)
-        pp_predict = perplexity_precit(y_pred, y_true)
-
         y_pred = K.constant([0.8, 0.2])
         y_true = K.constant([0.7, 0.3])
+
+        perplexity_predict = metric_pp(avg_tpw)
+        pp_predict = perplexity_predict(y_pred, y_true)
 
         cross_entropy_true = K.categorical_crossentropy(y_true, y_pred)
         bpt_true = avg_tpw * cross_entropy_true
@@ -34,3 +34,5 @@ if __name__ == '__main__':
 
     from keras import backend as K
     from src.perplexity import metric_pp
+
+    unittest.main()
