@@ -3,8 +3,7 @@ from src.Corpus import Corpus
 
 from src.TokenSelector import TokenSelector
 
-
-#TODO: ver si es útil escribir el código en función del Corpus (en vez de TokenSelector)
+# TODO: Testear main
 
 
 def main():
