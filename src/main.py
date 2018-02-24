@@ -61,7 +61,8 @@ def main():
                     signs_to_ignore=signs_to_ignore,
                     words_to_ignore=[],
                     map_punctuation=map_punctuation,
-                    letters=letters
+                    letters=letters,
+                    sign_not_syllable='<sns>'
                     )
     print('\n Corpus Instantiated \n')
 

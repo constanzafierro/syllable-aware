@@ -76,7 +76,7 @@ dropout_seed = 0
 
 train_size = 0.8 # 1
 batch_size = 128
-epochs = 100 #300
+epochs = 300
 
 optimizer = 'rmsprop' #'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
@@ -117,7 +117,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
 
 monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'categorical_accuracy','val_loss', etc
 
-patience = 300 #  number of epochs with no improvement after which training will be stopped
+patience = 100 #  number of epochs with no improvement after which training will be stopped
 
 
 early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
@@ -153,7 +153,8 @@ corpus = Corpus(path_to_file=path_to_file,
                 signs_to_ignore=signs_to_ignore,
                 words_to_ignore=[],
                 map_punctuation=map_punctuation,
-                letters=letters
+                letters=letters,
+                sign_not_syllable='<sns>'
                 )
 
 
