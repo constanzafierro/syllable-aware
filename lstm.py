@@ -42,15 +42,25 @@ print('\n Preprocess - Add Spaces \n')
 to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
 signs_to_ignore = [i for i in to_ignore]
 
-map_punctuation = {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
+map_punctuation = {'¿': '<ai>',
+                   '?': '<ci>',
+                   '.': '<pt>',
+                   '\n': '<nl>',
+                   ',': '<cm>',
+                   '<unk>':'<unk>',
+                   ':':'<dc>',
+                   ';':'<sc>'
+                   }
+
 letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
+
 
 add_space = True
 
 if add_space:
-    preprocessing_file(path_in = path_in,
-                       path_out = path_out,
-                       to_ignore = to_ignore
+    preprocessing_file(path_in=path_in,
+                       path_out=path_out,
+                       to_ignore=to_ignore
                        )
 
 path_to_file = path_out
@@ -85,28 +95,28 @@ L = 100  # sequence_length
 ## Init Corpus
 
 print('\n Init Corpus \n')
-corpus = Corpus(path_to_file = path_to_file,
-                train_size = train_size,
-                final_char = ':',
-                final_punc = '>',
-                inter_char = '-',
-                signs_to_ignore = signs_to_ignore,
-                words_to_ignore = [],
-                map_punctuation = map_punctuation,
-                letters = letters
+corpus = Corpus(path_to_file=path_to_file,
+                train_size=train_size,
+                final_char=':',
+                final_punc='>',
+                inter_char='-',
+                signs_to_ignore=signs_to_ignore,
+                words_to_ignore=[],
+                map_punctuation=map_punctuation,
+                letters=letters
                 )
 
 
 ## Tokenization
 print('\n Select Tokens \n')
-corpus.select_tokens(quantity_word = quantity_word,
-                     quantity_syllable = quantity_syllable
+corpus.select_tokens(quantity_word=quantity_word,
+                     quantity_syllable=quantity_syllable
                      )
 
 
 ## L prime
 print('\n L prime \n')
-corpus.calculateLprime(sequence_length = L)
+corpus.calculateLprime(sequence_length=L)
 Lprima = corpus.lprime
 
 
@@ -118,13 +128,13 @@ vocabulary = corpus.vocabulary_as_index
 
 ## Init Model
 print('\n Init Model \n')
-model = RecurrentLSTM(vocab_size = len(vocabulary),
-                      embedding_dim = D,
-                      hidden_dim = D,
-                      input_length = Lprima,
-                      recurrent_dropout = recurrent_dropout,
-                      dropout = dropout,
-                      seed = dropout_seed
+model = RecurrentLSTM(vocab_size=len(vocabulary),
+                      embedding_dim=D,
+                      hidden_dim=D,
+                      input_length=Lprima,
+                      recurrent_dropout=recurrent_dropout,
+                      dropout=dropout,
+                      seed=dropout_seed
                       )
 
 
@@ -135,14 +145,14 @@ print(model.summary())
 
 ## Build Model
 print('\n Build Model \n')
-model.build(optimizer = optimizer,
-            metrics = metrics
+model.build(optimizer=optimizer,
+            metrics=metrics
             )
 
 
 ## Generators
 print('\n Get Generators \n')
-train_generator, eval_generator = corpus.get_generators(batch_size = batch_size)
+train_generator, eval_generator = corpus.get_generators(batch_size=batch_size)
 
 
 ## Training
@@ -150,10 +160,10 @@ print('\n Training \n')
 ti = time.time()
 
 
-model.fit(generator = train_generator,
-          epochs = epochs,
-          workers = workers,
-          callbacks = callbacks
+model.fit(generator=train_generator,
+          epochs=epochs,
+          workers=workers,
+          callbacks=callbacks
           )
 
 
