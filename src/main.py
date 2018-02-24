@@ -1,8 +1,6 @@
 from src.utils import preprocessing_file
 from src.Corpus import Corpus
 
-from src.TokenSelector import TokenSelector
-
 # TODO: Testear main
 
 
