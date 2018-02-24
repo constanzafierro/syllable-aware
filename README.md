@@ -2,18 +2,13 @@
 
 *  **[Working]** lstm.py **Haven't been Tested yet !**
 
-* **[Working]** CLASE CORPUS **Haven't been Tested yet !**
+* **[Working]** main.py **Haven't been Tested yet !**
 
-* **[Broken]** main.py
 
 * **[Broken]** notebooks (Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
 
 
 # TODO List
-
-### Testear las clases
-
-### Crear archivo requirements.txt
 
 
 ### main --> Crear Main en Root
@@ -23,6 +18,26 @@
 * Agregar modelo al main y testear el main
 
 
+### Testear archivos y clases
+
+* **[Tested]** utils.py
+
+* **[Tested]** perplexity.py
+
+* **[Tested]** TokenSelector.py
+
+* Corpus.py
+
+* RNN.py
+
+* Generators.py
+
+
+### Crear archivo requirements.txt
+
+* Hacer lista de paquetes y crear archivo requirements.txt
+
+
 ### perplexity
 
 * Implementar perplexity
@@ -30,7 +45,7 @@
 
 ### Clase Generators
 
-* Ajustar clase Generators.py para utilizar L y Lprima
+* Verificar que clase Generators se ajusta al uso de L y Lprima
 
 
 ---
