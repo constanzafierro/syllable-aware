@@ -64,14 +64,11 @@ def main():
                     letters=letters
                     )
     print('\n Corpus Instantiated \n')
+
     ##
 
-    print(corpus.tokenSelector.dict_word)
-    print(corpus.tokenSelector.dict_syll)
-    ##
-
-    tw = [30, 60, 100, 300, 600, 1000, 3000, 6000]
-    totalt = 10000
+    T_W = [30, 60, 100, 300, 600, 1000, 3000, 6000]
+    Tmax = 10000 # Maximum number of Tokens (without considering characters)
     sequence_length = [100, 500, 1000, 2500, 5000]
 
     print('='*50)
@@ -82,23 +79,22 @@ def main():
           )
 
 
-    ####################################################################################################################
     for sl in sequence_length:
-        break #TODO: Eliminar break al modifcar el loop para correrlo
+
         print('='*50)
         print('sequence length = {}'.format(sl))
 
-        for t in tw:
+        for tw in T_W:
 
-            q_word = t
-            q_syll = totalt - t
+            quantity_word = tw
+            quantity_syllable = Tmax - tw
 
-            corpus.tokenSelector.get_frequent(quantity_word = q_word,
-                                              quantity_syll = q_syll
+            corpus.tokenSelector.get_frequent(quantity_word=quantity_word,
+                                              quantity_syll=quantity_syllable
                                               )
-            #print(tokenSelector.syllables)
 
             token_selected = []
+
             with open(path_out) as f1:
 
                 for line in f1:
@@ -106,13 +102,17 @@ def main():
 
                     for token in words:
                         token = token.strip()
-                        corpus.tokenSelector.select(token=token,
-                                                    tokens_selected=token_selected
-                                                    )
 
-            print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(q_word,
-                                                                                           q_syll,
-                                                                                           Lprime(token_selected,sl)
+                        corpus.select_tokens(quantity_word=quantity_word,
+                                             quantity_syllable=quantity_syllable
+                                             )
+
+            corpus.calculateLprime(sequence_length=sl)
+            Lprima = corpus.lprime
+
+            print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
+                                                                                           quantity_syllable,
+                                                                                           Lprima
                                                                                            )
                   )
 
@@ -120,9 +120,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-'''
-## L prime
-print('\n L prime \n')
-corpus.calculateLprime(sequence_length=sl)
-Lprima = corpus.lprime
-'''

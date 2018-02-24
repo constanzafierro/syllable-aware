@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/lstm.py" afterPath="$PROJECT_DIR$/lstm.py" />
       <change beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/syllable_aware$main.coverage" NAME="main Coverage Results" MODIFIED="1519503550378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/syllable_aware$main.coverage" NAME="main Coverage Results" MODIFIED="1519504632922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/syllable_aware$lstm__1_.coverage" NAME="lstm (1) Coverage Results" MODIFIED="1519427360370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/syllable_aware$test_utils.coverage" NAME="test_utils Coverage Results" MODIFIED="1519434501191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/syllable_aware$lstm.coverage" NAME="lstm Coverage Results" MODIFIED="1519503427627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -26,7 +25,7 @@
       <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
+            <state relative-caret-position="-474">
               <caret line="35" column="11" lean-forward="true" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="48" />
               <folding>
                 <element signature="e#28#61#0" expanded="true" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
+            <state relative-caret-position="666">
+              <caret line="95" column="24" lean-forward="false" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="24" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
               </folding>
@@ -50,7 +49,7 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
+            <state relative-caret-position="111">
               <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -62,8 +61,8 @@
       <file leaf-file-name="Corpus.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Corpus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+            <state relative-caret-position="270">
+              <caret line="71" column="8" lean-forward="true" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -434,13 +433,6 @@
       <option name="presentableId" value="Default" />
       <updated>1517541019873</updated>
     </task>
-    <task id="LOCAL-00009" summary="Para probar lstm.py hay que arreglar clase corpusClass !!">
-      <created>1519381443586</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1519381443586</updated>
-    </task>
     <task id="LOCAL-00010" summary="Agrego &quot;TODOs&quot; al comienzo  por unos &quot;unresolved references&quot;">
       <created>1519382266234</created>
       <option name="number" value="00010" />
@@ -777,7 +769,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519502904344</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Actualizando main">
+      <created>1519503579134</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1519503579135</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1029,39 +1028,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/TokenSelector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
           <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Corpus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lstm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="35" column="11" lean-forward="true" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="48" />
-          <folding>
-            <element signature="e#28#61#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1073,10 +1044,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lstm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-474">
+          <caret line="35" column="11" lean-forward="true" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="48" />
+          <folding>
+            <element signature="e#28#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Corpus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="71" column="8" lean-forward="true" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="74" column="50" lean-forward="true" selection-start-line="74" selection-start-column="50" selection-end-line="74" selection-end-column="50" />
+        <state relative-caret-position="666">
+          <caret line="95" column="24" lean-forward="false" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="24" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
           </folding>
