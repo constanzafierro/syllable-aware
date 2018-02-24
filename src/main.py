@@ -11,8 +11,8 @@ def main():
 
     ## Path to File
 
-    path_in = './data/train.txt'
-    path_out = './data/train_add_space.txt'
+    path_in = '../data/train.txt'
+    path_out = '../data/train_add_space.txt'
 
 
     print('\n Preprocess - Add Spaces \n')
@@ -34,12 +34,12 @@ def main():
     letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
 
 
-    add_space = False
+    add_space = True#False
 
     if add_space:
-        preprocessing_file(path_in = path_in,
-                           path_out = path_out,
-                           to_ignore = to_ignore
+        preprocessing_file(path_in=path_in,
+                           path_out=path_out,
+                           to_ignore=to_ignore
                            )
 
     path_to_file = path_out
@@ -65,40 +65,47 @@ def main():
                     )
     ##
 
-    tokenSelector = TokenSelector(signs_to_ignore = signs_to_ignore)
-    tokenSelector.get_dictionary(path_out = path_out)
+    #corpus.tokenSelector.get_dictionary()
 
     tw = [30, 60, 100, 300, 600, 1000, 3000, 6000]
     totalt = 10000
     sequence_length = [100, 500, 1000, 2500, 5000]
 
     print('='*50)
-    print('corpus to proccess : {}'.format(path_in))
-    print('vocabulary  word size = {} \t vocabulary syllables size = {}'.format(len(tokenSelector.dict_word),
-                                                                                len(tokenSelector.dict_syll)
-                                                                                )
+    print('Corpus to Process : {}'.format(path_in))
+    print('Vocabulary Word Size = {} \t Vocabulary Syllables Size = {}'.format(len(corpus.tokenSelector.dict_word),
+                                                                               len(corpus.tokenSelector.dict_syll)
+                                                                               )
           )
 
-    for sl in sequence_length:
 
+    ####################################################################################################################
+    for sl in sequence_length:
+        break #TODO
         print('='*50)
         print('sequence length = {}'.format(sl))
 
         for t in tw:
+
             q_word = t
             q_syll = totalt - t
-            tokenSelector.get_frequent(quantity_word = q_word,
-                                       quantity_syll = q_syll
-                                       )
+
+            corpus.tokenSelector.get_frequent(quantity_word = q_word,
+                                              quantity_syll = q_syll
+                                              )
             #print(tokenSelector.syllables)
 
             token_selected = []
             with open(path_out) as f1:
+
                 for line in f1:
                     words = line.lower().split()
+
                     for token in words:
                         token = token.strip()
-                        tokenSelector.select(token, token_selected)
+                        corpus.tokenSelector.select(token=token,
+                                                    tokens_selected=token_selected
+                                                    )
 
             print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(q_word,
                                                                                            q_syll,
@@ -108,6 +115,11 @@ def main():
 
 
 if __name__ == '__main__':
-
     main()
 
+'''
+## L prime
+print('\n L prime \n')
+corpus.calculateLprime(sequence_length=sl)
+Lprima = corpus.lprime
+'''
