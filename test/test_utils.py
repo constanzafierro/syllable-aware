@@ -545,8 +545,7 @@ class TestUtils(unittest.TestCase):
 
     def test_ending_tokens_index(self):
 
-        token_to_index = {'hola:':1, 'co-':2, 'mo:':3, 'es-':4, 'tas:':5, '<pt>':6,
-                          'hola:': 1, 'co-': 2, 'mo:': 3}
+        token_to_index = {'hola:':1, 'co-':2, 'mo:':3, 'es-':4, 'tas:':5, '<pt>':6}
         ends = [':', '>']
         ending = ending_tokens_index(token_to_index, ends)
         ending_true = [1, 3, 5, 6]
