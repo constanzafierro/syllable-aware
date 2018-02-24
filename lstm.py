@@ -47,9 +47,9 @@ map_punctuation = {'¿': '<ai>',
                    '.': '<pt>',
                    '\n': '<nl>',
                    ',': '<cm>',
-                   '<unk>':'<unk>',
-                   ':':'<dc>',
-                   ';':'<sc>'
+                   '<unk>': '<unk>',
+                   ':': '<dc>',
+                   ';': '<sc>'
                    }
 
 letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'

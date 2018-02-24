@@ -11,8 +11,8 @@ def main():
 
     ## Path to File
 
-    path_in = '../data/train.txt'
-    path_out = '../data/train_add_space.txt'
+    path_in = '../data/horoscopo_test_overfitting.txt'
+    path_out = '../data/horoscopo_test_overfitting_add_space.txt'
 
 
     print('\n Preprocess - Add Spaces \n')
@@ -63,16 +63,19 @@ def main():
                     map_punctuation=map_punctuation,
                     letters=letters
                     )
+    print('\n Corpus Instantiated \n')
     ##
 
-    #corpus.tokenSelector.get_dictionary()
+    print(corpus.tokenSelector.dict_word)
+    print(corpus.tokenSelector.dict_syll)
+    ##
 
     tw = [30, 60, 100, 300, 600, 1000, 3000, 6000]
     totalt = 10000
     sequence_length = [100, 500, 1000, 2500, 5000]
 
     print('='*50)
-    print('Corpus to Process : {}'.format(path_in))
+    print('Corpus to Process : {}'.format(path_to_file))
     print('Vocabulary Word Size = {} \t Vocabulary Syllables Size = {}'.format(len(corpus.tokenSelector.dict_word),
                                                                                len(corpus.tokenSelector.dict_syll)
                                                                                )
@@ -81,7 +84,7 @@ def main():
 
     ####################################################################################################################
     for sl in sequence_length:
-        break #TODO
+        break #TODO: Eliminar break al modifcar el loop para correrlo
         print('='*50)
         print('sequence length = {}'.format(sl))
 
