@@ -1,4 +1,4 @@
-from .utils import tokenize_corpus, get_most_frequent
+from .utils import tokenize_corpus, get_most_frequent, get_syllables_to_ignore
 
 
 class TokenSelector():
@@ -49,16 +49,12 @@ class TokenSelector():
 
         # count syllables ignoring most frequent words
 
-        syll_to_ignore = []
-
-        for w in self.words:
-            syll_to_ignore += self.dict_word[w]
+        syll_to_ignore = get_syllables_to_ignore(self.words, self.dict_word)
 
         self.syllables = get_most_frequent(freq_dict =  self.freq_syll,
                                            quantity = quantity_syll,
                                            to_ignore = syll_to_ignore
                                            )
-
 
     def select(self, token, tokens_selected):
 

@@ -255,3 +255,17 @@ def ending_tokens_index(token_to_index, ends):
 
     return token_end
 
+
+def get_syllables_to_ignore(words, dict_word_to_syll, verbose = False):
+
+    syll_to_ignore = []
+
+    for w in words:
+        try:
+            syll_to_ignore += dict_word_to_syll[w]
+        except KeyError:
+            if verbose:
+                print('KeyError in dict_word_to_syll, word = {}'.format(w))
+
+    return syll_to_ignore
+

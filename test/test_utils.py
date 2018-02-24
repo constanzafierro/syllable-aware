@@ -552,6 +552,18 @@ class TestUtils(unittest.TestCase):
 
         self.assertEqual(ending, ending_true)
 
+    def test_get_syllables_to_ignore(self):
+
+        words = ['hola', 'chao']
+        dict_word_to_syll = {'chao':['cha-', 'o:'], 'hola':['ho-', 'la:']}
+
+        syll_to_ignore = get_syllables_to_ignore(words, dict_word_to_syll)
+
+        syll_true = ['cha-', 'ho-', 'la:', 'o:']
+
+        for syll in syll_to_ignore:
+            self.assertTrue(syll in syll_true)
+
 
 
 if __name__ == '__main__':
@@ -571,5 +583,6 @@ if __name__ == '__main__':
     from src.utils import get_most_frequent
     from src.utils import Lprime
     from src.utils import ending_tokens_index
+    from src.utils import get_syllables_to_ignore
 
     unittest.main()
