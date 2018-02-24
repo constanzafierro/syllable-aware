@@ -93,24 +93,12 @@ def main():
             token_selected = corpus.token_selected
             print(token_selected)
 
-            with open(path_out) as f1:
-
-                for line in f1:
-                    words = line.lower().split()
-
-                    for token in words:
-                        token = token.strip()
-
-                        corpus.select_tokens(quantity_word=quantity_word,
-                                             quantity_syllable=quantity_syllable
-                                             )
-
             corpus.calculateLprime(sequence_length=sl)
-            Lprima = corpus.lprime
+            print(corpus.lprime)
 
             print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
                                                                                            quantity_syllable,
-                                                                                           Lprima
+                                                                                           corpus.lprime
                                                                                            )
                   )
 
