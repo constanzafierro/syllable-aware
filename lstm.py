@@ -117,7 +117,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
 
 monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'categorical_accuracy','val_loss', etc
 
-patience = 100 # number of epochs with no improvement after which training will be stopped
+patience = 100# number of epochs with no improvement after which training will be stopped
 
 
 early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
