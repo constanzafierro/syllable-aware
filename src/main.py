@@ -1,4 +1,4 @@
-from src.utils import preprocessing_file, Lprime
+from src.utils import preprocessing_file
 from src.Corpus import Corpus
 
 from src.TokenSelector import TokenSelector
