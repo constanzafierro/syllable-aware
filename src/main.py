@@ -11,10 +11,13 @@ def main():
     path_in = '../data/horoscopo_test_overfitting.txt'
     path_out = '../data/horoscopo_test_overfitting_add_space.txt'
 
+    path_in = '../data/train.txt' #
+    path_out = '../data/train_add_space.txt'
+
 
     print('\n Preprocess - Add Spaces \n')
 
-    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­''' #TODO: Agregar simbolos //­
 
     signs_to_ignore = [i for i in to_ignore]
 
@@ -31,7 +34,7 @@ def main():
     letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
 
 
-    add_space = True#False
+    add_space = True
 
     if add_space:
         preprocessing_file(path_in=path_in,
@@ -39,7 +42,7 @@ def main():
                            to_ignore=to_ignore
                            )
 
-    path_to_file = path_out
+    path_to_file = path_out # to instantiate Corpus
 
 
     ## Hyperparameters
