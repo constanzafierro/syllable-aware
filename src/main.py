@@ -93,8 +93,6 @@ def main():
                                               quantity_syll=quantity_syllable
                                               )
 
-            token_selected = []
-
             with open(path_out) as f1:
 
                 for line in f1:
