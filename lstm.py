@@ -1,17 +1,24 @@
 # coding: utf-8
 
+## Imports
+from src.RNN import RecurrentLSTM
+from src.Corpus import Corpus
+from src.utils import preprocessing_file
+import time
+
+########################################################################################################################
 
 ## Setting Seed for Reproducibility
+# https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
+
 import os
 import numpy as np
 import random
 
 # import tensorflow as tf
 
-
 os.environ['PYTHONHASHSEED'] = '1' # https://github.com/fchollet/keras/issues/850
 seed = 1 # must be the same as PYTHONHASHSEED
-
 np.random.seed(seed)
 random.seed(seed)
 
@@ -22,15 +29,7 @@ random.seed(seed)
 # sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 # K.set_session(sess)
 
-
-## Imports
-
-from src.RNN import RecurrentLSTM
-from src.Corpus import Corpus
-from src.utils import preprocessing_file
-
-import time
-
+########################################################################################################################
 
 ## Path to File
 
