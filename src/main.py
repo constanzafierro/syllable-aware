@@ -86,9 +86,10 @@ def main():
             quantity_word = tw
             quantity_syllable = Tmax - tw
 
-            corpus.tokenSelector.get_frequent(quantity_word=quantity_word,
-                                              quantity_syll=quantity_syllable
-                                              )
+            corpus.select_tokens(quantity_word=quantity_word,
+                                 quantity_syllable=quantity_syllable
+                                 )
+
 
             with open(path_out) as f1:
 
