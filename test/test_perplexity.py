@@ -11,13 +11,13 @@ class TestUtils(unittest.TestCase):
         y_true = K.constant([0.7, 0.3])
 
         perplexity_predict = metric_pp(avg_tpw)
-        pp_predict = perplexity_predict(y_pred, y_true)
+        pp_predict = perplexity_predict(y_true, y_pred)
 
         cross_entropy_true = K.categorical_crossentropy(y_true, y_pred)
         bpt_true = avg_tpw * cross_entropy_true
         pp_true = K.pow(2.0, bpt_true)
 
-        if K == 'tensorflow':
+        if K.backend() == 'tensorflow':
             tf_session = K.get_session()
             pp_true_eval = pp_true.eval(session=tf_session)
             pp_predict_eval = pp_predict.eval(session=tf_session)
