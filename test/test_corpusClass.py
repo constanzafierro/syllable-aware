@@ -108,9 +108,9 @@ class TestCorpusClass(unittest.TestCase):
 
         corpus.select_tokens(quantity_word, quantity_syll)
 
-        token_selected_true = ['hola:', '<cm>', 'como:', 'es-', 'tas:', 'hola:',
-                               'bien:', 'y:', 'tu:', 'como:', 'es-', 'tás:',
-                               's-','t-', 'a-', 't-', 'u-', 's:']
+        token_selected_true = ['hola:', '<cm>', 'como:', 'es-', 'tas:', '<nl>', 'hola:',
+                               '<nl>', 'bien:', 'y:', 'tu:', 'como:', 'es-', 'tás:',
+                               's-','t-', 'a-', 't-', 'u-', 's:', '<nl>']
 
         self.assertEqual(token_selected_true, corpus.token_selected)
 
@@ -166,6 +166,48 @@ class TestCorpusClass(unittest.TestCase):
 
         lprime_true = 9
         self.assertEqual(corpus.lprime, lprime_true)
+
+    def test_dictionaries_token_index(self):
+        train_size = 128
+
+        quantity_word = 2
+        quantity_syll = 6
+
+        text = 'hola , ¿ como estas ? \n hola \n bien y tu como estás ? status '
+        path = './data/test_corpus_select_tokens.txt'
+        with open(path, 'w') as f: f.write(text)
+
+        final_char = ':'
+        final_punc = '>'
+        inter_char = '-'
+        signs_to_ignore = ['?', '¿']
+        words_to_ignore = []
+        map_punctuation = {'.': '<pt>', ',': '<cm>', '\n': '<nl>'}
+        letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
+        sign_not_syllable = '<sns>'
+
+        corpus = Corpus(path_to_file=path,
+                        train_size=train_size,
+                        final_char=final_char,
+                        final_punc=final_punc,
+                        inter_char=inter_char,
+                        signs_to_ignore=signs_to_ignore,
+                        words_to_ignore=words_to_ignore,
+                        map_punctuation=map_punctuation,
+                        letters=letters,
+                        sign_not_syllable=sign_not_syllable
+                        )
+
+        corpus.select_tokens(quantity_word, quantity_syll)
+
+        corpus.dictionaries_token_index()
+
+
+        vocabulary_true = {'hola:', '<cm>', 'y:', 't-', 'como:', 's-', 'a-', 'tás:',
+                           'tu:', 'es-', 'u-', 'bien:', 'tas:', 's:', '<nl>'}
+
+        for key in corpus.vocabulary:
+            self.assertTrue(key in vocabulary_true)
 
 
 if __name__ == '__main__':
