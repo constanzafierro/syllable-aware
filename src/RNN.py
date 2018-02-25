@@ -94,7 +94,7 @@ class RecurrentLSTM:
                                  workers=self.workers,
                                  use_multiprocessing=False, # Must be False, unless there is a "thread safe generator"
                                  shuffle=False, # Must be False
-                                 initial_epoch=0 # TODO: Ver si es útil añadirlo como input del fit()
+                                 initial_epoch=0
                                  )
 
     def summary(self):
