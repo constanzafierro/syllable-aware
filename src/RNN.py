@@ -88,8 +88,8 @@ class RecurrentLSTM:
                                  epochs=self.epochs,
                                  verbose=1,
                                  callbacks=self.callbacks,
-                                 validation_data=self.val_generator.generator(), # TODO: (1)
-                                 validation_steps=1,#None
+                                 validation_data= None# self.val_generator.generator(), # TODO: (1)
+                                 validation_steps=None#1 # TODO: (2)
                                  class_weight=None,
                                  max_queue_size=10,
                                  workers=self.workers,
