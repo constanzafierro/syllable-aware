@@ -71,6 +71,8 @@ class RecurrentLSTM:
                            metrics=self.metrics
                            )
 
+        self.get_config = self.model.get_config()
+
 
     def fit(self, train_generator, val_generator, epochs, callbacks, workers):
 
