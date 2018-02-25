@@ -111,7 +111,7 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
                                              save_best_only=True, # TODO: Guardar cada K epochs, y Guardar el mejor
                                              save_weights_only=False,
                                              mode='auto',
-                                             period=1
+                                             period=1 # Interval (number of epochs) between checkpoints.
                                              )
 
 

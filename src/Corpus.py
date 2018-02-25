@@ -35,13 +35,13 @@ class Corpus:
         self.sign_not_syllable = sign_not_syllable
 
 
-        self.tokenSelector = TokenSelector(final_char = self.final_char,
-                                           inter_char = self.inter_char,
-                                           signs_to_ignore = self.signs_to_ignore,
-                                           words_to_ignore = self.words_to_ignore,
-                                           map_punctuation = self.map_punctuation,
-                                           letters = self.letters,
-                                           sign_not_syllable = self.sign_not_syllable
+        self.tokenSelector = TokenSelector(final_char=self.final_char,
+                                           inter_char=self.inter_char,
+                                           signs_to_ignore=self.signs_to_ignore,
+                                           words_to_ignore=self.words_to_ignore,
+                                           map_punctuation=self.map_punctuation,
+                                           letters=self.letters,
+                                           sign_not_syllable=self.sign_not_syllable
                                            )
 
         self.tokenSelector.get_dictionary(path_file = self.path_to_file)
@@ -54,8 +54,8 @@ class Corpus:
         self.quantity_word = quantity_word
         self.quantity_syllable = quantity_syllable
 
-        self.tokenSelector.get_frequent(quantity_word = self.quantity_word,
-                                        quantity_syll = self.quantity_syllable
+        self.tokenSelector.get_frequent(quantity_word=self.quantity_word,
+                                        quantity_syll=self.quantity_syllable
                                         )
 
         self.token_selected = []
@@ -68,15 +68,15 @@ class Corpus:
                     for token in words:
                         token = token.strip()
 
-                        self.tokenSelector.select(token = token,
-                                                  tokens_selected = self.token_selected
+                        self.tokenSelector.select(token=token,
+                                                  tokens_selected=self.token_selected
                                                   )
 
 
     def calculateLprime(self, sequence_length):
 
-        self.lprime = Lprime(token_selected = self.token_selected,
-                             sequence_length = sequence_length
+        self.lprime = Lprime(token_selected=self.token_selected,
+                             sequence_length=sequence_length
                              )
     
     
@@ -164,20 +164,20 @@ class Corpus:
 
     def get_generators(self, batch_size):
 
-        train_generator = GeneralGenerator(batch_size = batch_size,
-                                           ind_tokens = self.train_set,
-                                           vocabulary = self.vocabulary,
-                                           max_len = self.lprime,
-                                           split_symbol_index = self.tokensplit,
-                                           count_to_split = -1
+        train_generator = GeneralGenerator(batch_size=batch_size,
+                                           ind_tokens=self.train_set,
+                                           vocabulary=self.vocabulary,
+                                           max_len=self.lprime,
+                                           split_symbol_index=self.tokensplit,
+                                           count_to_split=-1
                                            )
 
-        eval_generator = GeneralGenerator(batch_size = batch_size,
-                                          ind_tokens = self.eval_set,
-                                          vocabulary = self.vocabulary,
-                                          max_len = self.lprime,
-                                          split_symbol_index = self.tokensplit,
-                                          count_to_split = -1
+        eval_generator = GeneralGenerator(batch_size=batch_size,
+                                          ind_tokens=self.eval_set,
+                                          vocabulary=self.vocabulary,
+                                          max_len=self.lprime,
+                                          split_symbol_index=self.tokensplit,
+                                          count_to_split=-1
                                           )
 
         return train_generator, eval_generator
