@@ -229,7 +229,7 @@ model.build(optimizer=optimizer,
 
 ## Model Summary
 print('\n Model Summary \n')
-print(model.summary())
+print(model.summary)
 
 
 ## Model Config
