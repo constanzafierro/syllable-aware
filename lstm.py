@@ -219,7 +219,7 @@ model = RecurrentLSTM(vocab_size=len(vocabulary),
                       seed=dropout_seed
                       )
 
-print(model.get_config())
+print(model.get_config)
 
 ## Model Summary
 print('\n Model Summary \n')
