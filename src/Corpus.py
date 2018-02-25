@@ -11,16 +11,31 @@ class Corpus:
     def __init__(self,
                  path_to_file,
                  train_size,
-                 final_char=':',
-                 final_punc='>',
-                 inter_char='-',
-                 signs_to_ignore=[],
-                 words_to_ignore=[],
-                 map_punctuation={'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>',
-                                  ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
-                 letters='aáeéoóíúiuübcdfghjklmnñopqrstvwxyz',
-                 sign_not_syllable = '<sns>'
+                 final_char,
+                 final_punc,
+                 inter_char,
+                 signs_to_ignore,
+                 words_to_ignore,
+                 map_punctuation,
+                 letters,
+                 sign_not_syllable
                  ):
+
+        '''
+
+        :param path_to_file:
+        :param train_size:
+        :param final_char: ':'
+        :param final_punc: '>'
+        :param inter_char: '-'
+        :param signs_to_ignore: []
+        :param words_to_ignore: []
+        :param map_punctuation: {'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>',
+                                  ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'}
+        :param letters: 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
+        :param sign_not_syllable: '<sns>'
+
+        '''
 
         self.path_to_file = path_to_file
         self.train_size = train_size
@@ -60,7 +75,7 @@ class Corpus:
 
         self.vocabulary = set()
         self.token_to_index = dict()
-        self.indice_ends = []
+        self.index_ends = []
         self.index_to_token = dict()
         self.ind_corpus = []
         self.vocabulary_as_index = set()
@@ -109,7 +124,7 @@ class Corpus:
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
 
-        self.indice_ends = ending_tokens_index(token_to_index = self.token_to_index,
+        self.index_ends = ending_tokens_index(token_to_index = self.token_to_index,
                                                ends = [self.final_char, self.final_punc]
                                                )
 
@@ -131,7 +146,7 @@ class Corpus:
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
 
-        self.indice_ends = ending_tokens_index(token_to_index = self.token_to_index,
+        self.index_ends = ending_tokens_index(token_to_index = self.token_to_index,
                                                ends = [self.final_char, self.final_punc]
                                                )
 
@@ -150,7 +165,7 @@ class Corpus:
 
             tokens.append(token)
 
-            if token in self.indice_ends:
+            if token in self.index_ends:
                 qw += 1
 
             if token == self.tokensplit:
