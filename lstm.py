@@ -75,7 +75,7 @@ D = 512
 
 recurrent_dropout = 0.3 # 0
 dropout = 0.3 # 0
-dropout_seed = 0
+dropout_seed = 1
 
 train_size = 0.8 # 1
 batch_size = 128
@@ -84,7 +84,7 @@ epochs = 300
 optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
-workers = 1 # default 1
+workers = 2 # default 1
 
 
 ## Callbacks
@@ -204,7 +204,7 @@ model.build(optimizer=optimizer,
 
 ## Generators
 print('\n Get Generators \n')
-train_generator, eval_generator = corpus.get_generators(batch_size=batch_size)
+train_generator, val_generator = corpus.get_generators(batch_size=batch_size)
 
 
 ## Training
@@ -212,7 +212,8 @@ print('\n Training \n')
 ti = time.time()
 
 
-model.fit(generator=train_generator,
+model.fit(train_generator=train_generator,
+          val_generator=val_generator,
           epochs=epochs,
           callbacks=callbacks,
           workers=workers

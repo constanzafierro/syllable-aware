@@ -72,24 +72,24 @@ class RecurrentLSTM:
                            )
 
 
-    def fit(self, generator, epochs, callbacks, workers, **kwargs):
+    def fit(self, train_generator, val_generator, epochs, callbacks, workers):
 
-        self.g = generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
+        self.train_generator = train_generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
+        self.val_generator = val_generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
 
         self.epochs = epochs
         self.workers = workers
         self.callbacks = callbacks
 
-
-        # TODO: Ver si agregar validation_data al fit_generator y al input del fit()
+        # TODO: Agregar val_generator al fit_generator y al input del fit()
         # https://keras.io/models/sequential/#fit_generator
-        self.model.fit_generator(generator=self.g.generator(),
-                                 steps_per_epoch=self.g.steps_per_epoch,
+        self.model.fit_generator(generator=self.train_generator.generator(),
+                                 steps_per_epoch=self.train_generator.steps_per_epoch,
                                  epochs=self.epochs,
                                  verbose=1,
                                  callbacks=self.callbacks,
-                                 validation_data=None, # TODO: ver si agregar generator
-                                 validation_steps=None,
+                                 validation_data=self.val_generator.generator(), # TODO: (1)
+                                 validation_steps=1,#None
                                  class_weight=None,
                                  max_queue_size=10,
                                  workers=self.workers,
