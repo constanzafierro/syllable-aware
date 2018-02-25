@@ -35,8 +35,8 @@ random.seed(seed)
 #
 # Path to File
 
-path_in = './data/horoscopo_test_overfitting.txt'
-path_out = './data/horoscopo_test_overfitting_add_space.txt'
+path_in = '../data/horoscopo_test_overfitting.txt'
+path_out = '../data/horoscopo_test_overfitting_add_space.txt'
 
 # Pre processing
 
