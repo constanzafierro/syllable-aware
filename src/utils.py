@@ -170,6 +170,8 @@ def tokenize_corpus(path_file,
             for word in words:
                 word = word.strip()
 
+                if word == '': continue
+
                 dict_word = word_to_syll(word = word,
                                          dict_word = dict_word,
                                          to_ignore = to_ignore,

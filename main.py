@@ -17,7 +17,7 @@ def main():
 
     print('\n Preprocess - Add Spaces \n')
 
-    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­''' # TODO: Agregar simbolos //­
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­\xc2''' # TODO: Agregar simbolos //­
 
     signs_to_ignore = [i for i in to_ignore]
 

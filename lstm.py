@@ -42,7 +42,7 @@ path_out = './data/horoscopo_test_overfitting_add_space.txt'
 ## Pre processing
 print('\n Preprocess - Add Spaces \n')
 
-to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
+to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­\xc2'''
 signs_to_ignore = [i for i in to_ignore]
 
 map_punctuation = {'¿': '<ai>',
@@ -90,8 +90,8 @@ workers = 2 # default 1
 ## Callbacks
 # https://keras.io/callbacks/
 
-out_directory_train_history = '../train_history/'
-out_directory_model = '../models/'
+out_directory_train_history = './train_history/'
+out_directory_model = './models/'
 out_model_pref = 'lstm_model_'
 
 time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
