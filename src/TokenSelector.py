@@ -23,9 +23,19 @@ class TokenSelector():
         self.punctuation = set(self.map_punctuation)
 
         # Characters
-        self.characters = set(letters)
+        self.letters = set(letters)
 
         self.sign_not_syllable = sign_not_syllable
+
+        #dictionaries
+        self.dict_word = dict()
+        self.dict_syll = dict()
+        self.freq_word = dict()
+        self.freq_syll = dict()
+
+        #selectors
+        self.words = set()
+        self.syllables = set()
 
     def get_dictionary(self, path_file):
 
@@ -75,11 +85,12 @@ class TokenSelector():
                     else:
                         if s == self.sign_not_syllable:
                             for c in self.dict_syll[token]:
-                                if c in self.characters:
+                                if c[0] in self.letters:
+
                                     tokens_selected.append(c)
                         else:
                             for c in self.dict_syll[s]:
-                                if c in self.characters:
+                                if c[0] in self.letters:
                                     tokens_selected.append(c)
 
         return tokens_selected

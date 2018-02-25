@@ -83,9 +83,11 @@ def get_syllables(word, middle, end):
     return word_syllables
 
 
-def get_characters(token, middle, end):
+def get_characters(token,
+                   middle,
+                   end,
+                   letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'):
 
-    letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
     s = []
 
     for letter in token:

@@ -11,7 +11,7 @@ class TestTokenSelector(unittest.TestCase):
         signs_to_ignore = ['&', '%']
         words_to_ignore = ['hola']
         map_punctuation = {'.':'<pt>', ',':'<cm>'}
-        letters = 'abcdeábcdé'
+        letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
         sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char = final_char,
@@ -29,7 +29,7 @@ class TestTokenSelector(unittest.TestCase):
         self.assertEqual(tokenselector.words_to_ignore, words_to_ignore)
         self.assertEqual(tokenselector.map_punctuation, map_punctuation)
         self.assertEqual(tokenselector.punctuation, set(map_punctuation))
-        self.assertEqual(tokenselector.characters, set(letters))
+        self.assertEqual(tokenselector.letters, set(letters))
 
 
     def test_get_dictionary(self):
@@ -79,7 +79,7 @@ class TestTokenSelector(unittest.TestCase):
         signs_to_ignore = ['?', '¿']
         words_to_ignore = []
         map_punctuation = {'.': '<pt>', ',': '<cm>', '\n':'<nl>'}
-        letters = 'abcdeábcdé'
+        letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
         sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char=final_char,
@@ -112,7 +112,7 @@ class TestTokenSelector(unittest.TestCase):
         signs_to_ignore = ['?', '¿']
         words_to_ignore = []
         map_punctuation = {'.': '<pt>', ',': '<cm>', '\n': '<nl>'}
-        letters = 'abcdeábcdé'
+        letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
         sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char=final_char,
@@ -153,7 +153,7 @@ class TestTokenSelector(unittest.TestCase):
         signs_to_ignore = ['?', '¿']
         words_to_ignore = []
         map_punctuation = {'.': '<pt>', ',': '<cm>', '\n': '<nl>'}
-        letters = 'abcdeábcdé',
+        letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
         sign_not_syllable = '<sns>'
 
         tokenselector = TokenSelector(final_char=final_char,

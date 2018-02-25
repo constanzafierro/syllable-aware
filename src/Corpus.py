@@ -16,7 +16,8 @@ class Corpus:
                  inter_char='-',
                  signs_to_ignore=[],
                  words_to_ignore=[],
-                 map_punctuation={'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>', ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
+                 map_punctuation={'¿': '<ai>', '?': '<ci>', '.': '<pt>', '\n': '<nl>',
+                                  ',': '<cm>', '<unk>':'<unk>', ':':'<dc>', ';':'<sc>'},
                  letters='aáeéoóíúiuübcdfghjklmnñopqrstvwxyz',
                  sign_not_syllable = '<sns>'
                  ):
@@ -34,31 +35,52 @@ class Corpus:
 
         self.sign_not_syllable = sign_not_syllable
 
-
-        self.tokenSelector = TokenSelector(final_char=self.final_char,
-                                           inter_char=self.inter_char,
-                                           signs_to_ignore=self.signs_to_ignore,
-                                           words_to_ignore=self.words_to_ignore,
-                                           map_punctuation=self.map_punctuation,
-                                           letters=self.letters,
-                                           sign_not_syllable=self.sign_not_syllable
+        self.tokenSelector = TokenSelector(final_char = self.final_char,
+                                           inter_char = self.inter_char,
+                                           signs_to_ignore = self.signs_to_ignore,
+                                           words_to_ignore = self.words_to_ignore,
+                                           map_punctuation = self.map_punctuation,
+                                           letters = self.letters,
+                                           sign_not_syllable = self.sign_not_syllable
                                            )
 
         self.tokenSelector.get_dictionary(path_file = self.path_to_file)
 
         self.tokensplit = -1 # for get_generators
 
+        self.train_set = []
+        self.eval_set = []
+
+        self.quantity_word = None
+        self.quantity_syllable = None
+
+        self.token_selected = []
+
+        self.lprime = 0
+
+        self.vocabulary = set()
+        self.token_to_index = dict()
+        self.indice_ends = []
+        self.index_to_token = dict()
+        self.ind_corpus = []
+        self.vocabulary_as_index = set()
+
+        self.vocabulary_train = set()
+        self.vocabulary_eval = set()
+
+        self.train_ATPW = 1
+        self.eval_ATPW = 1
 
     def select_tokens(self, quantity_word, quantity_syllable):
         
         self.quantity_word = quantity_word
         self.quantity_syllable = quantity_syllable
 
-        self.tokenSelector.get_frequent(quantity_word=self.quantity_word,
-                                        quantity_syll=self.quantity_syllable
+        self.tokenSelector.get_frequent(quantity_word = self.quantity_word,
+                                        quantity_syll = self.quantity_syllable
                                         )
 
-        self.token_selected = []
+        token_selected = []
 
         with open(self.path_to_file) as f1:
 
@@ -68,15 +90,17 @@ class Corpus:
                     for token in words:
                         token = token.strip()
 
-                        self.tokenSelector.select(token=token,
-                                                  tokens_selected=self.token_selected
-                                                  )
+                        token_selected = self.tokenSelector.select(token = token,
+                                                                   tokens_selected = token_selected
+                                                                   )
+
+        self.token_selected = token_selected
 
 
     def calculateLprime(self, sequence_length):
 
-        self.lprime = Lprime(token_selected=self.token_selected,
-                             sequence_length=sequence_length
+        self.lprime = Lprime(token_selected = self.token_selected,
+                             sequence_length = sequence_length
                              )
     
     
@@ -115,20 +139,16 @@ class Corpus:
         self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
         self.vocabulary_as_index = set(self.ind_corpus) # vocabulary as index
 
-        self.train_set = []
-        self.eval_set = []
-
-        tokens = []
-
-        self.token_selected = self.token_selected if self.token_selected[-1] == token_split else self.token_selected + [token_split]
-
         self.tokensplit = self.token_to_index[token_split]
 
         words_train_set = 0
         words_eval_set = 0
         qw = 0
+        tokens = []
 
         for token in self.ind_corpus:
+
+            tokens.append(token)
 
             if token in self.indice_ends:
                 qw += 1
@@ -142,18 +162,16 @@ class Corpus:
                 p = random.choice(range(0, 100))
 
                 if p < val_percentage:
-                    self.eval_set += tokens + [self.tokensplit]
+                    self.eval_set += tokens
                     words_eval_set += qw + 1
                     qw = 0
 
                 else:
-                    self.train_set += tokens + [self.tokensplit]
+                    self.train_set += tokens
                     words_train_set += qw + 1
                     qw = 0
-                tokens = []
 
-            else:
-                tokens.append(token)
+                tokens = []
 
         self.vocabulary_train = set(self.train_set) # indexes
         self.vocabulary_eval = set(self.eval_set) # indexes
@@ -164,20 +182,20 @@ class Corpus:
 
     def get_generators(self, batch_size):
 
-        train_generator = GeneralGenerator(batch_size=batch_size,
-                                           ind_tokens=self.train_set,
-                                           vocabulary=self.vocabulary,
-                                           max_len=self.lprime,
-                                           split_symbol_index=self.tokensplit,
-                                           count_to_split=-1
+        train_generator = GeneralGenerator(batch_size = batch_size,
+                                           ind_tokens = self.train_set,
+                                           vocabulary = self.vocabulary,
+                                           max_len = self.lprime,
+                                           split_symbol_index = self.tokensplit,
+                                           count_to_split = -1
                                            )
 
-        eval_generator = GeneralGenerator(batch_size=batch_size,
-                                          ind_tokens=self.eval_set,
-                                          vocabulary=self.vocabulary,
-                                          max_len=self.lprime,
-                                          split_symbol_index=self.tokensplit,
-                                          count_to_split=-1
+        eval_generator = GeneralGenerator(batch_size = batch_size,
+                                          ind_tokens = self.eval_set,
+                                          vocabulary = self.vocabulary,
+                                          max_len = self.lprime,
+                                          split_symbol_index = self.tokensplit,
+                                          count_to_split = -1
                                           )
 
         return train_generator, eval_generator
