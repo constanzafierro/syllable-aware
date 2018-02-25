@@ -6,8 +6,10 @@ from src.Corpus import Corpus
 from src.utils import preprocessing_file
 
 import time
+import os
 
 import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
+
 
 ########################################################################################################################
 
@@ -73,8 +75,13 @@ path_to_file = path_out
 
 D = 512
 
-recurrent_dropout = 0# 0.3
-dropout = 0 # 0.3
+recurrent_dropout = 0
+dropout = 0
+
+if keras.backend.backend() == 'tensorflow':
+    recurrent_dropout = 0.3
+    dropout = 0.3
+
 dropout_seed = 1
 
 train_size = 0.8 # 1
@@ -93,6 +100,14 @@ workers = 1 # default 1
 out_directory_train_history = './train_history/'
 out_directory_model = './models/'
 out_model_pref = 'lstm_model_'
+
+
+if not os.path.exists(out_directory_model):
+    os.mkdir(out_directory_model)
+
+if not os.path.exists(out_directory_train_history):
+    os.mkdir(out_directory_model)
+
 
 time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
 
@@ -141,7 +156,7 @@ T = 6000 # quantity of tokens
 quantity_word = 30
 quantity_syllable = T - quantity_word
 
-L = 100  # sequence_length
+L = 10  # sequence_length
 
 
 ## Init Corpus
