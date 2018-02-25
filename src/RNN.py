@@ -80,6 +80,7 @@ class RecurrentLSTM:
         self.workers = workers
         self.callbacks = callbacks
 
+
         # TODO: Ver si agregar validation_data al fit_generator y al input del fit()
         # https://keras.io/models/sequential/#fit_generator
         self.model.fit_generator(generator=self.g.generator(),
