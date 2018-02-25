@@ -91,7 +91,7 @@ epochs = 300
 optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
-workers = 1 # default 1
+workers = 16 # default 1
 
 
 ## Callbacks
@@ -154,7 +154,6 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                )
 
 callbacks = [checkpoint, early_stopping]
-#callbacks = []
 
 
 ##
