@@ -4,6 +4,7 @@
 from src.RNN import RecurrentLSTM
 from src.Corpus import Corpus
 from src.utils import preprocessing_file
+
 import time
 
 import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
@@ -32,14 +33,13 @@ random.seed(seed)
 # K.set_session(sess)
 
 ########################################################################################################################
-#
-# Path to File
 
+## Path to File
 path_in = './data/horoscopo_test_overfitting.txt'
 path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
-# Pre processing
 
+## Pre processing
 print('\n Preprocess - Add Spaces \n')
 
 to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&'''
@@ -71,17 +71,17 @@ path_to_file = path_out
 
 ## Hyperparameters
 
-D = 512 #
+D = 512
 
-recurrent_dropout = 0.3 #0
-dropout = 0.3 #0
+recurrent_dropout = 0.3 # 0
+dropout = 0.3 # 0
 dropout_seed = 0
 
 train_size = 0.8 # 1
 batch_size = 128
 epochs = 300
 
-optimizer = 'rmsprop' #'adam'
+optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
 workers = 1 # default 1
@@ -94,9 +94,10 @@ out_directory_train_history = '../train_history/'
 out_directory_model = '../models/'
 out_model_pref = 'lstm_model_'
 
-time_pref = time.strftime('%y%m%d.%H%M')
+time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
 
 outfile = out_model_pref + time_pref + '.h5'
+
 
 # Checkpoint
 # https://keras.io/callbacks/#modelcheckpoint
@@ -113,11 +114,12 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
                                              period=1
                                              )
 
+
+## EarlyStopping
 # https://keras.io/callbacks/#earlystopping
 
-monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'categorical_accuracy','val_loss', etc
-
-patience = 100# number of epochs with no improvement after which training will be stopped
+monitor_early_stopping = 'categorical_accuracy' # 'val_top_k_categorical_accuracy', 'val_loss', etc
+patience = 100 # number of epochs with no improvement after which training will be stopped
 
 
 early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
@@ -127,8 +129,8 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                mode='auto'
                                                )
 
-# callbacks = [checkpoint, early_stopping]
-callbacks = []
+callbacks = [checkpoint, early_stopping]
+#callbacks = []
 
 
 ##
@@ -142,7 +144,6 @@ L = 100  # sequence_length
 
 
 ## Init Corpus
-
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file=path_to_file,
                 train_size=train_size,
@@ -220,3 +221,7 @@ model.fit(generator=train_generator,
 tf = time.time()
 dt = (tf - ti) / 60.0
 print('\n Elapsed Time {} \n'.format(dt))
+
+
+# iter = 0
+# time_pref = time_pref[:-1] + str(i)
