@@ -219,7 +219,12 @@ model = RecurrentLSTM(vocab_size=len(vocabulary),
                       seed=dropout_seed
                       )
 
-print(model.get_config)
+
+## Build Model
+print('\n Build Model \n')
+model.build(optimizer=optimizer,
+            metrics=metrics
+            )
 
 
 ## Model Summary
@@ -227,11 +232,9 @@ print('\n Model Summary \n')
 print(model.summary())
 
 
-## Build Model
-print('\n Build Model \n')
-model.build(optimizer=optimizer,
-            metrics=metrics
-            )
+## Model Config
+print('\n Model Config \n')
+print(model.get_config)
 
 
 ## Generators

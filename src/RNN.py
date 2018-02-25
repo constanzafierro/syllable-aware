@@ -102,3 +102,8 @@ class RecurrentLSTM:
     def summary(self):
 
         return self.summary
+
+
+    def get_config(self):
+
+        return self.get_config
