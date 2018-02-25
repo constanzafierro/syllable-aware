@@ -11,10 +11,7 @@ import os
 import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
 
 import losswise
-from losswise.libs import LosswiseKerasCallback
-
-losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
-losswise_callback = LosswiseKerasCallback(tag='syllable-aware test')
+from src.callback_losswise import LosswiseKerasCallback
 
 ########################################################################################################################
 
@@ -158,11 +155,13 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                mode='auto'
                                                )
 ## Losswise
-
-losswise_callback = losswise_callback
+losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
+losswise_callback = LosswiseKerasCallback(tag='syllable-aware test',
+                                          params_data={},
+                                          params_model={})
 
 ## Callbacks Pipeline
-callbacks = [checkpoint, early_stopping, losswise_callback]
+callbacks = [checkpoint, early_stopping]#, losswise_callback]
 
 
 ##
@@ -220,6 +219,7 @@ model = RecurrentLSTM(vocab_size=len(vocabulary),
                       seed=dropout_seed
                       )
 
+print(model.get_config())
 
 ## Model Summary
 print('\n Model Summary \n')
