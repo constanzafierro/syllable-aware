@@ -4,6 +4,7 @@
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/lstm.py" afterPath="$PROJECT_DIR$/lstm.py" />
+      <change beforePath="$PROJECT_DIR$/src/RNN.py" afterPath="$PROJECT_DIR$/src/RNN.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+            <state relative-caret-position="120">
+              <caret line="104" column="66" lean-forward="false" selection-start-line="104" selection-start-column="66" selection-end-line="104" selection-end-column="66" />
               <folding>
                 <element signature="e#28#61#0" expanded="true" />
               </folding>
@@ -47,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RNN.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RNN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-909">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1230">
+              <caret line="82" column="70" lean-forward="false" selection-start-line="82" selection-start-column="70" selection-end-line="82" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -133,6 +134,7 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/lstm.py" />
+        <option value="$PROJECT_DIR$/src/RNN.py" />
       </list>
     </option>
   </component>
@@ -311,13 +313,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1517541019873</updated>
-    </task>
-    <task id="LOCAL-00013" summary="TODO: realizar preprocesamiento al texto y agregar sign_to_ignore (si se requiere)">
-      <created>1519383785801</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1519383785801</updated>
     </task>
     <task id="LOCAL-00014" summary="agrego from keras import backend as K">
       <created>1519387613902</created>
@@ -655,7 +650,14 @@
       <option name="project" value="LOCAL" />
       <updated>1519523330929</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="callbacks">
+      <created>1519532502264</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1519532502270</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -757,7 +759,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Notifico &quot;error&quot; en clase corpusClass" />
     <MESSAGE value="indentación" />
     <MESSAGE value="Arreglar clase corpusClass !!" />
     <MESSAGE value="Para probar lstm.py hay que arreglar clase corpusClass !!" />
@@ -782,7 +783,8 @@
     <MESSAGE value="adding callbacks" />
     <MESSAGE value="Update Readme" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="callbacks" />
+    <option name="LAST_COMMIT_MESSAGE" value="callbacks" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -972,14 +974,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-909">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -1000,11 +994,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+        <state relative-caret-position="120">
+          <caret line="104" column="66" lean-forward="false" selection-start-line="104" selection-start-column="66" selection-end-line="104" selection-end-column="66" />
           <folding>
             <element signature="e#28#61#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1230">
+          <caret line="82" column="70" lean-forward="false" selection-start-line="82" selection-start-column="70" selection-end-line="82" selection-end-column="70" />
+          <folding />
         </state>
       </provider>
     </entry>

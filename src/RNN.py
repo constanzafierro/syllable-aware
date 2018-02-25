@@ -22,32 +22,32 @@ class RecurrentLSTM:
         self.seed = seed
 
 
-        self.word_embeddings = keras.layers.Embedding(input_dim = self.vocab_size + 1,
-                                                      output_dim = self.embedding_dim,
-                                                      input_length = self.input_length,
-                                                      mask_zero = True
+        self.word_embeddings = keras.layers.Embedding(input_dim=self.vocab_size + 1,
+                                                      output_dim=self.embedding_dim,
+                                                      input_length=self.input_length,
+                                                      mask_zero=True
                                                       )
 
-        self.lstm_1 = keras.layers.LSTM(units = self.hidden_dim,
-                                        recurrent_dropout = self.recurrent_dropout,
-                                        return_sequences = True,
-                                        unroll = False,
-                                        implementation = 2
+        self.lstm_1 = keras.layers.LSTM(units=self.hidden_dim,
+                                        recurrent_dropout=self.recurrent_dropout,
+                                        return_sequences=True,
+                                        unroll=False,
+                                        implementation=2
                                         )
 
-        self.dropout_1 = keras.layers.Dropout(rate = self.dropout,
-                                              seed = self.seed
+        self.dropout_1 = keras.layers.Dropout(rate=self.dropout,
+                                              seed=self.seed
                                               )
 
-        self.lstm_2 = keras.layers.LSTM(units = self.hidden_dim,
-                                        recurrent_dropout = self.recurrent_dropout,
-                                        return_sequences = False,
-                                        unroll = False,
-                                        implementation = 2
+        self.lstm_2 = keras.layers.LSTM(units=self.hidden_dim,
+                                        recurrent_dropout=self.recurrent_dropout,
+                                        return_sequences=False,
+                                        unroll=False,
+                                        implementation=2
                                         )
 
-        self.dense = keras.layers.Dense(units = self.vocab_size,
-                                        activation = 'softmax'
+        self.dense = keras.layers.Dense(units=self.vocab_size,
+                                        activation='softmax'
                                         )
 
 
@@ -66,9 +66,9 @@ class RecurrentLSTM:
 
         self.summary = self.model.summary()
 
-        self.model.compile(loss = 'categorical_crossentropy',
-                           optimizer = self.optimizer,
-                           metrics = self.metrics
+        self.model.compile(loss='categorical_crossentropy',
+                           optimizer=self.optimizer,
+                           metrics=self.metrics
                            )
 
 
@@ -80,12 +80,13 @@ class RecurrentLSTM:
         self.workers = workers
         self.callbacks = callbacks
 
-        self.model.fit_generator(generator = self.g.generator(),
-                                 steps_per_epoch = self.g.steps_per_epoch,
-                                 epochs= self.epochs,
-                                 workers = self.workers,
-                                 callbacks = self.callbacks,
-                                 shuffle = False
+        # https://keras.io/models/sequential/#fit_generator TODO: Ver si agregar validation_data al fit_generator
+        self.model.fit_generator(generator=self.g.generator(),
+                                 steps_per_epoch=self.g.steps_per_epoch,
+                                 epochs=self.epochs,
+                                 workers=self.workers,
+                                 callbacks=self.callbacks,
+                                 shuffle=False
                                  )
 
 

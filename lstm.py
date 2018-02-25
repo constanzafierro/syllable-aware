@@ -102,7 +102,7 @@ outfile = out_model_pref + time_pref + '.h5'
 # Checkpoint
 # https://keras.io/callbacks/#modelcheckpoint
 
-monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'categorical_accuracy', 'val_loss', etc
+monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'val_loss'
 
 
 checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outfile,
@@ -118,7 +118,8 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
 ## EarlyStopping
 # https://keras.io/callbacks/#earlystopping
 
-monitor_early_stopping = 'categorical_accuracy' # 'val_top_k_categorical_accuracy', 'val_loss', etc
+monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'val_loss'
+
 patience = 100 # number of epochs with no improvement after which training will be stopped
 
 
