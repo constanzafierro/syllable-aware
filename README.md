@@ -125,14 +125,40 @@ Edit keras.json, and change the field "backend" to "theano"
 }
 ```
 
----
+## Theano Configuration (GPU)
 
+From [Theano Configuration](http://deeplearning.net/software/theano/library/config.html)
 
-## Install Tensorflow-GPU 1.4.0 (because there is CUDA Toolkit 8.0) para Python 3.6
+Create a config file at home dir
 
 ```
-pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
+cd ~
+nano .theanorc
 ```
+
+And copy and paste this configuration
+
+```
+[global]
+device = cuda
+force_device = True
+floatX = float32
+mode=FAST_RUN
+optimizer_including=cudnn
+
+[dnn]
+enabled = True
+include_path = /usr/local/cuda/include
+library_path = /usr/local/cuda/lib64
+
+[gpuarray]
+preallocate = 1
+
+[lib]
+cnmem = 1
+```
+
+And save it.
 
 ---
 
@@ -141,8 +167,7 @@ pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorfl
 ```
 conda install -n venv1 mkl
 conda install -n venv1 mkl-service
-conda install -n venv1 -c conda-forge blas
+conda install -n venv1 openblas
 conda install -n venv1 -c anaconda pygpu
 ```
-conda install -n venv1 openblas
 
