@@ -20,8 +20,8 @@ import random
 
 # import tensorflow as tf
 
-os.environ['PYTHONHASHSEED'] = '1' # https://github.com/fchollet/keras/issues/850
-seed = 1 # must be the same as PYTHONHASHSEED
+os.environ['PYTHONHASHSEED'] = '57' # https://github.com/fchollet/keras/issues/850
+seed = 57 # must be the same as PYTHONHASHSEED
 np.random.seed(seed)
 random.seed(seed)
 

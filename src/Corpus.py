@@ -102,9 +102,9 @@ class Corpus:
                 for line in f1:
                     words = line.lower().split()
 
-                    for token in words:
-                        token = token.strip()
+                    words += ['\n']
 
+                    for token in words:
                         token_selected = self.tokenSelector.select(token = token,
                                                                    tokens_selected = token_selected
                                                                    )
@@ -130,7 +130,7 @@ class Corpus:
 
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
         self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
-        self.vocabulary_as_index = set(self.ind_corpus) # vocabualry as index
+        self.vocabulary_as_index = set(self.ind_corpus) # vocabulary as index
  
         len_train = int(len(self.ind_corpus)*self.train_size)
 
