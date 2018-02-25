@@ -73,8 +73,8 @@ path_to_file = path_out
 
 D = 512
 
-recurrent_dropout = 0.3 # 0
-dropout = 0.3 # 0
+recurrent_dropout = 0# 0.3
+dropout = 0 # 0.3
 dropout_seed = 1
 
 train_size = 0.8 # 1
