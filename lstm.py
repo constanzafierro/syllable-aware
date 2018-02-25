@@ -102,15 +102,15 @@ out_directory_model = './models/'
 out_model_pref = 'lstm_model_'
 
 
-if not os.path.exists(path = out_directory_model):
+if not os.path.exists(path=out_directory_model):
     os.mkdir(path=out_directory_model,
              mode=0o755
              )
 else:
     pass
 
-if not os.path.exists(path = out_directory_train_history):
-    os.mkdir(path=out_directory_model,
+if not os.path.exists(path=out_directory_train_history):
+    os.mkdir(path=out_directory_train_history,
              mode=0o755
              )
 else:
