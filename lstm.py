@@ -221,6 +221,7 @@ model = RecurrentLSTM(vocab_size=len(vocabulary),
 
 print(model.get_config)
 
+
 ## Model Summary
 print('\n Model Summary \n')
 print(model.summary())
