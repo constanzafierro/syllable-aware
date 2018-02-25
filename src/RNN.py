@@ -81,15 +81,14 @@ class RecurrentLSTM:
         self.workers = workers
         self.callbacks = callbacks
 
-        # TODO: Agregar val_generator al fit_generator y al input del fit()
         # https://keras.io/models/sequential/#fit_generator
         self.model.fit_generator(generator=self.train_generator.generator(),
                                  steps_per_epoch=self.train_generator.steps_per_epoch,
                                  epochs=self.epochs,
-                                 verbose=1,
+                                 verbose=2,
                                  callbacks=self.callbacks,
-                                 validation_data= None,# self.val_generator.generator(), # TODO: (1)
-                                 validation_steps=None, #TODO: (2)
+                                 validation_data=self.val_generator.generator(),
+                                 validation_steps=self.val_generator.steps_per_epoch,
                                  class_weight=None,
                                  max_queue_size=10,
                                  workers=self.workers,
