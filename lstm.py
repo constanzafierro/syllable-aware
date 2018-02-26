@@ -40,9 +40,12 @@ random.seed(seed)
 ########################################################################################################################
 
 ## Path to File
-path_in = './data/horoscopo_test_overfitting.txt'
-path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
+#path_in = './data/horoscopo_test_overfitting.txt'
+#path_out = './data/horoscopo_test_overfitting_add_space.txt'
+
+path_in = './data/train.txt'
+path_out = './data/train_add_space.txt'
 
 ## Pre processing
 print('\n Preprocess - Add Spaces \n')
@@ -243,8 +246,8 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                )
 ## Losswise
 
-losswise_api_key = 'GHH8RPJ3L'
-losswise_tag = 'syllable-aware overfitting test'
+losswise_api_key = 'DJCG99NX6'
+losswise_tag = 'syllable-aware playing with train.txt'
 
 losswise.set_api_key(losswise_api_key)
 
