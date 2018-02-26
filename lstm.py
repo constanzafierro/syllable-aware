@@ -145,9 +145,7 @@ split_mode = 'random' # 'simple'
 
 if split_mode == 'random':
     print('\n Random Split \n')
-    corpus.split_train_eval(val_percentage=20,
-                            token_split=-1
-                            )
+    corpus.split_train_eval(val_percentage=20)
     vocabulary = corpus.vocabulary_as_index
     metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
 else:
