@@ -13,7 +13,7 @@ class LosswiseKerasCallback(Callback):
         #self.params_data = params_data
         #self.params_model = params_model
         self.graph_map = {}
-        self.params = {}
+        #self.params = {}
 
         super(LosswiseKerasCallback, self).__init__()
 
