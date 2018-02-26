@@ -42,11 +42,11 @@ random.seed(seed)
 
 ## Path to File
 
-#path_in = './data/horoscopo_test_overfitting.txt'
-#path_out = './data/horoscopo_test_overfitting_add_space.txt'
+path_in = './data/horoscopo_test_overfitting.txt'
+path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
-path_in = './data/train.txt'
-path_out = './data/train_add_space.txt'
+#path_in = './data/train.txt'
+#path_out = './data/train_add_space.txt'
 
 
 ###################################################
@@ -110,10 +110,10 @@ workers = 16 # default 1
 
 T = 6000 # quantity of tokens
 
-quantity_word = 3000
+quantity_word = 30
 quantity_syllable = T - quantity_word
 
-L = 100  # 10 sequence_length
+L = 10  # 100 sequence_length
 
 
 ###################################################
