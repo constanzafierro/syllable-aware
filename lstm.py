@@ -248,22 +248,20 @@ losswise_tag = 'syllable-aware overfitting test'
 
 losswise.set_api_key(losswise_api_key)
 
-#params_data = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
-
+#params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
 
 import json
 
 model_to_json = json.loads(model_to_json)
+params_data = model_to_json
 
-params = model_to_json
+params_data['samples'] = len(train_generator.ind_tokens)
+params_data['steps'] = train_generator.steps_per_epoch
 
-params['samples'] = len(train_generator.ind_tokens)
-params['steps'] = train_generator.steps_per_epoch
-params['batch_size'] = train_generator.batch_size
+params_model = {'batch_size': train_generator.batch_size}
 
-losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params=params)
-#losswise_callback.set_params(params=params)
-
+losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params_data=params_data, params_model=params_model)
+losswise_callback.set_params(params=params_model)
 
 #params = {'epochs': epochs, 'samples': len(train_generator.ind_tokens), 'batch_size': batch_size}
 #losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params=params)
