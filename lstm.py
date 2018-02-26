@@ -244,14 +244,16 @@ losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
 
 
 params = {'samples': len(train_generator.ind_tokens),
-          'steps': train_generator.steps_per_epoch,
-          'batch_size': train_generator.batch_size
+          'steps': train_generator.steps_per_epoch
           }
+
+params_model = {'batch_size': train_generator.batch_size}
+print(' AHHHHHHH = ', params_model['batch_size'])
 
 
 losswise_callback = LosswiseKerasCallback(tag='syllable-aware test',
                                           params_data={},
-                                          params_model={})
+                                          params_model=params_model)
 
 losswise_callback.set_params(params=params)
 

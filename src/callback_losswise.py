@@ -10,7 +10,11 @@ class LosswiseKerasCallback(Callback):
         self.params_data = params_data
         self.params_model = params_model
         self.graph_map = {}
+        self.params = {}
         super(LosswiseKerasCallback, self).__init__()
+
+    def set_params(self, params):
+        self.params = params
 
     def on_train_begin(self, logs={}):
         print(self.params)
