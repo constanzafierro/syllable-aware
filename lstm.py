@@ -243,9 +243,9 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
 
 
-params = {'samples': len(corpus.train_set),
+params = {'samples': len(train_generator.ind_tokens),
           'steps': train_generator.steps_per_epoch,
-          'batch_size': batch_size
+          'batch_size': train_generator.batch_size
           }
 
 
