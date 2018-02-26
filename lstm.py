@@ -240,6 +240,7 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                mode='auto'
                                                )
 ## Losswise
+
 losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
 
 
@@ -248,7 +249,6 @@ params = {'samples': len(train_generator.ind_tokens),
           }
 
 params_model = {'batch_size': train_generator.batch_size}
-print(' AHHHHHHH = ', params_model['batch_size'])
 
 
 losswise_callback = LosswiseKerasCallback(tag='syllable-aware test',
@@ -258,11 +258,8 @@ losswise_callback = LosswiseKerasCallback(tag='syllable-aware test',
 losswise_callback.set_params(params=params)
 
 
-
 ## Callbacks Pipeline
 callbacks = [checkpoint, early_stopping, losswise_callback]
-
-
 
 
 model.fit(train_generator=train_generator,

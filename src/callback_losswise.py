@@ -5,16 +5,20 @@ from keras.callbacks import Callback
 class LosswiseKerasCallback(Callback):
 
     def __init__(self, tag=None, params_data={}, params_model={}):
+
         # model hyper parameters, json serializable Python object
         self.tag = tag
         self.params_data = params_data
         self.params_model = params_model
         self.graph_map = {}
         self.params = {}
+
         super(LosswiseKerasCallback, self).__init__()
 
-    def set_params(self, params):
-        self.params = params
+
+    #def set_params(self, params):
+    #    self.params = params
+
 
     def on_train_begin(self, logs={}):
         print(self.params)
@@ -33,6 +37,7 @@ class LosswiseKerasCallback(Callback):
             self.graph_map[metric] = self.session.graph(metric, kind=kind)
         self.x = 0
 
+
     def on_epoch_end(self, epoch, logs={}):
         for metric in self.metric_list:
             metric_val = "val_" + metric
@@ -40,11 +45,13 @@ class LosswiseKerasCallback(Callback):
                 data = {metric_val: logs[metric_val]}
                 self.graph_map[metric].append(self.x, data)
 
+
     def on_batch_end(self, batch, logs={}):
         for metric in self.metric_list:
             data = {metric: logs.get(metric)}
             self.graph_map[metric].append(self.x, data)
         self.x += 1
+
 
     def on_train_end(self, logs={}):
         self.session.done()
