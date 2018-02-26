@@ -136,7 +136,7 @@ class Corpus:
         return self.vocabulary, self.token_to_index, self.index_ends, self.index_to_token, self.average_tpw, self.lprime
 
 
-    def split_corpus(self, percentage = 0, random = False, token_split= '<nl>', min_len = 0):
+    def split_corpus(self, percentage = 0, random_split = False, token_split= '<nl>', min_len = 0):
 
         if 0 <= percentage <= 100:
             percentage = percentage if percentage < 1 else percentage / 100.0
@@ -146,7 +146,7 @@ class Corpus:
         val_set = []
         train_set = []
 
-        if random:
+        if random_split:
 
             tokensplit = self.token_to_index[token_split]
 
