@@ -251,6 +251,7 @@ params = {'epochs': epochs,
           'samples': len(train_generator.ind_tokens),
           'batch_size': batch_size
           }
+print(params['samples'])
 
 losswise_callback = LosswiseKerasCallback(tag=losswise_tag,
                                           params=params
