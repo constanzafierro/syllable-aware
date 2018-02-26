@@ -147,8 +147,8 @@ class Corpus:
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
 
         self.index_ends = ending_tokens_index(token_to_index = self.token_to_index,
-                                               ends = [self.final_char, self.final_punc]
-                                               )
+                                              ends = [self.final_char, self.final_punc]
+                                              )
 
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
         self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes

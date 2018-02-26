@@ -95,7 +95,7 @@ batch_size = 128
 epochs = 300
 
 optimizer = 'rmsprop' # 'adam'
-metrics = ['top_k_categorical_accuracy', 'categorical_accuracy', metric_pp(average_TPW = 5.0)]
+metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
 workers = 16 # default 1
 
@@ -140,8 +140,18 @@ Lprima = corpus.lprime
 
 ## Dictionaries Token-Index
 print('\n Dictionaries Token - Index \n')
-corpus.dictionaries_token_index()
-vocabulary = corpus.vocabulary_as_index
+
+split_mode = 'random' # 'simple'
+
+if split_mode == 'random':
+    print('\n Random Split \n')
+    corpus.split_train_eval(val_percentage=20)
+    vocabulary = corpus.vocabulary_as_index
+    metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
+else:
+    print('\n Simple Split \n')
+    corpus.dictionaries_token_index()
+    vocabulary = corpus.vocabulary_as_index
 
 
 ## Init Model
@@ -173,16 +183,11 @@ print(model.summary)
 #model_to_json = model.to_json # for losswise_callback
 #print(model_to_json)
 
+########################################################################################################################
 
 ## Generators
 print('\n Get Generators \n')
 train_generator, val_generator = corpus.get_generators(batch_size=batch_size)
-
-
-## Training
-print('\n Training \n')
-ti = time.time()
-
 
 ########################################################################################################################
 
@@ -244,6 +249,8 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                verbose=0,
                                                mode='auto'
                                                )
+
+
 ## Losswise
 
 losswise_api_key = 'DJCG99NX6'
@@ -271,6 +278,13 @@ losswise_callback.set_params(params=params_model)
 
 ## Callbacks Pipeline
 callbacks = [checkpoint, early_stopping, losswise_callback]
+
+
+########################################################################################################################
+
+## Training
+print('\n Training \n')
+ti = time.time()
 
 
 model.fit(train_generator=train_generator,
