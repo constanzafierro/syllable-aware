@@ -87,6 +87,29 @@ class Corpus:
                                         quantity_syll = quantity_syllable
                                         )
 
+
+    def select_tokens_from_file(self, path_to_file):
+        token_selected = []
+
+        with open(path_to_file) as f1:
+
+                for line in f1:
+                    words = line.lower().split()
+
+                    words += ['\n']
+
+                    for token in words:
+                        token_selected = self.tokenSelector.select(token = token,
+                                                                   tokens_selected = token_selected
+                                                                   )
+
+        return token_selected
+
+
+    def set_token_selected(self):
+        self.token_selected = self.select_tokens_from_file(self.path_to_file)
+
+
     def build_dictionaries(self):
 
         self.vocabulary = set(self.token_selected)
@@ -111,27 +134,6 @@ class Corpus:
 
     def get_parameters(self):
         return self.vocabulary, self.token_to_index, self.index_ends, self.index_to_token, self.average_tpw, self.lprime
-
-
-    def select_tokens_from_file(self, path_to_file):
-        token_selected = []
-
-        with open(path_to_file) as f1:
-
-                for line in f1:
-                    words = line.lower().split()
-
-                    words += ['\n']
-
-                    for token in words:
-                        token_selected = self.tokenSelector.select(token = token,
-                                                                   tokens_selected = token_selected
-                                                                   )
-
-        return token_selected
-
-    def set_token_selected(self):
-        self.token_selected = self.select_tokens_from_file(self.path_to_file)
 
 
     def split_corpus(self, percentage = 0, random = False, token_split= '<nl>', min_len = 0):

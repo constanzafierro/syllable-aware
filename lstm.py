@@ -139,17 +139,17 @@ corpus.set_tokens_selector(quantity_word=quantity_word,
                            quantity_syllable=quantity_syllable
                            )
 
-
-## L prime
-print('\n L prime \n')
-corpus.set_lprime(sequence_length = L)
-
 ########################################################################################################################
 
 ## Dictionaries Token-Index
 print('\n Dictionaries Token - Index \n')
 corpus.build_dictionaries()
 corpus.set_token_selected()
+
+## L prime
+print('\n L prime \n')
+corpus.set_lprime(sequence_length = L)
+
 train_vocabulary, train_token_to_index, train_index_ends, train_index_to_token, train_average_tpw, train_lprime = corpus.get_parameters()
 
 split_mode = True
