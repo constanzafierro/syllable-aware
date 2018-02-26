@@ -15,10 +15,9 @@ class LosswiseKerasCallback(Callback):
 
         super(LosswiseKerasCallback, self).__init__()
 
-
+    # set_params se hereda de keras.kallbacks.Callback
     #def set_params(self, params):
     #    self.params = params
-
 
     def on_train_begin(self, logs={}):
         print(self.params)
