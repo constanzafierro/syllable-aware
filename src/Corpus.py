@@ -61,7 +61,7 @@ class Corpus:
 
         self.tokenSelector.get_dictionary(path_file = self.path_to_file)
 
-        self.tokensplit = -1 # for get_generators
+        self.tokensplit = None#-1 # for get_generators
 
         self.train_set = []
         self.eval_set = []
