@@ -147,13 +147,13 @@ if split_mode == 'random':
     print('\n Random Split \n')
     corpus.split_train_eval(val_percentage=20)
     vocabulary = corpus.vocabulary_as_index
-    metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
+    #metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
     #TODO: División por cero en método split_train_eval, en self.train_ATPW = words_train_set / len(self.train_set)
 else:
     print('\n Simple Split \n')
     corpus.dictionaries_token_index()
     vocabulary = corpus.vocabulary_as_index
-    metrics.append(metric_pp(average_TPW=10.0))
+    #metrics.append(metric_pp(average_TPW=10.0))
 
 
 ## Init Model
@@ -266,7 +266,11 @@ params_data['batch_size'] = train_generator.batch_size # para meterlo igual a lo
 
 params_model = {'batch_size': train_generator.batch_size}
 
-losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params_data=params_data, params_model=params_model)
+losswise_callback = LosswiseKerasCallback(tag=losswise_tag,
+                                          params_data=params_data,
+                                          params_model=params_model
+                                          )
+
 losswise_callback.set_params(params=params_model)
 
 #params = {'epochs': epochs, 'samples': len(train_generator.ind_tokens), 'batch_size': batch_size}
