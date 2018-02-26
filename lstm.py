@@ -199,6 +199,7 @@ print(model.summary)
 print('\n Get Generators \n')
 train_generator, val_generator = corpus.get_generators(batch_size=batch_size)
 
+
 ########################################################################################################################
 
 ## Callbacks
