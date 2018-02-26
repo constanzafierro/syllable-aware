@@ -169,6 +169,7 @@ print(model.summary)
 print('\n Model Config \n')
 print(model.get_config)
 
+print('\n', model.get_config[0], '\n')
 
 ## Generators
 print('\n Get Generators \n')
