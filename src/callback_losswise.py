@@ -8,9 +8,9 @@ class LosswiseKerasCallback(Callback):
 
         # model hyper parameters, json serializable Python object
         self.tag = tag
+        self.params = params
         self.params_data = params
         self.graph_map = {}
-        self.params = {}
 
         super(LosswiseKerasCallback, self).__init__()
 

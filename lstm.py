@@ -262,7 +262,7 @@ params['steps'] = train_generator.steps_per_epoch
 params['batch_size'] = train_generator.batch_size
 
 losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params=params)
-#losswise_callback.set_params(params=params)
+losswise_callback.set_params(params=params)
 
 
 #params = {'epochs': epochs, 'samples': len(train_generator.ind_tokens), 'batch_size': batch_size}
