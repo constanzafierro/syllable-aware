@@ -252,12 +252,13 @@ def Lprime(token_selected, sequence_length):
 def ending_tokens_index(token_to_index, ends):
 
     token_end = []
-
+    words_complete = 0
     for k,v in token_to_index.items() :
         if k[-1] in ends:
+            words_complete += 1
             token_end.append(v)
 
-    return token_end
+    return token_end, words_complete
 
 
 def get_syllables_to_ignore(words, dict_word_to_syll, verbose = False):

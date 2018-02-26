@@ -158,13 +158,15 @@ if split_mode == 'random':
     print('\n Random Split \n')
     corpus.split_train_eval(val_percentage=20)
     vocabulary = corpus.vocabulary_as_index
-    if use_perplexity: metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
+    if use_perplexity: 
+metrics.append(metric_pp(average_TPW=corpus.average_tpw))
     #TODO: División por cero en método split_train_eval, en self.train_ATPW = words_train_set / len(self.train_set)
 else:
     print('\n Simple Split \n')
     corpus.dictionaries_token_index()
     vocabulary = corpus.vocabulary_as_index
-    if use_perplexity: metrics.append(metric_pp(average_TPW=10.0))
+    if use_perplexity: metrics.append(metric_pp(average_TPW = 
+corpus.average_tpw))
 
 
 ########################################################################################################################

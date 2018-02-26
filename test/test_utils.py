@@ -547,10 +547,11 @@ class TestUtils(unittest.TestCase):
 
         token_to_index = {'hola:':1, 'co-':2, 'mo:':3, 'es-':4, 'tas:':5, '<pt>':6}
         ends = [':', '>']
-        ending = ending_tokens_index(token_to_index, ends)
+        ending, words_complete = ending_tokens_index(token_to_index, ends)
         ending_true = [1, 3, 5, 6]
 
         self.assertEqual(ending, ending_true)
+        self.assertEqual(words_complete, 4)
 
     def test_get_syllables_to_ignore(self):
 
