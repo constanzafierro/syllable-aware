@@ -138,14 +138,13 @@ print('\n Select Tokens \n')
 corpus.set_tokens_selector(quantity_word=quantity_word,
                            quantity_syllable=quantity_syllable
                            )
+corpus.set_token_selected()
 
 ########################################################################################################################
 
 ## Dictionaries Token-Index
 print('\n Dictionaries Token - Index \n')
 corpus.build_dictionaries()
-corpus.set_token_selected()
-
 ## L prime
 print('\n L prime \n')
 corpus.set_lprime(sequence_length = L)
