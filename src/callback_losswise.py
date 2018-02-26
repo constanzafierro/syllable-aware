@@ -4,12 +4,14 @@ from keras.callbacks import Callback
 
 class LosswiseKerasCallback(Callback):
 
-    def __init__(self, tag=None, params_data={}, params_model={}):
+    def __init__(self, tag=None, params={}):
+    #def __init__(self, tag=None, params_data={}, params_model={}):
 
         # model hyper parameters, json serializable Python object
         self.tag = tag
-        self.params_data = params_data
-        self.params_model = params_model
+        self.params_data = params
+        #self.params_data = params_data
+        #self.params_model = params_model
         self.graph_map = {}
         self.params = {}
 
@@ -20,7 +22,8 @@ class LosswiseKerasCallback(Callback):
     #    self.params = params
 
     def on_train_begin(self, logs={}):
-        self.max_iter = int(self.params['epochs'] * self.params['steps'] / self.params_model['batch_size'] + 1)
+        self.max_iter = int(self.params['epochs'] * self.params['steps'] / self.params['batch_size'] + 1)
+        #self.max_iter = int(self.params['epochs'] * self.params['steps'] / self.params_model['batch_size'] + 1)
         self.session = Session(tag=self.tag, max_iter=self.max_iter, params=self.params_data)
         self.metric_list = []
         for metric in self.params['metrics']:
