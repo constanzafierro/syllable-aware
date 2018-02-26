@@ -258,6 +258,8 @@ params_data = model_to_json
 params_data['samples'] = len(train_generator.ind_tokens)
 params_data['steps'] = train_generator.steps_per_epoch
 
+params_data['batch_size'] =  train_generator.batch_size # para meterlo igual
+
 params_model = {'batch_size': train_generator.batch_size}
 
 losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params_data=params_data, params_model=params_model)
