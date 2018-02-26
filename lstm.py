@@ -110,7 +110,7 @@ workers = 16 # default 1
 
 T = 6000 # quantity of tokens
 
-quantity_word = 30
+quantity_word = 3000
 quantity_syllable = T - quantity_word
 
 L = 100  # 10 sequence_length
