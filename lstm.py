@@ -167,7 +167,8 @@ print(model.summary)
 
 ## Model Config
 print('\n Model to JSON \n')
-print(model.to_json)
+model_to_json = model.to_json
+print(model_to_json)
 
 
 ## Generators
@@ -247,7 +248,11 @@ losswise_tag = 'syllable-aware overfitting test'
 
 losswise.set_api_key(losswise_api_key)
 
-params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
+#params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
+params = model_to_json
+params['samples'] = len(train_generator.ind_tokens)
+params['steps'] = train_generator.steps_per_epoch
+
 params_model = {'batch_size': train_generator.batch_size}
 losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params_data={}, params_model=params_model)
 losswise_callback.set_params(params=params)
