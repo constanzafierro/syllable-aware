@@ -270,8 +270,11 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 
 ## Losswise
 
-losswise_api_key = 'DJCG99NX6'
-losswise_tag = 'syllable-aware playing with train.txt'
+
+keyfile = json.load(open('.env'))
+
+losswise_api_key = keyfile["losswise_api_key"]
+losswise_tag = keyfile["losswise_tag"]
 
 losswise.set_api_key(losswise_api_key)
 
