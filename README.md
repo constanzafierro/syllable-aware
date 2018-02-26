@@ -4,13 +4,12 @@
 
 * **[Working]** main.py **Haven't been Tested yet !**
 
-* **[Broken]** notebooks (Falta modificar las referencias a las clases en los imports. Y están pensados en ejecutarlos en Colaboratory)
-
-
 # TODO List
 
 
 ### main --> Crear Main en Root
+
+* Implementar Callback de Losswise en lstm.py
 
 * Testear modelo en lstm.py
 
@@ -39,7 +38,8 @@
 
 ### perplexity
 
-* Implementar perplexity
+* **[Done]** Implementar perplexity [BPC] (bits per character)
+* Implementar perplexity per word
 
 
 ### Clase Generators
@@ -79,16 +79,16 @@ mv spanish_billion_words ./data/
 # Conda Environment
 
 
-## Create Environment (example name = venv1)
+## List of conda environments
 
 ```
-conda create -n venv1 python=3.6 theano=1.0 anaconda
+conda env list
 ```
 
-## Activate Environment
+## Activate Environment (base)
 
 ```
-source activate venv1
+source activate base
 ```
 
 ## Theano Install
@@ -101,6 +101,12 @@ pip install theano --upgrade
 
 ```
 pip install keras --upgrade
+```
+
+## Deactivate Enviroment (base)
+
+```
+source deactivate base
 ```
 
 ## Switch KERAS Backend to Theano
@@ -165,9 +171,9 @@ And save it.
 ## Extras
 
 ```
-conda install -n venv1 mkl
-conda install -n venv1 mkl-service
-conda install -n venv1 openblas
-conda install -n venv1 -c anaconda pygpu
+conda install mkl
+conda install mkl-service
+conda install openblas
+conda install pygpu
 ```
 
