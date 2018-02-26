@@ -96,74 +96,6 @@ metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 workers = 16 # default 1
 
 
-## Callbacks
-# https://keras.io/callbacks/
-
-out_directory_train_history = './train_history/'
-out_directory_model = './models/'
-out_model_pref = 'lstm_model_'
-
-
-if not os.path.exists(path=out_directory_model):
-    os.mkdir(path=out_directory_model,
-             mode=0o755
-             )
-else:
-    pass
-
-if not os.path.exists(path=out_directory_train_history):
-    os.mkdir(path=out_directory_train_history,
-             mode=0o755
-             )
-else:
-    pass
-
-
-time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
-
-outfile = out_model_pref + time_pref + '.h5'
-
-
-# Checkpoint
-# https://keras.io/callbacks/#modelcheckpoint
-
-monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'val_loss'
-
-
-checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outfile,
-                                             monitor=monitor_checkpoint,
-                                             verbose=1,
-                                             save_best_only=True, # TODO: Guardar cada K epochs, y Guardar el mejor
-                                             save_weights_only=False,
-                                             mode='auto',
-                                             period=1 # Interval (number of epochs) between checkpoints.
-                                             )
-
-
-## EarlyStopping
-# https://keras.io/callbacks/#earlystopping
-
-monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'val_loss'
-
-patience = 100 # number of epochs with no improvement after which training will be stopped
-
-
-early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
-                                               min_delta=0,
-                                               patience=patience,
-                                               verbose=0,
-                                               mode='auto'
-                                               )
-## Losswise
-losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
-losswise_callback = LosswiseKerasCallback(tag='syllable-aware test',
-                                          params_data={},
-                                          params_model={})
-
-## Callbacks Pipeline
-callbacks = [checkpoint, early_stopping]#, losswise_callback]
-
-
 ##
 
 T = 6000 # quantity of tokens
@@ -245,6 +177,90 @@ train_generator, val_generator = corpus.get_generators(batch_size=batch_size)
 ## Training
 print('\n Training \n')
 ti = time.time()
+
+
+
+
+## Callbacks
+# https://keras.io/callbacks/
+
+out_directory_train_history = './train_history/'
+out_directory_model = './models/'
+out_model_pref = 'lstm_model_'
+
+
+if not os.path.exists(path=out_directory_model):
+    os.mkdir(path=out_directory_model,
+             mode=0o755
+             )
+else:
+    pass
+
+if not os.path.exists(path=out_directory_train_history):
+    os.mkdir(path=out_directory_train_history,
+             mode=0o755
+             )
+else:
+    pass
+
+
+time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
+
+outfile = out_model_pref + time_pref + '.h5'
+
+
+# Checkpoint
+# https://keras.io/callbacks/#modelcheckpoint
+
+monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'val_loss'
+
+
+checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outfile,
+                                             monitor=monitor_checkpoint,
+                                             verbose=1,
+                                             save_best_only=True, # TODO: Guardar cada K epochs, y Guardar el mejor
+                                             save_weights_only=False,
+                                             mode='auto',
+                                             period=1 # Interval (number of epochs) between checkpoints.
+                                             )
+
+
+## EarlyStopping
+# https://keras.io/callbacks/#earlystopping
+
+monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'val_loss'
+
+patience = 100 # number of epochs with no improvement after which training will be stopped
+
+
+early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
+                                               min_delta=0,
+                                               patience=patience,
+                                               verbose=0,
+                                               mode='auto'
+                                               )
+## Losswise
+losswise.set_api_key('VAX1TP45Q') # api_key for "syllable-aware"
+
+
+params = {'samples': len(corpus.train_set),
+          'steps': train_generator.steps_per_epoch,
+          'batch_size': batch_size
+          }
+
+
+losswise_callback = LosswiseKerasCallback(tag='syllable-aware test',
+                                          params_data={},
+                                          params_model={})
+
+losswise_callback.set_params(params=params)
+
+
+
+## Callbacks Pipeline
+callbacks = [checkpoint, early_stopping, losswise_callback]
+
+
 
 
 model.fit(train_generator=train_generator,
