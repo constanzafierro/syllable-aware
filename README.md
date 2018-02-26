@@ -24,7 +24,7 @@
 
 * **[Tested]** TokenSelector.py
 
-* Corpus.py
+* **[Partially Tested]** Corpus.py
 
 * RNN.py
 
