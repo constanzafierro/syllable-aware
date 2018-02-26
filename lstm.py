@@ -12,7 +12,6 @@ import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN
 
 import losswise
 from src.callback_losswise import LosswiseKerasCallback
-#from losswise.libs import LosswiseKerasCallback
 
 ########################################################################################################################
 
@@ -166,9 +165,9 @@ print(model.summary)
 
 
 ## Model Config
-print('\n Model to JSON \n')
-model_to_json = model.to_json
-print(model_to_json)
+#print('\n Model to JSON \n')
+#model_to_json = model.to_json # for losswise_callback
+#print(model_to_json)
 
 
 ## Generators
@@ -181,7 +180,7 @@ print('\n Training \n')
 ti = time.time()
 
 
-
+########################################################################################################################
 
 ## Callbacks
 # https://keras.io/callbacks/
@@ -248,9 +247,12 @@ losswise_tag = 'syllable-aware overfitting test'
 
 losswise.set_api_key(losswise_api_key)
 
-#params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
-
 import json
+
+## Model Config
+print('\n Model to JSON \n')
+model_to_json = model.to_json # for losswise_callback
+print(model_to_json)
 
 model_to_json = json.loads(model_to_json)
 params_data = model_to_json
