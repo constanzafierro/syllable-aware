@@ -249,13 +249,7 @@ losswise.set_api_key(losswise_api_key)
 
 import json
 
-## Model Config
-print('\n Model to JSON \n')
-model_to_json = model.to_json # for losswise_callback
-print(model_to_json)
-
-model_to_json = json.loads(model_to_json)
-params_data = model_to_json
+params_data = json.loads(model.to_json)
 
 params_data['samples'] = len(train_generator.ind_tokens)
 params_data['steps'] = train_generator.steps_per_epoch
