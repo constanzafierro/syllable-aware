@@ -166,10 +166,9 @@ print(model.summary)
 
 
 ## Model Config
-print('\n Model Config \n')
-print(model.get_config)
+print('\n Model to JSON \n')
+print(model.to_json)
 
-print('\n', model.get_config[0], '\n')
 
 ## Generators
 print('\n Get Generators \n')

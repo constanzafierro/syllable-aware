@@ -73,6 +73,8 @@ class RecurrentLSTM:
 
         self.get_config = self.model.get_config()
 
+        self.to_json = self.model.to_json()
+
 
     def fit(self, train_generator, val_generator, epochs, callbacks, workers):
 
@@ -107,3 +109,7 @@ class RecurrentLSTM:
     def get_config(self):
 
         return self.get_config
+
+    def to_json(self):
+
+        return self.to_json()
