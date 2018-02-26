@@ -5,6 +5,7 @@ from src.RNN import RecurrentLSTM
 from src.Corpus import Corpus
 from src.utils import preprocessing_file
 from src.perplexity import metric_pp
+from src.Generators import GeneralGenerator
 
 import time
 
@@ -121,7 +122,6 @@ L = 100  # 10 sequence_length
 ## Init Corpus
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file=path_to_file,
-                train_size=train_size,
                 final_char=':',
                 final_punc='>',
                 inter_char='-',
@@ -135,46 +135,47 @@ corpus = Corpus(path_to_file=path_to_file,
 
 ## Tokenization
 print('\n Select Tokens \n')
-corpus.select_tokens(quantity_word=quantity_word,
-                     quantity_syllable=quantity_syllable
-                     )
+corpus.set_tokens_selector(quantity_word=quantity_word,
+                           quantity_syllable=quantity_syllable
+                           )
 
 
 ## L prime
 print('\n L prime \n')
-corpus.calculateLprime(sequence_length=L)
-Lprima = corpus.lprime
-
+corpus.set_lprime(sequence_length = L)
 
 ########################################################################################################################
 
 ## Dictionaries Token-Index
 print('\n Dictionaries Token - Index \n')
+corpus.build_dictionaries()
+corpus.set_token_selected()
+train_vocabulary, train_token_to_index, train_index_ends, train_index_to_token, train_average_tpw, train_lprime = corpus.get_parameters()
 
-split_mode = 'simple' # 'random'
-use_perplexity = False # True
+split_mode = True
+token_split = '<nl>'
+use_perplexity = True # True
 
-if split_mode == 'random':
-    print('\n Random Split \n')
-    corpus.split_train_eval(val_percentage=20)
-    vocabulary = corpus.vocabulary_as_index
-    if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
-    #TODO: División por cero en método split_train_eval, en self.train_ATPW = words_train_set / len(self.train_set)
-else:
-    print('\n Simple Split \n')
-    corpus.dictionaries_token_index()
-    vocabulary = corpus.vocabulary_as_index
-    if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
+
+print('\n Split Corpus \n')
+train_set, eval_set = corpus.split_corpus(percentage = 80,
+                                          random = split_mode,
+                                          token_split=token_split,
+                                          min_len = 0
+                                          )
+
+
+if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
 
 
 ########################################################################################################################
 
 ## Init Model
 print('\n Init Model \n')
-model = RecurrentLSTM(vocab_size=len(vocabulary),
+model = RecurrentLSTM(vocab_size=len(train_vocabulary),
                       embedding_dim=D,
                       hidden_dim=D,
-                      input_length=Lprima,
+                      input_length=train_lprime,
                       recurrent_dropout=recurrent_dropout,
                       dropout=dropout,
                       seed=dropout_seed
@@ -197,8 +198,37 @@ print(model.summary)
 
 ## Generators
 print('\n Get Generators \n')
-train_generator, val_generator = corpus.get_generators(batch_size=batch_size)
 
+train_generator = GeneralGenerator(batch_size = batch_size,
+                                   ind_tokens = train_set,
+                                   vocabulary = train_vocabulary,
+                                   max_len = train_lprime,
+                                   split_symbol_index = token_split,
+                                   count_to_split = -1
+                                   )
+
+val_generator = GeneralGenerator(batch_size = batch_size,
+                                 ind_tokens = train_set,
+                                 vocabulary = train_vocabulary,
+                                 max_len = train_lprime,
+                                 split_symbol_index = token_split,
+                                 count_to_split = -1
+                                 )
+
+
+######################### TEST SET ################################
+
+path_to_test = './data/test.txt'
+
+test_set = corpus.select_tokens_from_file(path_to_test)
+
+test_generator = GeneralGenerator(batch_size = batch_size,
+                                 ind_tokens = train_set,
+                                 vocabulary = train_vocabulary,
+                                 max_len = train_lprime,
+                                 split_symbol_index = token_split,
+                                 count_to_split = -1
+                                 )
 
 ########################################################################################################################
 
