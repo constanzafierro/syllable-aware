@@ -61,7 +61,7 @@ class Corpus:
 
         self.tokenSelector.get_dictionary(path_file = self.path_to_file)
 
-        self.tokensplit = None#-1 # for get_generators
+        self.tokensplit = -1 # for get_generators
 
         self.train_set = []
         self.eval_set = []
@@ -141,7 +141,8 @@ class Corpus:
         self.vocabulary_eval = set(self.eval_set) # indexes
 
 
-    def split_train_eval(self, val_percentage, token_split, min_len=0):
+    #def split_train_eval(self, val_percentage, token_split, min_len=0):
+    def split_train_eval(self, val_percentage, min_len=0):
 
         self.vocabulary = set(self.token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
@@ -154,7 +155,7 @@ class Corpus:
         self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
         self.vocabulary_as_index = set(self.ind_corpus) # vocabulary as index
 
-        self.tokensplit = self.token_to_index[token_split]
+        #self.tokensplit = self.token_to_index[token_split]
 
         words_train_set = 0
         words_eval_set = 0
