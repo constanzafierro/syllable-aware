@@ -7,12 +7,13 @@ from src.utils import preprocessing_file
 from src.perplexity import metric_pp
 
 import time
-import os
 
-import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
+import keras # para Callbacks
 
 import losswise
 from src.callback_losswise import LosswiseKerasCallback
+
+import json
 
 ########################################################################################################################
 
@@ -47,6 +48,9 @@ random.seed(seed)
 path_in = './data/train.txt'
 path_out = './data/train_add_space.txt'
 
+
+###################################################
+
 ## Pre processing
 print('\n Preprocess - Add Spaces \n')
 
@@ -76,6 +80,8 @@ if add_space:
 
 path_to_file = path_out
 
+
+########################################################################################################################
 
 ## Hyperparameters
 
@@ -110,6 +116,8 @@ quantity_syllable = T - quantity_word
 L = 100  # 10 sequence_length
 
 
+###################################################
+
 ## Init Corpus
 print('\n Init Corpus \n')
 corpus = Corpus(path_to_file=path_to_file,
@@ -138,23 +146,28 @@ corpus.calculateLprime(sequence_length=L)
 Lprima = corpus.lprime
 
 
+########################################################################################################################
+
 ## Dictionaries Token-Index
 print('\n Dictionaries Token - Index \n')
 
 split_mode = 'simple' # 'random'
+use_perplexity = False # True
 
 if split_mode == 'random':
     print('\n Random Split \n')
     corpus.split_train_eval(val_percentage=20)
     vocabulary = corpus.vocabulary_as_index
-    #metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
+    if use_perplexity: metrics.append(metric_pp(average_TPW=corpus.train_ATPW))
     #TODO: División por cero en método split_train_eval, en self.train_ATPW = words_train_set / len(self.train_set)
 else:
     print('\n Simple Split \n')
     corpus.dictionaries_token_index()
     vocabulary = corpus.vocabulary_as_index
-    #metrics.append(metric_pp(average_TPW=10.0))
+    if use_perplexity: metrics.append(metric_pp(average_TPW=10.0))
 
+
+########################################################################################################################
 
 ## Init Model
 print('\n Init Model \n')
@@ -216,6 +229,8 @@ time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
 outfile = out_model_pref + time_pref + '.h5'
 
 
+###################################################
+
 # Checkpoint
 # https://keras.io/callbacks/#modelcheckpoint
 
@@ -231,6 +246,8 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
                                              period=1 # Interval (number of epochs) between checkpoints.
                                              )
 
+
+###################################################
 
 ## EarlyStopping
 # https://keras.io/callbacks/#earlystopping
@@ -248,14 +265,14 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                )
 
 
+###################################################
+
 ## Losswise
 
 losswise_api_key = 'DJCG99NX6'
 losswise_tag = 'syllable-aware playing with train.txt'
 
 losswise.set_api_key(losswise_api_key)
-
-import json
 
 params_data = json.loads(model.to_json)
 
@@ -273,9 +290,8 @@ losswise_callback = LosswiseKerasCallback(tag=losswise_tag,
 
 losswise_callback.set_params(params=params_model)
 
-#params = {'epochs': epochs, 'samples': len(train_generator.ind_tokens), 'batch_size': batch_size}
-#losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params=params)
 
+###################################################
 
 ## Callbacks Pipeline
 callbacks = [checkpoint, early_stopping, losswise_callback]
