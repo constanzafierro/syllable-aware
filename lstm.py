@@ -4,6 +4,7 @@
 from src.RNN import RecurrentLSTM
 from src.Corpus import Corpus
 from src.utils import preprocessing_file
+from src.perplexity import metric_pp
 
 import time
 import os
@@ -91,7 +92,7 @@ batch_size = 128
 epochs = 300
 
 optimizer = 'rmsprop' # 'adam'
-metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
+metrics = ['top_k_categorical_accuracy', 'categorical_accuracy', metric_pp(average_TPW = 5.0)]
 
 workers = 16 # default 1
 
