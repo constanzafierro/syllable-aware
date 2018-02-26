@@ -98,7 +98,7 @@ if keras.backend.backend() == 'tensorflow':
 dropout_seed = 1
 
 train_size = 0.8 # 1
-batch_size = 128
+batch_size =1024
 epochs = 300
 
 optimizer = 'rmsprop' # 'adam'
@@ -111,7 +111,7 @@ workers = 16 # default 1
 
 T = 6000 # quantity of tokens
 
-quantity_word = 30
+quantity_word = 2000
 quantity_syllable = T - quantity_word
 
 L = 100  # 10 sequence_length
@@ -151,14 +151,14 @@ corpus.set_lprime(sequence_length = L)
 
 train_vocabulary, train_token_to_index, train_index_ends, train_index_to_token, train_average_tpw, train_lprime = corpus.get_parameters()
 
-split_mode = True
+random_split = True
 token_split = '<nl>'
 use_perplexity = True # True
 
 
 print('\n Split Corpus \n')
 train_set, eval_set = corpus.split_corpus(percentage = 80,
-                                          random = split_mode,
+                                          random_split = random_split,
                                           token_split=token_split,
                                           min_len = 0
                                           )
