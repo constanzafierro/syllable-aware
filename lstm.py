@@ -242,8 +242,8 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                )
 ## Losswise
 
-losswise_api_key = 'VAX1TP45Q'
-losswise_tag = 'syllable-aware test'
+losswise_api_key = 'GHH8RPJ3L'
+losswise_tag = 'syllable-aware overfitting test'
 
 losswise.set_api_key(losswise_api_key)
 
