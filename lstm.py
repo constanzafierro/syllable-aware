@@ -11,8 +11,8 @@ import os
 import keras # para Callbacks TODO: posiblemente moverlas a RecurrentLSTM en RNN.py
 
 import losswise
-from losswise.libs import LosswiseKerasCallback
-#from src.callback_losswise import LosswiseKerasCallback
+from src.callback_losswise import LosswiseKerasCallback
+#from losswise.libs import LosswiseKerasCallback
 
 ########################################################################################################################
 
@@ -247,21 +247,13 @@ losswise_tag = 'syllable-aware test'
 
 losswise.set_api_key(losswise_api_key)
 
-params = {'epochs': epochs,
-          'samples': len(train_generator.ind_tokens),
-          'batch_size': batch_size
-          }
-print(params['samples'])
-
-losswise_callback = LosswiseKerasCallback(tag=losswise_tag,
-                                          params=params
-                                          )
+params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
+params_model = {'batch_size': train_generator.batch_size}
+losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params_data={}, params_model=params_model)
 losswise_callback.set_params(params=params)
 
-# params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
-# params_model = {'batch_size': train_generator.batch_size}
-# losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params_data={}, params_model=params_model)
-# losswise_callback.set_params(params=params)
+#params = {'epochs': epochs, 'samples': len(train_generator.ind_tokens), 'batch_size': batch_size}
+#losswise_callback = LosswiseKerasCallback(tag=losswise_tag, params=params)
 
 
 ## Callbacks Pipeline
