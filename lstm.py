@@ -157,7 +157,7 @@ use_perplexity = True# True
 if split_mode == 'random':
     print('\n Random Split \n')
     corpus.split_train_eval(val_percentage=20,
-                            token_split=-1
+                            token_split='<nl>'
                             )
     vocabulary = corpus.vocabulary_as_index
     if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
