@@ -249,11 +249,11 @@ losswise.set_api_key(losswise_api_key) # api_key for "syllable-aware"
 
 
 params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
-params_model = {'batch_size': train_generator.batch_size}
+
+#params_model = {'batch_size': train_generator.batch_size}
 
 losswise_callback = LosswiseKerasCallback(tag=losswise_tag) #, params_data={}, params_model=params_model)
-
-#losswise_callback.set_params(params=params)
+losswise_callback.set_params(params=params)
 
 
 ## Callbacks Pipeline
