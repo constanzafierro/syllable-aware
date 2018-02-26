@@ -249,6 +249,9 @@ losswise_tag = 'syllable-aware overfitting test'
 losswise.set_api_key(losswise_api_key)
 
 #params = {'samples': len(train_generator.ind_tokens), 'steps': train_generator.steps_per_epoch}
+
+import json
+model_to_json = json.loads(model_to_json)
 params = model_to_json
 params['samples'] = len(train_generator.ind_tokens)
 params['steps'] = train_generator.steps_per_epoch
