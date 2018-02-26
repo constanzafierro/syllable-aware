@@ -151,12 +151,14 @@ Lprima = corpus.lprime
 ## Dictionaries Token-Index
 print('\n Dictionaries Token - Index \n')
 
-split_mode = 'simple' # 'random'
-use_perplexity = False # True
+split_mode = 'random' #'simple'
+use_perplexity = True# True
 
 if split_mode == 'random':
     print('\n Random Split \n')
-    corpus.split_train_eval(val_percentage=20)
+    corpus.split_train_eval(val_percentage=20,
+                            token_split=-1
+                            )
     vocabulary = corpus.vocabulary_as_index
     if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
     #TODO: División por cero en método split_train_eval, en self.train_ATPW = words_train_set / len(self.train_set)
