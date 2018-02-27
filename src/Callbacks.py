@@ -9,9 +9,9 @@ class Callbacks:
 
     def __init__(self):
 
-        self.early_stopping = None
-        self.checkpoint = None
-        self.losswise_callback = None
+        self.early_stopping = []
+        self.checkpoint = []
+        self.losswise_callback = []
 
         self.callbacks = []
 
