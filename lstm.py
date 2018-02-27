@@ -233,13 +233,21 @@ outfile = out_model_pref + time_pref + '.h5'
 
 
 ###################################################
-
 # Checkpoint
 # https://keras.io/callbacks/#modelcheckpoint
 
+from src.Callbacks import Callbacks
+
+callbacks = Callbacks()
+
 monitor_checkpoint = 'val_top_k_categorical_accuracy' # 'val_loss'
+save_best_only = True
 
+callbacks.checkpoint(filepath=out_directory_model + outfile,
+                     monitor=monitor_checkpoint,
+                     save_best_only=save_best_only)
 
+'''
 checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outfile,
                                              monitor=monitor_checkpoint,
                                              verbose=1,
@@ -248,31 +256,43 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outf
                                              mode='auto',
                                              period=1 # Interval (number of epochs) between checkpoints.
                                              )
-
+'''
 
 ###################################################
-
 ## EarlyStopping
 # https://keras.io/callbacks/#earlystopping
 
 monitor_early_stopping = 'val_top_k_categorical_accuracy' # 'val_loss'
-
 patience = 100 # number of epochs with no improvement after which training will be stopped
 
+callbacks.early_stopping(monitor=monitor_early_stopping,
+                         patience=patience)
 
+'''
 early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
                                                min_delta=0,
                                                patience=patience,
                                                verbose=0,
                                                mode='auto'
                                                )
-
+'''
 
 ###################################################
-
 ## Losswise
 
+model_to_json = json.loads(model.to_json)
 
+samples = len(train_generator.ind_tokens)
+steps = train_generator.steps_per_epoch
+batch_size = train_generator.batch_size
+
+callbacks.losswise(keyfile='.env',
+                   model_to_json=model_to_json,
+                   samples=samples,
+                   steps=steps,
+                   batch_size=batch_size)
+
+'''
 keyfile = json.load(open('.env'))
 
 losswise_api_key = keyfile["losswise_api_key"]
@@ -295,13 +315,16 @@ losswise_callback = LosswiseKerasCallback(tag=losswise_tag,
                                           )
 
 losswise_callback.set_params(params=params_model)
-
+'''
 
 ###################################################
 
 ## Callbacks Pipeline
-callbacks = [checkpoint, early_stopping, losswise_callback]
+callbacks = callbacks.callbacks()
 
+'''
+callbacks = [checkpoint, early_stopping, losswise_callback]
+'''
 
 ########################################################################################################################
 
