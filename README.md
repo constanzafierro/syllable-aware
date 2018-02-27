@@ -168,6 +168,30 @@ And save it.
 
 ---
 
+## clone_github.sh
+
+
+Edit clone_github.sh
+
+```
+cd ~
+nano clone_github.sh
+```
+
+And copy and paste this script
+
+```
+#!/bin/bash
+cd ~
+cd Syllables
+chmod 777 -R syllable-aware/
+rm -R syllable-aware/
+git clone https://github.com/nlpchile/syllable-aware.git
+```
+
+And save it.
+
+
 ## Extras
 
 ```
