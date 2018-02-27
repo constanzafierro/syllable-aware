@@ -1,6 +1,6 @@
 from .TokenSelector import TokenSelector
 from .utils import Lprime, ending_tokens_index
-from .Generators import GeneralGenerator
+
 
 import random # TODO: We must set a seed !!
 
@@ -65,19 +65,12 @@ class Corpus:
         self.quantity_word = None
         self.quantity_syllable = None
 
-        self.token_selected = []
-
         self.lprime = 0
-
         self.vocabulary = set()
         self.token_to_index = dict()
         self.index_ends = []
         self.index_to_token = dict()
         self.ind_corpus = []
-        self.vocabulary_as_index = set()
-
-        self.vocabulary_train = set()
-        self.vocabulary_eval = set()
 
         self.average_tpw = 1
 
@@ -106,13 +99,9 @@ class Corpus:
         return token_selected
 
 
-    def set_token_selected(self):
-        self.token_selected = self.select_tokens_from_file(self.path_to_file)
+    def build_dictionaries(self, token_selected):
 
-
-    def build_dictionaries(self):
-
-        self.vocabulary = set(self.token_selected)
+        self.vocabulary = set(token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
 
         self.index_ends, words_complete = ending_tokens_index(token_to_index=self.token_to_index,
@@ -120,20 +109,15 @@ class Corpus:
                                                               )
 
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
-        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected]  # corpus as indexes
-        self.vocabulary_as_index = set(self.ind_corpus)  # vocabulary as index
+        self.ind_corpus = [self.token_to_index[token] for token in token_selected]  # corpus as indexes
 
         self.average_tpw = words_complete / len(self.ind_corpus)
 
 
-    def set_lprime(self, sequence_length):
-        self.lprime = Lprime(token_selected = self.token_selected,
+    def set_lprime(self, token_selected, sequence_length):
+        self.lprime = Lprime(token_selected = token_selected,
                         sequence_length = sequence_length
                         )
-
-
-    def get_parameters(self):
-        return self.vocabulary, self.token_to_index, self.index_ends, self.index_to_token, self.average_tpw, self.lprime
 
 
     def split_corpus(self, percentage = 0, random_split = False, token_split= '<nl>', min_len = 0):
@@ -178,3 +162,39 @@ class Corpus:
             val_set = self.ind_corpus[len_train:]  # indexes
 
         return train_set, val_set
+
+    def coverage(self, path_to_file):
+
+        words_coverage = 0
+        words_total = 0
+        with open(path_to_file) as f1:
+
+                for line in f1:
+                    words = line.lower().split()
+
+                    words += ['\n']
+
+                    for token in words:
+
+                        words_coverage = self.tokenSelector.coverage(token = token,
+                                                            count = words_coverage
+                                                            )
+                        words_total += 1
+
+        return 100.0 * words_coverage / words_total
+
+
+    def params(self):
+
+        params = {"tokenSelector": self.tokenSelector,
+                  "tokensplit": self.tokensplit,
+                  "quantity_word": self.quantity_word,
+                  "quantity_syll": self.quantity_syllable,
+                  "lprime": self.lprime,
+                  "vocabulary": self.vocabulary,
+                  "token_to_index": self.token_to_index,
+                  "index_to_token": self.index_to_token,
+                  "index_ends": self.index_ends,
+                  "average_tpw": self.average_tpw
+                   }
+        return params
