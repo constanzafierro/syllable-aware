@@ -321,7 +321,7 @@ losswise_callback.set_params(params=params_model)
 ###################################################
 
 ## Callbacks Pipeline
-callbacks = callbacks.callbacks()
+callbacks = callbacks.get_callbacks()
 
 '''
 callbacks = [checkpoint, early_stopping, losswise_callback]
