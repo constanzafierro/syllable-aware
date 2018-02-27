@@ -109,9 +109,9 @@ workers = 16 # default 1
 
 ################ CORPUS ATRIBUTES #################
 
-T = 6000 # quantity of tokens
+T = 5000 # quantity of tokens
 
-quantity_word = 2000
+quantity_word = 1000
 quantity_syllable = T - quantity_word
 
 L = 100
@@ -376,7 +376,6 @@ tf = time.time()
 dt = (tf - ti) / 60.0
 print('\n Elapsed Time {} \n'.format(dt))
 
-" T = {} ; Tw = {} ; Ts = {}"
 
 with open(path_test_result, "a") as f1:
     f1.write("Result experiment T = {} ; Tw = {} ; Ts = {} \nScores={}".format(T, quantity_word, quantity_syllable, scores))
