@@ -8,8 +8,6 @@ from . import TokenSelector
 from . import Generators
 from . import Corpus
 
-from . import Callbacks
-
 #from . import RNN
 
 #from . import perplexity
