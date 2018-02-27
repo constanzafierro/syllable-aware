@@ -379,4 +379,4 @@ print('\n Elapsed Time {} \n'.format(dt))
 " T = {} ; Tw = {} ; Ts = {}"
 
 with open(path_test_result, "a") as f1:
-    f1.write("Result experiment T = {} ; Tw = {} ; Ts = {} \nScores={}".format(scores))
+    f1.write("Result experiment T = {} ; Tw = {} ; Ts = {} \nScores={}".format(T, quantity_word, quantity_syllable, scores))

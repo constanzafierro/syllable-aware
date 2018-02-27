@@ -103,7 +103,7 @@ class RecurrentLSTM:
 
     def evaluate(self, test_generator):
 
-        self.model.evaluate_generator(generator = test_generator.generator(),
+        return self.model.evaluate_generator(generator = test_generator.generator(),
                                       steps=test_generator.steps_per_epoch,
                                       max_queue_size=10,
                                       workers=self.workers,
