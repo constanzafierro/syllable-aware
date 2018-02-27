@@ -165,9 +165,7 @@ class Corpus:
 
     def coverage(self, path_to_file):
 
-        words_coverage_w = 0
-        words_coverage_s = 0
-        words_total = 0
+        count = [0, 0, 0]
         with open(path_to_file) as f1:
 
                 for line in f1:
@@ -177,13 +175,9 @@ class Corpus:
 
                     for token in words:
 
-                        words_coverage_w, words_coverage_s = self.tokenSelector.coverage(token = token,
-                                                                                         words_count = words_coverage_w,
-                                                                                         sylls_count = words_coverage_s
-                                                                                         )
-                        words_total += 1
+                        count = self.tokenSelector.coverage(token = token, count = count)
 
-        return 100.0 * words_coverage_w / words_total , 100.0 * words_coverage_s / words_total
+        return 100.0 * count[1] / count[0] , 100.0 * count[2] / count[0]
 
 
     def params(self):

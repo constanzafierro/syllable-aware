@@ -95,22 +95,30 @@ class TokenSelector():
 
         return tokens_selected
 
-    def coverage(self, token, words_count, sylls_count):
+    def coverage(self, token, count = [0, 0, 0]):
+        """
 
+        :param token:
+        :param count: array lenght 3, count[0] = quantity of words, count[1] = quantity of words cover with words tokens
+        count[2] = quantity of words cover with syllables tokens
+        :return:
+        """
         if token in self.dict_word:
+            count[0] += 1
 
             if token in self.words:
-                return words_count + 1, sylls_count
+                count[1] += 1
+                return count
 
             else:
                 for s in self.dict_word[token]:
 
                     if s in self.syllables:
-
-                        return words_count, sylls_count
-                return words_count, sylls_count + 1
+                        return count
+                count[2] += 1
+                return count
 
         # word out of vocabulary
-        return words_count, sylls_count
+        return count
 
 
