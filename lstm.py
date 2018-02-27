@@ -153,15 +153,17 @@ print('Build Dictionaries Done\n')
 
 corpus.set_lprime(token_selected = token_selected, sequence_length = L)
 
+params_corpus = corpus.params()
+
 train_set, val_set = corpus.split_corpus(percentage = 80,
                                           random_split = random_split,
                                           token_split=token_split,
                                           min_len = 0
                                          )
 
-if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
+print("average tokens per words = {}".format(params_corpus["average_tpw"]))
+if use_perplexity: metrics.append(metric_pp(average_TPW = params_corpus["average_tpw"]))
 
-params_corpus = corpus.params()
 
 ######################## TEST COVERAGE ##################
 
@@ -309,7 +311,9 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 keyfile = json.load(open('.env'))
 
 losswise_api_key = keyfile["losswise_api_key"]
-losswise_tag = keyfile["losswise_tag"]
+losswise_tag = keyfile["losswise_tag"] + " T = {} ; Tw = {} ; Ts = {}"
+
+losswise_tag = losswise_tag.format(T, quantity_word, quantity_syllable)
 
 losswise.set_api_key(losswise_api_key)
 
