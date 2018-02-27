@@ -312,7 +312,7 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 keyfile = json.load(open('.env'))
 
 losswise_api_key = keyfile["losswise_api_key"]
-losswise_tag = keyfile["losswise_tag"] + " T = {} ; Tw = {} ; Ts = {}"
+losswise_tag = keyfile["losswise_tag"] + " " + path_to_file + " T = {} ; Tw = {} ; Ts = {}"
 
 losswise_tag = losswise_tag.format(T, quantity_word, quantity_syllable)
 

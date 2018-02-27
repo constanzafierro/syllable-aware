@@ -111,7 +111,7 @@ class Corpus:
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
         self.ind_corpus = [self.token_to_index[token] for token in token_selected]  # corpus as indexes
 
-        self.average_tpw = len(token_selected) / words_complete
+        self.average_tpw = compute_tpw(self.index_to_token, self.index_ends)
 
 
     def set_lprime(self, token_selected, sequence_length):
@@ -194,3 +194,17 @@ class Corpus:
                   "average_tpw": self.average_tpw
                    }
         return params
+
+
+def compute_tpw(index_to_token, index_ends):
+
+    words_complete = 0
+    len_tokens = len(index_to_token)
+    if len_tokens == 0:
+        raise (ValueError, "dicionary index_to_token empty")
+
+    for index in index_to_token:
+        if index in index_ends:
+            words_complete += 1
+
+    return len_tokens / words_complete
