@@ -167,12 +167,13 @@ if use_perplexity: metrics.append(metric_pp(average_TPW = params_corpus["average
 
 ######################## TEST COVERAGE ##################
 
-cover = corpus.coverage(path_to_file)
+cover_with_words, cover_with_syll = corpus.coverage(path_to_file)
 
-print("With {} words and {} syllables the corpus coverage is {} percent".format(quantity_word,
-                                                                                quantity_syllable,
-                                                                                cover
-                                                                                )
+print("With {} words the corpus coverage is {} percent \nWith {} syllables the corpus coverage is {}".format(quantity_word,
+                                                                                                             cover_with_words,
+                                                                                                             quantity_syllable,
+                                                                                                             cover_with_syll
+                                                                                                             )
       )
 
 ########################################################################################################################

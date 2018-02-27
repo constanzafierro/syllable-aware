@@ -95,25 +95,22 @@ class TokenSelector():
 
         return tokens_selected
 
-    def coverage(self, token, count):
+    def coverage(self, token, words_count, sylls_count):
 
-        if token in self.punctuation:
-            return count + 1
-
-        elif token in self.dict_word:
+        if token in self.dict_word:
 
             if token in self.words:
-                return count + 1
+                return words_count + 1, sylls_count
 
             else:
                 for s in self.dict_word[token]:
 
                     if s in self.syllables:
 
-                        return count
-                return count + 1
+                        return words_count, sylls_count
+                return words_count, sylls_count + 1
 
         # word out of vocabulary
-        return count
+        return words_count, sylls_count
 
 

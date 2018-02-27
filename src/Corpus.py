@@ -111,7 +111,7 @@ class Corpus:
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
         self.ind_corpus = [self.token_to_index[token] for token in token_selected]  # corpus as indexes
 
-        self.average_tpw = len(token_selected) / words_complete 
+        self.average_tpw = len(token_selected) / words_complete
 
 
     def set_lprime(self, token_selected, sequence_length):
@@ -165,7 +165,8 @@ class Corpus:
 
     def coverage(self, path_to_file):
 
-        words_coverage = 0
+        words_coverage_w = 0
+        words_coverage_s = 0
         words_total = 0
         with open(path_to_file) as f1:
 
@@ -176,12 +177,13 @@ class Corpus:
 
                     for token in words:
 
-                        words_coverage = self.tokenSelector.coverage(token = token,
-                                                            count = words_coverage
-                                                            )
+                        words_coverage_w, words_coverage_s = self.tokenSelector.coverage(token = token,
+                                                                                         words_count = words_coverage_w,
+                                                                                         sylls_count = words_coverage_s
+                                                                                         )
                         words_total += 1
 
-        return 100.0 * words_coverage / words_total
+        return 100.0 * words_coverage_w / words_total , 100.0 * words_coverage_s / words_total
 
 
     def params(self):
