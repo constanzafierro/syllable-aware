@@ -12,6 +12,7 @@ from .src import separadorSilabas
 from .src import TokenSelector
 from .src import Corpus
 
+
 #from .src import RNN
 
 #from .src import perplexity
