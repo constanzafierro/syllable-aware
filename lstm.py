@@ -281,7 +281,7 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 ###################################################
 ## Losswise
 
-model_to_json = json.loads(model.to_json)
+model_to_json = model.to_json
 
 samples = len(train_generator.ind_tokens)
 steps = train_generator.steps_per_epoch
