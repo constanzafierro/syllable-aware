@@ -69,6 +69,6 @@ class Callbacks:
         # return self.losswise_callback
 
 
-        def get_callbacks(self):
+    def get_callbacks(self):
 
-            return self.callbacks
+        return self.callbacks
