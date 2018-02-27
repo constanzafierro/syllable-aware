@@ -6,6 +6,9 @@ from src.Corpus import Corpus
 from src.utils import preprocessing_file
 from src.perplexity import metric_pp
 
+from src.Callbacks import Callbacks
+
+
 import time
 
 import keras # para Callbacks
@@ -235,8 +238,6 @@ outfile = out_model_pref + time_pref + '.h5'
 ###################################################
 # Checkpoint
 # https://keras.io/callbacks/#modelcheckpoint
-
-from src.Callbacks import Callbacks
 
 callbacks = Callbacks()
 
