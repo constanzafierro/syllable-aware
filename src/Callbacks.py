@@ -4,6 +4,7 @@ from src.callback_losswise import LosswiseKerasCallback
 import keras
 import json
 
+#TODO: eliminar appends de los métodos, y agregar el append unicamente en el método get_callbacks
 
 class Callbacks:
 
