@@ -223,21 +223,6 @@ val_generator = GeneralGenerator(batch_size = batch_size,
                                  count_to_split = -1
                                  )
 
-
-######################### TEST SET ################################
-
-path_to_test = './data/test.txt'
-
-test_set = corpus.select_tokens_from_file(path_to_test)
-
-test_generator = GeneralGenerator(batch_size = batch_size,
-                                 ind_tokens = train_set,
-                                 vocabulary = params_corpus["vocabulary"],
-                                 max_len = params_corpus["lprime"],
-                                 split_symbol_index = token_split,
-                                 count_to_split = -1
-                                 )
-
 ########################################################################################################################
 
 ## Callbacks
@@ -312,7 +297,7 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 keyfile = json.load(open('.env'))
 
 losswise_api_key = keyfile["losswise_api_key"]
-losswise_tag = keyfile["losswise_tag"] + " " + path_to_file + " T = {} ; Tw = {} ; Ts = {}"
+losswise_tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
 
 losswise_tag = losswise_tag.format(T, quantity_word, quantity_syllable)
 
@@ -361,5 +346,37 @@ dt = (tf - ti) / 60.0
 print('\n Elapsed Time {} \n'.format(dt))
 
 
-# iter = 0
-# time_pref = time_pref[:-1] + str(i)
+## Test
+print('\nTesting\n')
+######################### TEST SET ################################
+
+path_to_test = './data/test.txt'
+
+test_set = corpus.select_tokens_from_file(path_to_test)
+
+test_generator = GeneralGenerator(batch_size = batch_size,
+                                 ind_tokens = train_set,
+                                 vocabulary = params_corpus["vocabulary"],
+                                 max_len = params_corpus["lprime"],
+                                 split_symbol_index = token_split,
+                                 count_to_split = -1
+                                 )
+
+path_log = './logs/'
+if not os.path.exists(path=path_log):
+    os.mkdir(path=path_log,
+             mode=0o755
+             )
+
+path_test_result = path_log + 'test_result.txt'
+
+ti = time.time()
+scores = model.evaluate(test_generator)
+tf = time.time()
+dt = (tf - ti) / 60.0
+print('\n Elapsed Time {} \n'.format(dt))
+
+" T = {} ; Tw = {} ; Ts = {}"
+
+with open(path_test_result, "a") as f1:
+    f1.write("Result experiment T = {} ; Tw = {} ; Ts = {} \nScores={}".format(scores))
