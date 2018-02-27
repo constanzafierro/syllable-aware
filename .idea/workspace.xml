@@ -29,9 +29,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lstm.py">
+      <file leaf-file-name="Corpus.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Corpus.py">
           <provider selected="true" editor-type-id="text-editor">
+
             <state relative-caret-position="282">
               <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="27" selection-end-column="13" />
               <folding />
@@ -72,27 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>test</find>
-      <find>vocabulary_test</find>
-      <find>eval</find>
-      <find>loss</find>
-      <find>los</find>
-      <find>Lprime</find>
-      <find>GeneralGenerator</find>
-      <find>ending_tokens_index</find>
-      <find>get_characters</find>
-      <find>preprocessing_file</find>
-      <find>get_most_frequent</find>
-      <find>to_ignore</find>
-      <find>word_to_ignore</find>
-      <find>words_to_ignore</find>
-      <find>sign_to_ignore</find>
-      <find>corpus</find>
-      <find>&lt;sns&gt;</find>
-      <find>word_to</find>
-      <find>tokenize_c</find>
-      <find>tokenSelector</find>
-      <find>tokenize_corpus</find>
       <find>tokenize</find>
       <find>indice</find>
       <find>split</find>
@@ -102,6 +82,27 @@
       <find>steps_per_epoch</find>
       <find>sess</find>
       <find>dictionaries_token_index</find>
+      <find>train_size</find>
+      <find>token_selected</find>
+      <find>corpus</find>
+      <find>split_symbol_index</find>
+      <find>set_token_selected</find>
+      <find>tokensplit</find>
+      <find>batch_size</find>
+      <find>ind_corpus</find>
+      <find>dict</find>
+      <find>losswise</find>
+      <find>losswise_tag</find>
+      <find>coverage</find>
+      <find>L = 10</find>
+      <find>average</find>
+      <find>steps</find>
+      <find>lossw</find>
+      <find>os.</find>
+      <find>ts</find>
+      <find>tw</find>
+      <find>path_to_file</find>
+      <find>T = {}</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -112,6 +113,39 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="testing" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -136,7 +170,6 @@
         <option value="$PROJECT_DIR$/src/RNN.py" />
         <option value="$PROJECT_DIR$/src/callback_losswise.py" />
         <option value="$PROJECT_DIR$/test/test_perplexity.py" />
-        <option value="$PROJECT_DIR$/src/Corpus.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/.env.example" />
         <option value="$PROJECT_DIR$/.env" />
@@ -891,7 +924,6 @@
     <entry file="file://$PROJECT_DIR$/process_text.py" />
     <entry file="file://$PROJECT_DIR$/calculate_Lmax.py" />
     <entry file="file://$PROJECT_DIR$/generate_percent.py" />
-    <entry file="file://$PROJECT_DIR$/data/horoscopo_raw.txt" />
     <entry file="file://$PROJECT_DIR$/notebooks/lstmClass.ipynb" />
     <entry file="file://$PROJECT_DIR$/data/test_exploring_utils.txt" />
     <entry file="file://$PROJECT_DIR$/data/test_exploring_utils_spaces.txt" />
@@ -911,46 +943,53 @@
     <entry file="file://$PROJECT_DIR$/src/exploring_utils.py" />
     <entry file="file://$PROJECT_DIR$/src/lstm.py" />
     <entry file="file://$PROJECT_DIR$/test/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/src/utils.py" />
-    <entry file="file://$PROJECT_DIR$/src/TokenSelector.py" />
     <entry file="file://$PROJECT_DIR$/test/test_utils.py" />
     <entry file="file://$PROJECT_DIR$/test/test_tokenSelector.py" />
     <entry file="file://$USER_HOME$/.PyCharm2017.3/system/remote_sources/-422023831/1739583156/losswise/libs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        <state relative-caret-position="17">
+          <caret line="1" column="4" lean-forward="true" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_perplexity.py">
+    <entry file="file://$PROJECT_DIR$/.env.example">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="21" />
+        <state relative-caret-position="34">
+          <caret line="2" column="30" lean-forward="true" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="30" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.env" />
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
+        <state relative-caret-position="224">
           <caret line="96" column="12" lean-forward="false" selection-start-line="96" selection-start-column="12" selection-end-line="96" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_corpusClass.py">
+    <entry file="file://$PROJECT_DIR$/data/horoscopo_raw.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2514">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/perplexity.py">
+    <entry file="file://$PROJECT_DIR$/data/horoscopo_test_overfitting.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/Generators.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -972,7 +1011,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/logs/reference.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/perplexity.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />

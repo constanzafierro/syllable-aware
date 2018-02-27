@@ -5,6 +5,7 @@ from src.RNN import RecurrentLSTM
 from src.Corpus import Corpus
 from src.utils import preprocessing_file
 from src.perplexity import metric_pp
+from src.Generators import GeneralGenerator
 
 from src.Callbacks import Callbacks
 
@@ -100,8 +101,8 @@ if keras.backend.backend() == 'tensorflow':
 dropout_seed = 1
 
 train_size = 0.8 # 1
-batch_size = 128
-epochs = 300
+batch_size = 256
+epochs = 30
 
 optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
@@ -109,22 +110,24 @@ metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 workers = 16 # default 1
 
 
-##
+################ CORPUS ATRIBUTES #################
 
-T = 6000 # quantity of tokens
+T = 500 # quantity of tokens
 
 quantity_word = 30
 quantity_syllable = T - quantity_word
 
 L = 10  # 100 sequence_length
 
+random_split = True
+token_split = '<nl>'
+use_perplexity = True
 
 ###################################################
 
 ## Init Corpus
-print('\n Init Corpus \n')
+print('\n Starting Corpus \n')
 corpus = Corpus(path_to_file=path_to_file,
-                train_size=train_size,
                 final_char=':',
                 final_punc='>',
                 inter_char='-',
@@ -134,52 +137,56 @@ corpus = Corpus(path_to_file=path_to_file,
                 letters=letters,
                 sign_not_syllable='<sns>'
                 )
+print('Start Corpus Done \n')
 
 
 ## Tokenization
-print('\n Select Tokens \n')
-corpus.select_tokens(quantity_word=quantity_word,
-                     quantity_syllable=quantity_syllable
-                     )
+print('\n Selecting Tokens \n')
+corpus.set_tokens_selector(quantity_word=quantity_word,
+                           quantity_syllable=quantity_syllable
+                           )
+
+token_selected = corpus.select_tokens_from_file(path_to_file = path_to_file)
+print('Select Tokens Done\n')
+
+print('\n Building Dictionaries \n')
+corpus.build_dictionaries(token_selected = token_selected)
+print('Build Dictionaries Done\n')
 
 
-## L prime
-print('\n L prime \n')
-corpus.calculateLprime(sequence_length=L)
-Lprima = corpus.lprime
+corpus.set_lprime(token_selected = token_selected, sequence_length = L)
+
+params_corpus = corpus.params()
+
+train_set, val_set = corpus.split_corpus(percentage = 80,
+                                          random_split = random_split,
+                                          token_split=token_split,
+                                          min_len = 0
+                                         )
+
+print("average tokens per words = {}".format(params_corpus["average_tpw"]))
+if use_perplexity: metrics.append(metric_pp(average_TPW = params_corpus["average_tpw"]))
 
 
-########################################################################################################################
+######################## TEST COVERAGE ##################
 
-## Dictionaries Token-Index
-print('\n Dictionaries Token - Index \n')
+cover_with_words, cover_with_syll = corpus.coverage(path_to_file)
 
-split_mode = 'random' #'simple'
-use_perplexity = True# True
-
-if split_mode == 'random':
-    print('\n Random Split \n')
-    corpus.split_train_eval(val_percentage=20,
-                            token_split='<nl>'
-                            )
-    vocabulary = corpus.vocabulary_as_index
-    if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
-    #TODO: División por cero en método split_train_eval, en self.train_ATPW = words_train_set / len(self.train_set)
-else:
-    print('\n Simple Split \n')
-    corpus.dictionaries_token_index()
-    vocabulary = corpus.vocabulary_as_index
-    if use_perplexity: metrics.append(metric_pp(average_TPW = corpus.average_tpw))
-
+print("With {} words the corpus coverage is {} percent \nWith {} syllables the corpus coverage is {}".format(quantity_word,
+                                                                                                             cover_with_words,
+                                                                                                             quantity_syllable,
+                                                                                                             cover_with_syll
+                                                                                                             )
+      )
 
 ########################################################################################################################
 
 ## Init Model
 print('\n Init Model \n')
-model = RecurrentLSTM(vocab_size=len(vocabulary),
+model = RecurrentLSTM(vocab_size=len(params_corpus["vocabulary"]),
                       embedding_dim=D,
                       hidden_dim=D,
-                      input_length=Lprima,
+                      input_length= params_corpus["lprime"],
                       recurrent_dropout=recurrent_dropout,
                       dropout=dropout,
                       seed=dropout_seed
@@ -202,8 +209,22 @@ print(model.summary)
 
 ## Generators
 print('\n Get Generators \n')
-train_generator, val_generator = corpus.get_generators(batch_size=batch_size)
 
+train_generator = GeneralGenerator(batch_size = batch_size,
+                                   ind_tokens = train_set,
+                                   vocabulary = params_corpus["vocabulary"],
+                                   max_len = params_corpus["lprime"],
+                                   split_symbol_index = token_split,
+                                   count_to_split = -1
+                                   )
+
+val_generator = GeneralGenerator(batch_size = batch_size,
+                                 ind_tokens = train_set,
+                                 vocabulary = params_corpus["vocabulary"],
+                                 max_len = params_corpus["lprime"],
+                                 split_symbol_index = token_split,
+                                 count_to_split = -1
+                                 )
 
 ########################################################################################################################
 
@@ -297,7 +318,9 @@ callbacks.losswise(keyfile='.env',
 keyfile = json.load(open('.env'))
 
 losswise_api_key = keyfile["losswise_api_key"]
-losswise_tag = keyfile["losswise_tag"]
+losswise_tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
+
+losswise_tag = losswise_tag.format(T, quantity_word, quantity_syllable)
 
 losswise.set_api_key(losswise_api_key)
 
@@ -347,5 +370,36 @@ dt = (tf - ti) / 60.0
 print('\n Elapsed Time {} \n'.format(dt))
 
 
-# iter = 0
-# time_pref = time_pref[:-1] + str(i)
+## Test
+print('\nTesting\n')
+######################### TEST SET ################################
+
+path_to_test = './data/test.txt'
+
+test_set = corpus.select_tokens_from_file(path_to_test)
+
+test_generator = GeneralGenerator(batch_size = batch_size,
+                                 ind_tokens = train_set,
+                                 vocabulary = params_corpus["vocabulary"],
+                                 max_len = params_corpus["lprime"],
+                                 split_symbol_index = token_split,
+                                 count_to_split = -1
+                                 )
+
+path_log = './logs/'
+if not os.path.exists(path=path_log):
+    os.mkdir(path=path_log,
+             mode=0o755
+             )
+
+path_test_result = path_log + 'test_result.txt'
+
+ti = time.time()
+scores = model.evaluate(test_generator)
+tf = time.time()
+dt = (tf - ti) / 60.0
+print('\n Elapsed Time {} \n'.format(dt))
+
+
+with open(path_test_result, "a") as f1:
+    f1.write("Result experiment T = {} ; Tw = {} ; Ts = {} \nScores={}".format(T, quantity_word, quantity_syllable, scores))

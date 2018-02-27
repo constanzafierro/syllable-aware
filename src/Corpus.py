@@ -1,6 +1,5 @@
 from .TokenSelector import TokenSelector
 from .utils import Lprime, ending_tokens_index
-from .Generators import GeneralGenerator
 
 
 import random # TODO: We must set a seed !!
@@ -10,7 +9,6 @@ class Corpus:
   
     def __init__(self,
                  path_to_file,
-                 train_size,
                  final_char,
                  final_punc,
                  inter_char,
@@ -24,7 +22,6 @@ class Corpus:
         '''
 
         :param path_to_file:
-        :param train_size:
         :param final_char: ':'
         :param final_punc: '>'
         :param inter_char: '-'
@@ -38,7 +35,6 @@ class Corpus:
         '''
 
         self.path_to_file = path_to_file
-        self.train_size = train_size
         self.final_char = final_char
         self.final_punc = final_punc
         self.inter_char = inter_char
@@ -61,7 +57,7 @@ class Corpus:
 
         self.tokenSelector.get_dictionary(path_file = self.path_to_file)
 
-        self.tokensplit = -1 # for get_generators
+        self.tokensplit = '<nl>' # for get_generators
 
         self.train_set = []
         self.eval_set = []
@@ -69,34 +65,26 @@ class Corpus:
         self.quantity_word = None
         self.quantity_syllable = None
 
-        self.token_selected = []
-
         self.lprime = 0
-
         self.vocabulary = set()
         self.token_to_index = dict()
         self.index_ends = []
         self.index_to_token = dict()
         self.ind_corpus = []
-        self.vocabulary_as_index = set()
-
-        self.vocabulary_train = set()
-        self.vocabulary_eval = set()
 
         self.average_tpw = 1
 
-    def select_tokens(self, quantity_word, quantity_syllable):
-        
-        self.quantity_word = quantity_word
-        self.quantity_syllable = quantity_syllable
 
-        self.tokenSelector.get_frequent(quantity_word = self.quantity_word,
-                                        quantity_syll = self.quantity_syllable
+    def set_tokens_selector(self, quantity_word, quantity_syllable):
+        self.tokenSelector.get_frequent(quantity_word = quantity_word,
+                                        quantity_syll = quantity_syllable
                                         )
 
+
+    def select_tokens_from_file(self, path_to_file):
         token_selected = []
 
-        with open(self.path_to_file) as f1:
+        with open(path_to_file) as f1:
 
                 for line in f1:
                     words = line.lower().split()
@@ -108,100 +96,115 @@ class Corpus:
                                                                    tokens_selected = token_selected
                                                                    )
 
-        self.token_selected = token_selected
+        return token_selected
 
 
-    def calculateLprime(self, sequence_length):
+    def build_dictionaries(self, token_selected):
 
-        self.lprime = Lprime(token_selected = self.token_selected,
-                             sequence_length = sequence_length
-                             )
-    
-    
-    def dictionaries_token_index(self):
-        
-        self.vocabulary = set(self.token_selected)
+        self.vocabulary = set(token_selected)
         self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
 
-        self.index_ends, words_complete = ending_tokens_index(token_to_index = self.token_to_index,
-                                               ends = [self.final_char, self.final_punc]
-                                               )
+        self.index_ends, words_complete = ending_tokens_index(token_to_index=self.token_to_index,
+                                                              ends=[self.final_char, self.final_punc]
+                                                              )
 
         self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
-        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
-        self.vocabulary_as_index = set(self.ind_corpus) # vocabulary as index
+        self.ind_corpus = [self.token_to_index[token] for token in token_selected]  # corpus as indexes
 
-        self.average_tpw = words_complete / len(self.ind_corpus)
- 
-        len_train = int(len(self.ind_corpus)*self.train_size)
-
-        self.train_set = self.ind_corpus[0:len_train] # indexes
-        self.eval_set = self.ind_corpus[len_train:] # indexes
-
-        self.vocabulary_train = set(self.train_set) # indexes
-        self.vocabulary_eval = set(self.eval_set) # indexes
+        self.average_tpw = compute_tpw(self.index_to_token, self.index_ends)
 
 
-    def split_train_eval(self, val_percentage, token_split, min_len=0):
+    def set_lprime(self, token_selected, sequence_length):
+        self.lprime = Lprime(token_selected = token_selected,
+                        sequence_length = sequence_length
+                        )
 
-        self.vocabulary = set(self.token_selected)
-        self.token_to_index = dict((t, i) for i, t in enumerate(self.vocabulary, 1))
 
-        self.index_ends, words_complete = ending_tokens_index(token_to_index = self.token_to_index,
-                                              ends = [self.final_char, self.final_punc]
-                                              )
+    def split_corpus(self, percentage = 0, random_split = False, token_split= '<nl>', min_len = 0):
 
-        self.index_to_token = dict((self.token_to_index[t], t) for t in self.vocabulary)
-        self.ind_corpus = [self.token_to_index[token] for token in self.token_selected] # corpus as indexes
+        if 0 <= percentage <= 100:
+            percentage = percentage if percentage < 1 else percentage / 100.0
+        else:
+            raise (ValueError, "percentage = {} must be between zero and one hundred".format(percentage))
 
-        self.average_tpw = words_complete / len(self.ind_corpus)
+        val_set = []
+        train_set = []
 
-        self.vocabulary_as_index = set(self.ind_corpus) # vocabulary as index
+        if random_split:
 
-        self.tokensplit = self.token_to_index[token_split]
+            tokensplit = self.token_to_index[token_split]
 
-        tokens = []
+            tokens = []
 
-        for token in self.ind_corpus:
+            for token in self.ind_corpus:
 
-            tokens.append(token)
+                tokens.append(token)
 
-            if token == self.tokensplit:
+                if token == tokensplit:
 
-                if len(tokens) < min_len:
+                    if len(tokens) < min_len:
+                        tokens = []
+                        continue
+
+                    p = random.choice(range(0, 100))
+
+                    if p < percentage:
+                        val_set += tokens
+
+                    else:
+                        train_set += tokens
+
                     tokens = []
-                    continue
 
-                p = random.choice(range(0, 100))
+        else:
+            len_train = int(len(self.ind_corpus) * percentage)
+            train_set = self.ind_corpus[0:len_train]  # indexes
+            val_set = self.ind_corpus[len_train:]  # indexes
 
-                if p < val_percentage:
-                    self.eval_set += tokens
+        return train_set, val_set
 
-                else:
-                    self.train_set += tokens
+    def coverage(self, path_to_file):
 
-                tokens = []
+        count = [0, 0, 0]
+        with open(path_to_file) as f1:
 
-        self.vocabulary_train = set(self.train_set) # indexes
-        self.vocabulary_eval = set(self.eval_set) # indexes
+                for line in f1:
+                    words = line.lower().split()
+
+                    words += ['\n']
+
+                    for token in words:
+
+                        count = self.tokenSelector.coverage(token = token, count = count)
+
+        return 100.0 * count[1] / count[0] , 100.0 * count[2] / count[0]
 
 
-    def get_generators(self, batch_size):
+    def params(self):
 
-        train_generator = GeneralGenerator(batch_size = batch_size,
-                                           ind_tokens = self.train_set,
-                                           vocabulary = self.vocabulary,
-                                           max_len = self.lprime,
-                                           split_symbol_index = self.tokensplit,
-                                           count_to_split = -1
-                                           )
+        params = {"tokenSelector": self.tokenSelector,
+                  "tokensplit": self.tokensplit,
+                  "quantity_word": self.quantity_word,
+                  "quantity_syll": self.quantity_syllable,
+                  "lprime": self.lprime,
+                  "vocabulary": self.vocabulary,
+                  "token_to_index": self.token_to_index,
+                  "index_to_token": self.index_to_token,
+                  "index_ends": self.index_ends,
+                  "average_tpw": self.average_tpw
+                   }
+        return params
 
-        eval_generator = GeneralGenerator(batch_size = batch_size,
-                                          ind_tokens = self.eval_set,
-                                          vocabulary = self.vocabulary,
-                                          max_len = self.lprime,
-                                          split_symbol_index = self.tokensplit,
-                                          count_to_split = -1
-                                          )
 
-        return train_generator, eval_generator
+def compute_tpw(index_to_token, index_ends):
+
+    words_complete = 0
+    len_tokens = len(index_to_token)
+    if len_tokens == 0:
+        raise (ValueError, "dicionary index_to_token empty")
+
+    for index in index_to_token:
+        if index in index_ends:
+            words_complete += 1
+
+    return len_tokens / words_complete

@@ -30,16 +30,19 @@ class LosswiseKerasCallback(Callback):
                 kind = 'min'
             self.graph_map[metric] = self.session.graph(metric, kind=kind)
         self.x = 0
+
     def on_epoch_end(self, epoch, logs={}):
         for metric in self.metric_list:
             metric_val = "val_" + metric
             if metric_val in logs:
                 data = {metric_val: logs[metric_val]}
                 self.graph_map[metric].append(self.x, data)
+
     def on_batch_end(self, batch, logs={}):
         for metric in self.metric_list:
             data = {metric: logs.get(metric)}
             self.graph_map[metric].append(self.x, data)
         self.x += 1
+
     def on_train_end(self, logs={}):
         self.session.done()
