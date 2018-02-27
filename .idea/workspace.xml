@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/lstm.py" afterPath="$PROJECT_DIR$/lstm.py" />
+      <change beforePath="$PROJECT_DIR$/src/Corpus.py" afterPath="$PROJECT_DIR$/src/Corpus.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Corpus.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Corpus.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Corpus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="165" column="37" lean-forward="true" selection-start-line="165" selection-start-column="8" selection-end-line="165" selection-end-column="37" />
+            <state relative-caret-position="331">
+              <caret line="113" column="64" lean-forward="false" selection-start-line="113" selection-start-column="64" selection-end-line="113" selection-end-column="64" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -38,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="313" column="12" lean-forward="false" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="12" />
+            <state relative-caret-position="297">
+              <caret line="320" column="0" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
               <folding>
                 <element signature="e#28#61#0" expanded="true" />
               </folding>
@@ -71,8 +70,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>preprocessing_file</find>
-      <find>get_most_frequent</find>
       <find>to_ignore</find>
       <find>word_to_ignore</find>
       <find>words_to_ignore</find>
@@ -101,6 +98,8 @@
       <find>ind_corpus</find>
       <find>dict</find>
       <find>losswise</find>
+      <find>losswise_tag</find>
+      <find>average</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -174,8 +173,8 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/.env.example" />
         <option value="$PROJECT_DIR$/src/TokenSelector.py" />
-        <option value="$PROJECT_DIR$/src/Corpus.py" />
         <option value="$PROJECT_DIR$/lstm.py" />
+        <option value="$PROJECT_DIR$/src/Corpus.py" />
       </list>
     </option>
   </component>
@@ -1016,22 +1015,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Corpus.py">
+    <entry file="file://$PROJECT_DIR$/lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="165" column="37" lean-forward="true" selection-start-line="165" selection-start-column="8" selection-end-line="165" selection-end-column="37" />
+        <state relative-caret-position="297">
+          <caret line="320" column="0" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#28#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lstm.py">
+    <entry file="file://$PROJECT_DIR$/src/Corpus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="313" column="12" lean-forward="false" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="12" />
+        <state relative-caret-position="331">
+          <caret line="113" column="64" lean-forward="false" selection-start-line="113" selection-start-column="64" selection-end-line="113" selection-end-column="64" />
           <folding>
-            <element signature="e#28#61#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
