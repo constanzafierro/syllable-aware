@@ -221,7 +221,7 @@ train_generator = GeneralGenerator(batch_size = batch_size,
                                    )
 
 val_generator = GeneralGenerator(batch_size = batch_size,
-                                 ind_tokens = train_set,
+                                 ind_tokens = val_set,
                                  vocabulary = params_tokenization["vocabulary"],
                                  max_len = params_tokenization["lprime"],
                                  split_symbol_index = token_split,
@@ -379,6 +379,8 @@ print('\nTesting\n')
 path_to_test = './data/test.txt'
 
 test_set = tokenization.select_tokens(path_to_test)
+
+index_test = tokenization.converting_token_to_index(test_set)
 
 test_generator = GeneralGenerator(batch_size = batch_size,
                                  ind_tokens = test_set,

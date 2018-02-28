@@ -161,7 +161,6 @@ class Tokenization:
         self.index_ends = params["index_ends"]
         self.average_tpw = params["average_tpw"]
 
-
     def params_experiment(self):
 
         params = {"tokensplit": self.tokensplit,
@@ -241,6 +240,22 @@ class Tokenization:
             val_set = self.ind_corpus[len_train:]  # indexes
 
         return train_set, val_set
+
+    def converting_token_to_index(self, token_selected):
+        index_array = []
+        for token in token_selected:
+            if token in self.token_to_index:
+                index_array.append(self.token_to_index[token])
+
+        return index_array
+
+    def converting_index_to_token(self, index_selected):
+        token_array = []
+        for index in index_selected:
+            if index in self.index_to_token:
+                token_array.append(self.index_to_token[index])
+
+        return token_array
 
     def coverage(self, path_to_file):
         """
