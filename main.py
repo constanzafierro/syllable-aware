@@ -67,7 +67,7 @@ def main():
 
     train_size = 0.8  # 1
     batch_size = 128
-    epochs = 30
+    epochs = 500
 
     optimizer = 'rmsprop'  # 'adam'
     metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
@@ -124,7 +124,6 @@ def main():
             json.dump(keyfile, f)
 
         ## Tokenization
-        print('=' * 50)
         print('Selecting Tokens ...')
         tokenization.setting_tokenSelector_params(quantity_word=quantity_word,
                                                   quantity_syllable=quantity_syllable
@@ -169,7 +168,7 @@ def main():
         print('=' * 50)
 
         words_cover_with_words, words_cover_with_syll, sylls_cover_with_syll = tokenization.coverage(path_to_file)
-        text = "With {} words the words corpus coverage is {} percent \nWith {} syllables the words corpus coverage is {} \n With {} syllables the syllables corpus cover is {}"
+        text = "With {} words the words corpus coverage is {} percent \nWith {} syllables the words corpus coverage is {} \nWith {} syllables the syllables corpus cover is {}"
         print(text.format(quantity_word,
                           words_cover_with_words,
                           quantity_syllable,
@@ -177,11 +176,6 @@ def main():
                           quantity_syllable,
                           sylls_cover_with_syll
                           )
-              )
-        print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
-                                                                                       quantity_syllable,
-                                                                                       params_tokenization["lprime"]
-                                                                                       )
               )
 
         ## Init Model
