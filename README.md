@@ -9,7 +9,7 @@
 
 ### main --> Crear Main en Root
 
-* Implementar Callback de Losswise en lstm.py
+* **[Done]** Implementar Callback de Losswise en lstm.py
 
 * Testear modelo en lstm.py
 
@@ -24,7 +24,7 @@
 
 * **[Tested]** TokenSelector.py
 
-* **[Partially Tested]** Corpus.py
+* **[Not Tested]** Tokenization.py
 
 * RNN.py
 
@@ -39,6 +39,7 @@
 ### perplexity
 
 * **[Done]** Implementar perplexity [BPC] (bits per character)
+
 * Implementar perplexity per word
 
 
