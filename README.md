@@ -54,31 +54,31 @@
 # Conda Environment
 
 
-## List of conda environments
+### List of conda environments
 
 ```
 conda env list
 ```
 
-## Activate Environment (base)
+### Activate Environment (base)
 
 ```
 source activate base
 ```
 
-## Theano Install
+### Theano Install
 
 ```
 pip install theano --upgrade
 ```
 
-## Keras Install
+### Keras Install
 
 ```
 pip install keras --upgrade
 ```
 
-## Deactivate Enviroment (base)
+### Deactivate Enviroment (base)
 
 ```
 source deactivate base
