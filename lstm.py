@@ -379,7 +379,7 @@ print('\n Elapsed Time {} \n'.format(dt))
 print('\nTesting\n')
 ######################### TEST SET ################################
 
-path_to_test = './data/horoscopo_test_overfitting_add_space'
+path_to_test = './data/horoscopo_test_overfitting_add_space.txt'
 
 test_set = tokenization.select_tokens(path_to_test)
 

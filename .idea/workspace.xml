@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/lstm.py" afterPath="$PROJECT_DIR$/lstm.py" />
       <change beforePath="$PROJECT_DIR$/src/Tokenization.py" afterPath="$PROJECT_DIR$/src/Tokenization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,8 +44,8 @@
       <file leaf-file-name="Tokenization.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Tokenization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1649">
-              <caret line="151" column="22" lean-forward="true" selection-start-line="151" selection-start-column="22" selection-end-line="151" selection-end-column="22" />
+            <state relative-caret-position="178">
+              <caret line="86" column="18" lean-forward="false" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="18" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -56,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="199">
-              <caret line="381" column="30" lean-forward="true" selection-start-line="381" selection-start-column="30" selection-end-line="381" selection-end-column="30" />
+              <caret line="381" column="63" lean-forward="false" selection-start-line="381" selection-start-column="63" selection-end-line="381" selection-end-column="63" />
               <folding>
                 <element signature="e#28#61#0" expanded="true" />
               </folding>
@@ -139,7 +140,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sess</find>
       <find>dictionaries_token_index</find>
       <find>train_size</find>
       <find>token_selected</find>
@@ -169,6 +169,7 @@
       <find>split</find>
       <find>split_t</find>
       <find>bat</find>
+      <find>os.path</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -898,7 +899,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2748447" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4673913" sideWeight="0.4969697" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.099186994" sideWeight="0.4969697" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16993958" sideWeight="0.48923078" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20166163" sideWeight="0.48923078" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1167,7 +1168,7 @@
     <entry file="file://$PROJECT_DIR$/lstm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
-          <caret line="381" column="30" lean-forward="true" selection-start-line="381" selection-start-column="30" selection-end-line="381" selection-end-column="30" />
+          <caret line="381" column="63" lean-forward="false" selection-start-line="381" selection-start-column="63" selection-end-line="381" selection-end-column="63" />
           <folding>
             <element signature="e#28#61#0" expanded="true" />
           </folding>
@@ -1176,8 +1177,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Tokenization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="151" column="22" lean-forward="true" selection-start-line="151" selection-start-column="22" selection-end-line="151" selection-end-column="22" />
+        <state relative-caret-position="178">
+          <caret line="86" column="18" lean-forward="false" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="18" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>

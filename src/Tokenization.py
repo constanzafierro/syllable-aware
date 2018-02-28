@@ -92,8 +92,8 @@ class Tokenization:
 
     def load_tokenSelector(self, path_to_file):
 
-        if os.path.exists(path=path_to_file):
-            raise (FileNotFoundError, "Path doesn't exists, '{}'".format(path_to_file))
+        if not os.path.exists(path=path_to_file):
+            raise FileNotFoundError("Path doesn't exists, '{}'".format(path_to_file))
 
         with open(path_to_file) as f:
             params = json.load(f)
@@ -106,7 +106,7 @@ class Tokenization:
         path_to_file = path_to_file if path_to_file != None else self.path_to_file
 
         if not os.path.exists(path=path_to_file):
-            raise (ValueError, "Path not exists, '{}'".format(path_to_file))
+            raise FileNotFoundError("Path not exists, '{}'".format(path_to_file))
 
         token_selected = []
 
