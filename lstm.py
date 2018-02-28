@@ -102,7 +102,7 @@ if keras.backend.backend() == 'tensorflow':
 dropout_seed = 1
 
 train_size = 0.8 # 1
-batch_size = 256
+batch_size = 128
 epochs = 30
 
 optimizer = 'rmsprop' # 'adam'
@@ -379,7 +379,7 @@ print('\n Elapsed Time {} \n'.format(dt))
 print('\nTesting\n')
 ######################### TEST SET ################################
 
-path_to_test = './data/nicanor_clean2.txt'
+path_to_test = './data/horoscopo_test_overfitting_add_space'
 
 test_set = tokenization.select_tokens(path_to_test)
 
