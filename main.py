@@ -256,14 +256,13 @@ def main():
         model_to_json = model.to_json
 
         samples = len(train_generator.ind_tokens)
-        steps = train_generator.steps_per_epoch
+        steps_per_epoch = train_generator.steps_per_epoch
         batch_size = train_generator.batch_size
 
         callbacks.losswise(keyfile='.env',
                            model_to_json=model_to_json,
-                           samples=samples,
-                           steps=steps,
-                           batch_size=batch_size)
+                           epochs=epochs,
+                           steps_per_epoch=steps_per_epoch)
 
         callbacks = callbacks.get_callbacks()
 
