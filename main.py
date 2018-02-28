@@ -1,24 +1,33 @@
+from src.RNN import RecurrentLSTM
+from src.Tokenization import Tokenization
 from src.utils import preprocessing_file
-from src.Corpus import Corpus
+from src.perplexity import metric_pp
+from src.Generators import GeneralGenerator
+from src.Callbacks import Callbacks
 
-# TODO: Testear main
+import time
+import os
+import numpy as np
+import random
+import json
+
+from keras import backend as K
+
+os.environ['PYTHONHASHSEED'] = '1' # https://github.com/fchollet/keras/issues/850
+seed = 1 # must be the same as PYTHONHASHSEED
+np.random.seed(seed)
+random.seed(seed)
+
+path_in = './data/train.txt'
+path_out = './data/train2.txt'
 
 
 def main():
 
-    ## Path to File
+    ## Preprocessing Corpus
+    print('\nPreprocessing Corpus\n')
 
-    path_in = './data/horoscopo_test_overfitting.txt'
-    path_out = './data/horoscopo_test_overfitting_add_space.txt'
-
-    path_in = './data/train.txt' #
-    path_out = './data/train_add_space.txt'
-
-
-    print('\n Preprocess - Add Spaces \n')
-
-    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­\xc2''' # TODO: Agregar simbolos //­
-
+    to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­\xc2'''
     signs_to_ignore = [i for i in to_ignore]
 
     map_punctuation = {'¿': '<ai>',
@@ -33,7 +42,6 @@ def main():
 
     letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
 
-
     add_space = True
 
     if add_space:
@@ -42,67 +50,239 @@ def main():
                            to_ignore=to_ignore
                            )
 
-    path_to_file = path_out # to instantiate Corpus
+    path_to_file = path_out
+
+    # Parameters LSTM
+    D = 512
+
+    recurrent_dropout = 0
+    dropout = 0
+
+    if K.backend() == 'tensorflow':
+        recurrent_dropout = 0.3
+        dropout = 0.3
+
+    dropout_seed = 1
+
+    train_size = 0.8  # 1
+    batch_size = 128
+    epochs = 30
+
+    optimizer = 'rmsprop'  # 'adam'
+    metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
+
+    workers = 16  # default 1
 
 
     ## Hyperparameters
 
-    train_size = 1
+    train_size = 0.8
 
+    random_split = True
+    token_split = '<nl>'
+    use_perplexity = True
+    sequence_length = 50
 
     ## Init Corpus
 
-    print('\n Init Corpus \n')
-    corpus = Corpus(path_to_file=path_to_file,
-                    train_size=train_size,
-                    final_char=':',
-                    final_punc='>',
-                    inter_char='-',
-                    signs_to_ignore=signs_to_ignore,
-                    words_to_ignore=[],
-                    map_punctuation=map_punctuation,
-                    letters=letters,
-                    sign_not_syllable='<sns>'
-                    )
-    print('\n Corpus Instantiated \n')
+    print('Init Corpus ...')
+
+    tokenization = Tokenization(path_to_file=path_to_file,
+                                final_char=':',
+                                final_punc='>',
+                                inter_char='-',
+                                signs_to_ignore=signs_to_ignore,
+                                words_to_ignore=[],
+                                map_punctuation=map_punctuation,
+                                letters=letters,
+                                sign_not_syllable='<sns>'
+                                )
+
+    print('Corpus Instantiated')
 
     ##
 
     T_W = [30, 60, 100, 300, 600, 1000, 3000, 6000]
-    Tmax = 10000 # Maximum number of Tokens (without considering characters)
-    sequence_length = [50, 100, 500, 1000, 2500, 5000]
+
+    Tmax = 500 # Maximum number of Tokens (without considering characters)
 
     print('='*50)
     print('Corpus to Process : {}'.format(path_to_file))
-    print('Vocabulary Word Size = {} \t Vocabulary Syllables Size = {}'.format(len(corpus.tokenSelector.dict_word),
-                                                                               len(corpus.tokenSelector.dict_syll)
+    print('Vocabulary Word Size = {} \t Vocabulary Syllables Size = {}'.format(len(tokenization.tokenSelector.words),
+                                                                               len(tokenization.tokenSelector.syllables)
                                                                                )
           )
 
+    print('='*50)
+    print('sequence length = {}'.format(sequence_length))
 
-    for sl in sequence_length:
+    for tw in T_W:
 
-        print('='*50)
-        print('sequence length = {}'.format(sl))
+        if tw > Tmax: break
 
-        for tw in T_W:
+        quantity_word = tw
+        quantity_syllable = Tmax -tw
 
-            quantity_word = tw
-            quantity_syllable = Tmax - tw
+        ## Config .env file
 
-            corpus.select_tokens(quantity_word=quantity_word,
-                                 quantity_syllable=quantity_syllable
-                                 )
+        keyfile = json.load(open('.env'))
+        tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
+        keyfile["losswise_tag"] = tag.format(Tmax, quantity_word, quantity_syllable)
 
-            corpus.calculateLprime(sequence_length=sl)
-            Lprima = corpus.lprime
-            print(Lprima)
+        with open('.env') as f:
+            json.dump(keyfile, f)
 
-            print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
-                                                                                           quantity_syllable,
-                                                                                           Lprima
-                                                                                           )
+        ## Tokenization
+        print('Selecting Tokens ...')
+        tokenization.setting_tokenSelector_params(quantity_word=quantity_word,
+                                                  quantity_syllable=quantity_syllable
+                                                  )
+
+        token_selected = tokenization.select_tokens()
+        print('Select Tokens Done')
+
+        print('Setting experiment')
+        tokenization.setting_experiment(token_selected=token_selected, sequence_length=sequence_length)
+        print('Set experiment Done')
+
+        print("Get and save parameters experiment")
+        params_tokenization = tokenization.params_experiment()
+
+        path_setting_experiment = "./data/experimentT{}Tw{}Ts{}.txt".format(Tmax, quantity_word, quantity_syllable)
+        tokenization.save_experiment(path_setting_experiment)
+
+        train_set, val_set = tokenization.split_train_val(train_size=train_size,
+                                                          random_split=random_split,
+                                                          token_split=token_split,
+                                                          min_len=0
+                                                          )
+
+        print("size train set = {}, size val set = {}".format(len(train_set), len(val_set)))
+
+        print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
+        if use_perplexity: metrics.append(metric_pp(average_TPW=params_tokenization["average_tpw"]))
+
+        words_cover_with_words, words_cover_with_syll, sylls_cover_with_syll = tokenization.coverage(path_to_file)
+        text = "With {} words the words corpus coverage is {} percent" \
+               "With {} syllables the words corpus coverage is {} and the syllables cover is {}"
+        print(text.format(quantity_word,
+                          words_cover_with_words,
+                          quantity_syllable,
+                          words_cover_with_syll,
+                          sylls_cover_with_syll
+                          )
+              )
+
+
+
+        print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
+                                                                                       quantity_syllable,
+                                                                                       params_tokenization["lprime"]
+                                                                                       )
+              )
+
+        ## Init Model
+        print('Init Model')
+        model = RecurrentLSTM(vocab_size=len(params_tokenization["vocabulary"]),
+                              embedding_dim=D,
+                              hidden_dim=D,
+                              input_length=params_tokenization["lprime"],
+                              recurrent_dropout=recurrent_dropout,
+                              dropout=dropout,
+                              seed=dropout_seed
+                              )
+
+        ## Build Model
+        print('Build Model ...')
+        model.build(optimizer=optimizer,
+                    metrics=metrics
+                    )
+
+        print('Get Generators ...')
+
+        train_generator = GeneralGenerator(batch_size=batch_size,
+                                           ind_tokens=train_set,
+                                           vocabulary=params_tokenization["vocabulary"],
+                                           max_len=params_tokenization["lprime"],
+                                           split_symbol_index=token_split,
+                                           count_to_split=-1
+                                           )
+
+        val_generator = GeneralGenerator(batch_size=batch_size,
+                                         ind_tokens=val_set,
+                                         vocabulary=params_tokenization["vocabulary"],
+                                         max_len=params_tokenization["lprime"],
+                                         split_symbol_index=token_split,
+                                         count_to_split=-1
+                                         )
+
+        out_directory_train_history = './train_history/'
+        out_directory_model = './models/'
+        out_model_pref = 'lstm_model_'
+
+        if not os.path.exists(path=out_directory_model):
+            os.mkdir(path=out_directory_model,
+                     mode=0o755
+                     )
+        else:
+            pass
+
+        if not os.path.exists(path=out_directory_train_history):
+            os.mkdir(path=out_directory_train_history,
+                     mode=0o755
+                     )
+        else:
+            pass
+
+        time_pref = time.strftime('%y%m%d.%H%M')  # Ver código de Jorge Perez
+
+        outfile = out_model_pref + time_pref + '.h5'
+
+        callbacks = Callbacks()
+
+        monitor_checkpoint = 'val_top_k_categorical_accuracy'  # 'val_loss'
+        save_best_only = True
+
+        callbacks.checkpoint(filepath=out_directory_model + outfile,
+                             monitor=monitor_checkpoint,
+                             save_best_only=save_best_only)
+
+        monitor_early_stopping = 'val_top_k_categorical_accuracy'  # 'val_loss'
+        patience = 100  # number of epochs with no improvement after which training will be stopped
+
+        callbacks.early_stopping(monitor=monitor_early_stopping,
+                                 patience=patience)
+
+        model_to_json = model.to_json
+
+        samples = len(train_generator.ind_tokens)
+        steps = train_generator.steps_per_epoch
+        batch_size = train_generator.batch_size
+
+        callbacks.losswise(keyfile='.env',
+                           model_to_json=model_to_json,
+                           samples=samples,
+                           steps=steps,
+                           batch_size=batch_size)
+
+        callbacks = callbacks.get_callbacks()
+
+        ## Training
+        print('Training ...')
+        ti = time.time()
+
+        model.fit(train_generator=train_generator,
+                  val_generator=val_generator,
+                  epochs=epochs,
+                  callbacks=callbacks,
+                  workers=workers
                   )
+
+        tf = time.time()
+        dt = (tf - ti) / 60.0
+        print('Elapsed Time {}'.format(dt))
+
+        print("Model was trained :)\n")
 
 
 if __name__ == '__main__':
