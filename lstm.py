@@ -112,7 +112,7 @@ workers = 16 # default 1
 
 ################ CORPUS ATRIBUTES #################
 
-T = 500 # quantity of tokens
+T = 6000 # quantity of tokens
 
 quantity_word = 30
 quantity_syllable = T - quantity_word
