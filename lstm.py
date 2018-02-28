@@ -46,8 +46,8 @@ random.seed(seed)
 
 ## Path to File
 
-path_in = './data/nicanor_clean.txt'
-path_out = './data/nicanor_clean2.txt'
+path_in = './data/nicanor_clear.txt'
+path_out = './data/nicanor_clear2.txt'
 
 #path_in = './data/train.txt'
 #path_out = './data/train_add_space.txt'

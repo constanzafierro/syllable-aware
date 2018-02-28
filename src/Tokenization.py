@@ -198,7 +198,7 @@ class Tokenization:
     def split_train_val(self, train_size, token_split, random_split=False, min_len=0):
 
         if 0 < train_size < 100:
-            percentage = train_size * 100 if train_size < 1 else train_size
+            train_size = train_size if train_size < 1 else train_size / 100
         else:
             raise (ValueError, "train_size = '{}' must be between zero and one hundred".format(train_size))
 
@@ -224,9 +224,16 @@ class Tokenization:
                         tokens = []
                         continue
 
+                    if len(train_size) == 0:
+                        train_size += tokens
+                        continue
+                    elif len(val_set) == 0:
+                        val_set += tokens
+                        continue
+
                     p = random.choice(range(0, 100))
 
-                    if p < percentage:
+                    if p < train_size*100:
                         val_set += tokens
 
                     else:
@@ -235,7 +242,7 @@ class Tokenization:
                     tokens = []
 
         else:
-            len_train = int(len(self.ind_corpus) * percentage)
+            len_train = int(len(self.ind_corpus) * train_size)
             train_set = self.ind_corpus[0:len_train]  # indexes
             val_set = self.ind_corpus[len_train:]  # indexes
 
