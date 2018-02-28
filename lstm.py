@@ -2,7 +2,7 @@
 
 ## Imports
 from src.RNN import RecurrentLSTM
-from src.Corpus import Corpus
+from src.Tokenization import Tokenization
 from src.utils import preprocessing_file
 from src.perplexity import metric_pp
 from src.Generators import GeneralGenerator
@@ -16,8 +16,6 @@ import keras # para Callbacks
 
 import losswise
 from src.callback_losswise import LosswiseKerasCallback
-
-import json
 
 ########################################################################################################################
 
@@ -46,15 +44,17 @@ random.seed(seed)
 
 ## Path to File
 
-#path_in = './data/horoscopo_test_overfitting.txt'
-#path_out = './data/horoscopo_test_overfitting_add_space.txt'
+path_in = './data/horoscopo_test_overfitting.txt'
+path_out = './data/horoscopo_test_overfitting_add_space.txt'
+
+#path_in = './data/nicanor_clear.txt'
+#path_out = './data/nicanor_clear2.txt'
+
+#path_in = './data/train.txt'
+#path_out = './data/train_add_space.txt'
 
 
-path_in = './data/train.txt'
-path_out = './data/train_add_space.txt'
-
-
-###################################################
+##################################################
 
 ## Pre processing
 print('\n Preprocess - Add Spaces \n')
@@ -127,67 +127,72 @@ use_perplexity = True
 ###################################################
 
 ## Init Corpus
-print('\n Starting Corpus \n')
-corpus = Corpus(path_to_file=path_to_file,
-                final_char=':',
-                final_punc='>',
-                inter_char='-',
-                signs_to_ignore=signs_to_ignore,
-                words_to_ignore=[],
-                map_punctuation=map_punctuation,
-                letters=letters,
-                sign_not_syllable='<sns>'
-                )
+print('\nStarting Corpus \n')
+tokenization = Tokenization(path_to_file=path_to_file,
+                            final_char=':',
+                            final_punc='>',
+                            inter_char='-',
+                            signs_to_ignore=signs_to_ignore,
+                            words_to_ignore=[],
+                            map_punctuation=map_punctuation,
+                            letters=letters,
+                            sign_not_syllable='<sns>'
+                            )
 print('Start Corpus Done \n')
 
 
 ## Tokenization
-print('\n Selecting Tokens \n')
-corpus.set_tokens_selector(quantity_word=quantity_word,
-                           quantity_syllable=quantity_syllable
-                           )
+print('\nSelecting Tokens \n')
+tokenization.setting_tokenSelector_params(quantity_word=quantity_word,
+                                          quantity_syllable=quantity_syllable
+                                          )
 
-token_selected = corpus.select_tokens_from_file(path_to_file = path_to_file)
+token_selected = tokenization.select_tokens()
 print('Select Tokens Done\n')
 
-print('\n Building Dictionaries \n')
-corpus.build_dictionaries(token_selected = token_selected)
-print('Build Dictionaries Done\n')
+print('\nSetting experiment\n')
+tokenization.setting_experiment(token_selected = token_selected, sequence_length=L)
+print('Set experiment Done\n')
+
+print("\nGet and save parameters experiment")
+params_tokenization = tokenization.params_experiment()
+
+path_setting_experiment = "./data/experimentT{}Tw{}Ts{}.txt".format(T, quantity_word, quantity_syllable)
+tokenization.save_experiment(path_setting_experiment)
+
+train_set, val_set = tokenization.split_train_val(train_size = train_size,
+                                                  random_split = random_split,
+                                                  token_split=token_split,
+                                                  min_len = 0
+                                                  )
+
+print("size train set = {}, size val set = {}".format(len(train_set), len(val_set)))
 
 
-corpus.set_lprime(token_selected = token_selected, sequence_length = L)
-
-params_corpus = corpus.params()
-
-train_set, val_set = corpus.split_corpus(percentage = 80,
-                                         random_split = random_split,
-                                         token_split=token_split,
-                                         min_len = 0
-                                         )
-
-print("average tokens per words = {}".format(params_corpus["average_tpw"]))
-if use_perplexity: metrics.append(metric_pp(average_TPW = params_corpus["average_tpw"]))
+print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
+if use_perplexity: metrics.append(metric_pp(average_TPW = params_tokenization["average_tpw"]))
 
 
 ######################## TEST COVERAGE ##################
 
-cover_with_words, cover_with_syll = corpus.coverage(path_to_file)
-
-print("With {} words the corpus coverage is {} percent \nWith {} syllables the corpus coverage is {}".format(quantity_word,
-                                                                                                             cover_with_words,
-                                                                                                             quantity_syllable,
-                                                                                                             cover_with_syll
-                                                                                                             )
+words_cover_with_words, words_cover_with_syll, sylls_cover_with_syll = tokenization.coverage(path_to_file)
+text = "With {} words the words corpus coverage is {} percent \nWith {} syllables the words corpus coverage is {} and the syllables cover is {}"
+print(text.format(quantity_word,
+                  words_cover_with_words,
+                  quantity_syllable,
+                  words_cover_with_syll,
+                  sylls_cover_with_syll
+                  )
       )
 
 ########################################################################################################################
 
 ## Init Model
 print('\n Init Model \n')
-model = RecurrentLSTM(vocab_size=len(params_corpus["vocabulary"]),
+model = RecurrentLSTM(vocab_size=len(params_tokenization["vocabulary"]),
                       embedding_dim=D,
                       hidden_dim=D,
-                      input_length= params_corpus["lprime"],
+                      input_length= params_tokenization["lprime"],
                       recurrent_dropout=recurrent_dropout,
                       dropout=dropout,
                       seed=dropout_seed
@@ -213,16 +218,16 @@ print('\n Get Generators \n')
 
 train_generator = GeneralGenerator(batch_size = batch_size,
                                    ind_tokens = train_set,
-                                   vocabulary = params_corpus["vocabulary"],
-                                   max_len = params_corpus["lprime"],
+                                   vocabulary = params_tokenization["vocabulary"],
+                                   max_len = params_tokenization["lprime"],
                                    split_symbol_index = token_split,
                                    count_to_split = -1
                                    )
 
 val_generator = GeneralGenerator(batch_size = batch_size,
                                  ind_tokens = val_set,
-                                 vocabulary = params_corpus["vocabulary"],
-                                 max_len = params_corpus["lprime"],
+                                 vocabulary = params_tokenization["vocabulary"],
+                                 max_len = params_tokenization["lprime"],
                                  split_symbol_index = token_split,
                                  count_to_split = -1
                                  )
@@ -374,14 +379,16 @@ print('\n Elapsed Time {} \n'.format(dt))
 print('\nTesting\n')
 ######################### TEST SET ################################
 
-path_to_test = './data/test.txt'
+path_to_test = './data/horoscopo_test_overfitting_add_space.txt'
 
-test_set = corpus.select_tokens_from_file(path_to_test)
+test_set = tokenization.select_tokens(path_to_test)
+
+index_test = tokenization.converting_token_to_index(test_set)
 
 test_generator = GeneralGenerator(batch_size = batch_size,
-                                 ind_tokens = train_set,
-                                 vocabulary = params_corpus["vocabulary"],
-                                 max_len = params_corpus["lprime"],
+                                 ind_tokens = index_test,
+                                 vocabulary = params_tokenization["vocabulary"],
+                                 max_len = params_tokenization["lprime"],
                                  split_symbol_index = token_split,
                                  count_to_split = -1
                                  )

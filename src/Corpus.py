@@ -3,6 +3,8 @@ from .utils import Lprime, ending_tokens_index
 
 
 import random # TODO: We must set a seed !!
+import os
+import json
 
 
 class Corpus:
@@ -77,13 +79,42 @@ class Corpus:
         self.average_tpw = 1
 
 
+    def save_tokens_selector(self, path_to_file):
+
+        params = self.tokenSelector.params()
+
+        if os.path.exists(path = path_to_file):
+            raise (ValueError, "Warning path exists, {}".format(path_to_file))
+
+        with open(path_to_file) as f:
+            json.dump(params, f)
+
+
+    def load_tokens_selector(self, path_to_file):
+
+        if os.path.exists(path = path_to_file):
+            raise (ValueError, "Path doesn't exists, {}".format(path_to_file))
+
+        with open(path_to_file) as f:
+            params = json.load(f)
+
+        re
+
+
+
     def set_tokens_selector(self, quantity_word, quantity_syllable):
         self.tokenSelector.get_frequent(quantity_word = quantity_word,
                                         quantity_syll = quantity_syllable
                                         )
 
 
-    def select_tokens_from_file(self, path_to_file):
+    def select_tokens_from_file(self, path_to_file = None):
+
+        path_to_file = path_to_file if path_to_file != None else self.path_to_file
+
+        if not os.path.exists(path = path_to_file):
+            raise (ValueError, "Path not exists, {}".format(path_to_file))
+
         token_selected = []
 
         with open(path_to_file) as f1:
