@@ -1,5 +1,7 @@
 import losswise
-from src.callback_losswise import LosswiseKerasCallback
+from losswise.libs import LosswiseKerasCallback
+
+#from src.callback_losswise import LosswiseKerasCallback
 
 import keras
 import json

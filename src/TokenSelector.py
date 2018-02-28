@@ -37,7 +37,7 @@ class TokenSelector():
         self.words = set()
         self.syllables = set()
 
-    def get_dictionary(self, path_file):
+    def setting_dictionaries(self, path_file):
 
         to_ignore = [i for i in self.punctuation]
         to_ignore = to_ignore + self.signs_to_ignore + self.words_to_ignore
@@ -50,8 +50,7 @@ class TokenSelector():
                                                                                          )
 
 
-    def get_frequent(self, quantity_word, quantity_syll):
-
+    def setting_selectors(self, quantity_word, quantity_syll):
         self.words = get_most_frequent(freq_dict = self.freq_word,
                                        quantity = quantity_word,
                                        to_ignore = []
@@ -65,6 +64,20 @@ class TokenSelector():
                                            quantity = quantity_syll,
                                            to_ignore = syll_to_ignore
                                            )
+
+    def set_params(self, params):
+
+        params_key = ["dict_word", "dict_syll", "freq_word", "freq_syll", "words", "syllables"]
+        for param, value in params:
+            if param not in params_key:
+                raise (KeyError, "params doesn't contain {}".format(param))
+
+        self.dict_word = params["dict_word"]
+        self.dict_syll = params["dict_syll"]
+        self.freq_word = params["freq_word"]
+        self.freq_syll = params["freq_syll"]
+        self.words = params["words"]
+        self.syllables = params["syllables"]
 
     def select(self, token, tokens_selected):
 
@@ -95,12 +108,15 @@ class TokenSelector():
 
         return tokens_selected
 
-    def coverage(self, token, count = [0, 0, 0]):
+    def coverage(self, token, count = [0, 0, 0, 0]):
         """
 
         :param token:
-        :param count: array lenght 3, count[0] = quantity of words, count[1] = quantity of words cover with words tokens
+        :param count: array length 4,
+        count[0] = quantity of words,
+        count[1] = quantity of words cover with words tokens
         count[2] = quantity of words cover with syllables tokens
+        count[3] = quantity of syllables cover with syllables tokens
         :return:
         """
         if token in self.dict_word:
@@ -114,11 +130,23 @@ class TokenSelector():
                 for s in self.dict_word[token]:
 
                     if s in self.syllables:
+                        count[3] += 1
                         return count
                 count[2] += 1
                 return count
 
         # word out of vocabulary
         return count
+
+
+    def params(self):
+        params = {"dict_word":self.dict_word,
+                  "dict_syll":self.dict_syll,
+                  "freq_word":self.freq_word,
+                  "freq_syll":self.freq_syll,
+                  "words":list(self.words),
+                  "syllables": list(self.syllables)
+                  }
+        return params
 
 
