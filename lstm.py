@@ -119,7 +119,7 @@ quantity_syllable = T - quantity_word
 
 L = 10  # 100 sequence_length
 
-random_split = True
+random_split = False
 token_split = '<nl>'
 use_perplexity = True
 
