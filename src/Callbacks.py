@@ -24,7 +24,7 @@ class Callbacks:
                                                             verbose=0,
                                                             mode='auto'
                                                             )
-        self.early_stopping = [self.early_stopping]
+        #self.early_stopping = [self.early_stopping]
 
 
     def checkpoint(self, filepath, monitor, save_best_only):
@@ -38,7 +38,7 @@ class Callbacks:
                                                           period=1
                                                           )
 
-        self.checkpoint = [self.checkpoint]
+        #self.checkpoint = [self.checkpoint]
 
 
     def losswise(self, keyfile, model_to_json, samples, steps, batch_size):
@@ -65,7 +65,7 @@ class Callbacks:
 
         self.losswise_callback.set_params(params=params_model)
 
-        self.losswise_callback = [self.losswise_callback]
+        #self.losswise_callback = [self.losswise_callback]
 
 
     def get_callbacks(self):
