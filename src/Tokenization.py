@@ -149,7 +149,7 @@ class Tokenization:
                       "average_tpw"]
         for param, value in params:
             if param not in params_key:
-                raise (KeyError, "params doesn't contain {}".format(param))
+                raise KeyError("params doesn't contain {}".format(param))
 
         self.tokensplit = params["tokensplit"]
         self.quantity_word = params["quantity_word"]
@@ -180,14 +180,14 @@ class Tokenization:
         params = self.params_experiment()
 
         if os.path.exists(path=path_to_file):
-            Warning(FileExistsError, "Warning path exists, '{}'".format(path_to_file))
+            Warning("Warning path exists, '{}'".format(path_to_file))
 
         with open(path_to_file, "w") as f:
             json.dump(params, f)
 
     def load_experiment(self, path_to_file):
-        if os.path.exists(path=path_to_file):
-            raise (FileNotFoundError, "Path doesn't exists, '{}'".format(path_to_file))
+        if not os.path.exists(path=path_to_file):
+            raise FileNotFoundError("Path doesn't exists, '{}'".format(path_to_file))
 
         with open(path_to_file) as f:
             params = json.load(f)
@@ -200,10 +200,10 @@ class Tokenization:
         if 0 < train_size < 100:
             train_size = train_size if train_size < 1 else train_size / 100
         else:
-            raise (ValueError, "train_size = '{}' must be between zero and one hundred".format(train_size))
+            raise ValueError("train_size = '{}' must be between zero and one hundred".format(train_size))
 
         if token_split not in self.token_to_index:
-            raise (KeyError, "token_split '{}' isn't in vocabulary".format(token_split))
+            raise KeyError("token_split '{}' isn't in vocabulary".format(token_split))
 
         val_set = []
         train_set = []
@@ -288,7 +288,7 @@ def compute_tpw(index_to_token, index_ends):
     words_complete = 0
     len_tokens = len(index_to_token)
     if len_tokens == 0:
-        raise (ValueError, "Dictionary index_to_token can't be empty")
+        raise ValueError("Dictionary index_to_token can't be empty")
 
     for index in index_to_token:
         if index in index_ends:
