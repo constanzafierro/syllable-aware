@@ -4,13 +4,16 @@ from src.callback_losswise import LosswiseKerasCallback
 import keras
 import json
 
-#TODO: eliminar appends de los métodos, y agregar el append unicamente en el método get_callbacks
 
 class Callbacks:
 
     def __init__(self):
 
         self.callbacks = []
+
+        self.early_stopping = []
+        self.checkpoint = []
+        self.losswise_callback = []
 
 
     def early_stopping(self, monitor, patience):
@@ -21,9 +24,7 @@ class Callbacks:
                                                             verbose=0,
                                                             mode='auto'
                                                             )
-        self.callbacks.append(self.early_stopping)
-
-        # return self.early_stopping
+        self.early_stopping = [self.early_stopping]
 
 
     def checkpoint(self, filepath, monitor, save_best_only):
@@ -36,9 +37,8 @@ class Callbacks:
                                                           mode='auto',
                                                           period=1
                                                           )
-        self.callbacks.append(self.checkpoint)
 
-        # return self.checkpoint
+        self.checkpoint = [self.checkpoint]
 
 
     def losswise(self, keyfile, model_to_json, samples, steps, batch_size):
@@ -65,11 +65,11 @@ class Callbacks:
 
         self.losswise_callback.set_params(params=params_model)
 
-        self.callbacks.append(self.losswise_callback)
-
-        # return self.losswise_callback
+        self.losswise_callback = [self.losswise_callback]
 
 
     def get_callbacks(self):
+
+        self.callbacks += self.early_stopping + self.checkpoint + self.losswise_callback
 
         return self.callbacks
