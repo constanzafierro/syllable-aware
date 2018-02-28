@@ -25,7 +25,8 @@ path_out = './data/train2.txt'
 def main():
 
     ## Preprocessing Corpus
-    print('\nPreprocessing Corpus\n')
+    print('=' * 50)
+    print('Preprocessing Corpus')
 
     to_ignore = '''¡!()[]{}\"\'0123456789…-=@+*\t%&//­\xc2'''
     signs_to_ignore = [i for i in to_ignore]
@@ -99,22 +100,12 @@ def main():
                                 )
 
     print('Corpus Instantiated')
-
+    print('=' * 50)
     ##
 
     T_W = [30, 60, 100, 300, 600, 1000, 3000, 6000]
 
     Tmax = 500 # Maximum number of Tokens (without considering characters)
-
-    print('='*50)
-    print('Corpus to Process : {}'.format(path_to_file))
-    print('Vocabulary Word Size = {} \t Vocabulary Syllables Size = {}'.format(len(tokenization.tokenSelector.words),
-                                                                               len(tokenization.tokenSelector.syllables)
-                                                                               )
-          )
-
-    print('='*50)
-    print('sequence length = {}'.format(sequence_length))
 
     for tw in T_W:
 
@@ -129,17 +120,26 @@ def main():
         tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
         keyfile["losswise_tag"] = tag.format(Tmax, quantity_word, quantity_syllable)
 
-        with open('.env') as f:
+        with open(".env", "w") as f:
             json.dump(keyfile, f)
 
         ## Tokenization
+        print('=' * 50)
         print('Selecting Tokens ...')
         tokenization.setting_tokenSelector_params(quantity_word=quantity_word,
                                                   quantity_syllable=quantity_syllable
                                                   )
 
+        print('Corpus to Process : {}'.format(path_to_file))
+        print('Vocabulary Word Size = {} \nVocabulary Syllables Size = {}\nsequence length = {}'.format(
+            len(tokenization.tokenSelector.words),
+            len(tokenization.tokenSelector.syllables),
+            sequence_length
+            )
+              )
         token_selected = tokenization.select_tokens()
         print('Select Tokens Done')
+        print('=' * 50)
 
         print('Setting experiment')
         tokenization.setting_experiment(token_selected=token_selected, sequence_length=sequence_length)
@@ -150,6 +150,14 @@ def main():
 
         path_setting_experiment = "./data/experimentT{}Tw{}Ts{}.txt".format(Tmax, quantity_word, quantity_syllable)
         tokenization.save_experiment(path_setting_experiment)
+        print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
+        if use_perplexity: metrics.append(metric_pp(average_TPW=params_tokenization["average_tpw"]))
+
+        print("parameter experiment saved")
+        print('=' * 50)
+
+        ##
+        print('Split corpus in train and validation set')
 
         train_set, val_set = tokenization.split_train_val(train_size=train_size,
                                                           random_split=random_split,
@@ -158,23 +166,18 @@ def main():
                                                           )
 
         print("size train set = {}, size val set = {}".format(len(train_set), len(val_set)))
-
-        print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
-        if use_perplexity: metrics.append(metric_pp(average_TPW=params_tokenization["average_tpw"]))
+        print('=' * 50)
 
         words_cover_with_words, words_cover_with_syll, sylls_cover_with_syll = tokenization.coverage(path_to_file)
-        text = "With {} words the words corpus coverage is {} percent" \
-               "With {} syllables the words corpus coverage is {} and the syllables cover is {}"
+        text = "With {} words the words corpus coverage is {} percent \nWith {} syllables the words corpus coverage is {} \n With {} syllables the syllables corpus cover is {}"
         print(text.format(quantity_word,
                           words_cover_with_words,
                           quantity_syllable,
                           words_cover_with_syll,
+                          quantity_syllable,
                           sylls_cover_with_syll
                           )
               )
-
-
-
         print('number of words = {} \t number of syllables = {} \t Lprime = {}'.format(quantity_word,
                                                                                        quantity_syllable,
                                                                                        params_tokenization["lprime"]
@@ -182,6 +185,7 @@ def main():
               )
 
         ## Init Model
+        print('=' * 50)
         print('Init Model')
         model = RecurrentLSTM(vocab_size=len(params_tokenization["vocabulary"]),
                               embedding_dim=D,
