@@ -25,6 +25,8 @@ class GeneralGenerator():
             count_to_split:
         '''
 
+        random.seed(777) # TODO: Seed
+
         self.ind_tokens = ind_tokens
         self.voc = vocabulary
         self.max_len = max_len

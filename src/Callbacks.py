@@ -4,6 +4,7 @@ from src.callback_losswise import LosswiseKerasCallback
 import keras
 import json
 
+# TODO : Inicializar correctamente para que el append sea safe
 
 class Callbacks:
 

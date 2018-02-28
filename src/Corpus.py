@@ -6,7 +6,7 @@ import random # TODO: We must set a seed !!
 
 
 class Corpus:
-  
+
     def __init__(self,
                  path_to_file,
                  final_char,
@@ -33,6 +33,8 @@ class Corpus:
         :param sign_not_syllable: '<sns>'
 
         '''
+
+        random.seed(666) # TODO: Seed
 
         self.path_to_file = path_to_file
         self.final_char = final_char
