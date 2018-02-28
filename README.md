@@ -104,6 +104,10 @@ preallocate = 1
 
 [lib]
 cnmem = 1
+
+[blas]
+ldflags = -lmkl_rt -lpthread
+
 ```
 
 And save it.
@@ -114,6 +118,10 @@ then, on a terminal, execute
 export MKL_THREADING_LAYER=GNU
 ```
 and press enter
+
+or
+
+mañana probamos -lpthread ( ver https://github.com/Theano/Theano/issues/5348 )
 
 ---
 
