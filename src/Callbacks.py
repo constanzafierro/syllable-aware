@@ -9,7 +9,7 @@ class Callbacks:
 
     def __init__(self):
 
-        self.callbacks = []
+        #self.callbacks = []
 
         self.early_stopping = []
         self.checkpoint = []
@@ -70,6 +70,6 @@ class Callbacks:
 
     def get_callbacks(self):
 
-        self.callbacks = self.early_stopping + self.checkpoint + self.losswise_callback
-
-        return self.callbacks
+        #self.callbacks = self.early_stopping + self.checkpoint + self.losswise_callback
+        #return self.callbacks
+        return self.early_stopping + self.checkpoint + self.losswise_callback
