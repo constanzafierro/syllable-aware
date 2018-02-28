@@ -2,11 +2,12 @@ import losswise
 #from losswise.libs import LosswiseKerasCallback
 
 from src.callback_losswise import LosswiseKerasCallback
+from losswise.libs import LosswiseKerasCallback
 
 import keras
 import json
 
-#TODO: eliminar appends de los métodos, y agregar el append unicamente en el método get_callbacks
+# TODO : Inicializar correctamente para que el append sea safe
 
 class Callbacks:
 
@@ -23,9 +24,6 @@ class Callbacks:
                                                             verbose=0,
                                                             mode='auto'
                                                             )
-        self.callbacks.append(self.early_stopping)
-
-        # return self.early_stopping
 
 
     def checkpoint(self, filepath, monitor, save_best_only):
@@ -38,12 +36,9 @@ class Callbacks:
                                                           mode='auto',
                                                           period=1
                                                           )
-        self.callbacks.append(self.checkpoint)
-
-        # return self.checkpoint
 
 
-    def losswise(self, keyfile, model_to_json, samples, steps, batch_size):
+    def losswise(self, keyfile, model_to_json, epochs, steps_per_epoch):
 
         keys = json.load(open(keyfile))
 
@@ -52,26 +47,24 @@ class Callbacks:
 
         losswise.set_api_key(api_key)
 
-        params_data = json.loads(model_to_json)
+        params = json.loads(model_to_json)
+        params['steps_per_epoch'] = steps_per_epoch
+        params['epochs'] = epochs
 
-        params_data['samples'] = samples
-        params_data['steps'] = steps
-        params_data['batch_size'] = batch_size
-
-        params_model = {'batch_size': batch_size}
 
         self.losswise_callback = LosswiseKerasCallback(tag=tag,
-                                                       params_data=params_data,
-                                                       params_model=params_model
+                                                       params=params
                                                        )
 
-        self.losswise_callback.set_params(params=params_model)
-
-        self.callbacks.append(self.losswise_callback)
-
-        # return self.losswise_callback
+        #self.losswise_callback.set_params(params=params)
 
 
     def get_callbacks(self):
+
+        self.callbacks.append(self.early_stopping)
+
+        self.callbacks.append(self.checkpoint)
+
+        self.callbacks.append(self.losswise_callback)
 
         return self.callbacks

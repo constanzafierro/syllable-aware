@@ -54,7 +54,7 @@ path_out = './data/horoscopo_test_overfitting_add_space.txt'
 #path_out = './data/train_add_space.txt'
 
 
-###################################################
+##################################################
 
 ## Pre processing
 print('\n Preprocess - Add Spaces \n')
@@ -103,7 +103,7 @@ dropout_seed = 1
 
 train_size = 0.8 # 1
 batch_size = 128
-epochs = 30
+epochs = 300
 
 optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
@@ -113,14 +113,14 @@ workers = 16 # default 1
 
 ################ CORPUS ATRIBUTES #################
 
-T = 500 # quantity of tokens
+T = 6000 # quantity of tokens
 
-quantity_word = 30
+quantity_word = 60
 quantity_syllable = T - quantity_word
 
-L = 10  # 100 sequence_length
+L = 100  # 100 sequence_length
 
-random_split = True
+random_split = False
 token_split = '<nl>'
 use_perplexity = True
 
@@ -167,6 +167,7 @@ train_set, val_set = tokenization.split_train_val(train_size = train_size,
                                                   )
 
 print("size train set = {}, size val set = {}".format(len(train_set), len(val_set)))
+
 
 print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
 if use_perplexity: metrics.append(metric_pp(average_TPW = params_tokenization["average_tpw"]))
@@ -310,14 +311,13 @@ early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
 model_to_json = model.to_json
 
 samples = len(train_generator.ind_tokens)
-steps = train_generator.steps_per_epoch
+steps_per_epoch = train_generator.steps_per_epoch
 batch_size = train_generator.batch_size
 
 callbacks.losswise(keyfile='.env',
                    model_to_json=model_to_json,
-                   samples=samples,
-                   steps=steps,
-                   batch_size=batch_size)
+                   epochs=epochs,
+                   steps_per_epoch=steps_per_epoch)
 
 '''
 keyfile = json.load(open('.env'))
@@ -349,7 +349,7 @@ losswise_callback.set_params(params=params_model)
 ###################################################
 
 ## Callbacks Pipeline
-callbacks = callbacks.get_callbacks()
+callbacks_pipeline = callbacks.get_callbacks()
 
 '''
 callbacks = [checkpoint, early_stopping, losswise_callback]
@@ -365,7 +365,7 @@ ti = time.time()
 model.fit(train_generator=train_generator,
           val_generator=val_generator,
           epochs=epochs,
-          callbacks=callbacks,
+          callbacks=callbacks_pipeline,
           workers=workers
           )
 
