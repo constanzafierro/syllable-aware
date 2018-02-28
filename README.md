@@ -185,9 +185,33 @@ conda install openblas
 conda install pygpu
 ```
 
+---
+# Screen
+
+```
+source init screen
+```
+
+### Detaching From Screen
+
+```
+source press ctrl + a then press d
+```
+
+### Attaching from last screen 
+
+```
+source screen -r
+```
+if exists may screen this command show a list with the Ids
+
+### Attaching specific screen
+
+```
+source screen -D -r id_screen
+```
 
 ---
-
 
 # Data
 
