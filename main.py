@@ -124,7 +124,6 @@ def main():
             json.dump(keyfile, f)
 
         ## Tokenization
-        print('=' * 50)
         print('Selecting Tokens ...')
         tokenization.setting_tokenSelector_params(quantity_word=quantity_word,
                                                   quantity_syllable=quantity_syllable
