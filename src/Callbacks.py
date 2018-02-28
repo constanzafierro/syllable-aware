@@ -70,6 +70,6 @@ class Callbacks:
 
     def get_callbacks(self):
 
-        self.callbacks += self.early_stopping + self.checkpoint + self.losswise_callback
+        self.callbacks = self.early_stopping + self.checkpoint + self.losswise_callback
 
         return self.callbacks
