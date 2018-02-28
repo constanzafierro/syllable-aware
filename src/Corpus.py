@@ -125,7 +125,7 @@ class Corpus:
     def split_corpus(self, percentage = 0, random_split = False, token_split= '<nl>', min_len = 0):
 
         if 0 <= percentage <= 100:
-            percentage = percentage if percentage < 1 else percentage / 100.0
+            percentage = percentage*100 if percentage < 1 else percentage
         else:
             raise (ValueError, "percentage = {} must be between zero and one hundred".format(percentage))
 
