@@ -197,8 +197,8 @@ class Tokenization:
 
     def split_train_val(self, train_size, token_split, random_split=False, min_len=0):
 
-        if 0 <= train_size <= 100:
-            percentage = train_size if train_size < 1 else train_size / 100.0
+        if 0 < train_size < 100:
+            percentage = train_size * 100 if train_size < 1 else train_size
         else:
             raise (ValueError, "train_size = '{}' must be between zero and one hundred".format(train_size))
 

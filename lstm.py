@@ -165,6 +165,8 @@ train_set, val_set = tokenization.split_train_val(train_size = train_size,
                                                   min_len = 0
                                                   )
 
+print("size train set = {}, size val set = {}".format(len(train_set), len(val_set)))
+
 print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
 if use_perplexity: metrics.append(metric_pp(average_TPW = params_tokenization["average_tpw"]))
 
