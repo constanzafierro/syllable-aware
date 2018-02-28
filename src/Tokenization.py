@@ -233,7 +233,7 @@ class Tokenization:
 
                     p = random.choice(range(0, 100))
 
-                    if p < train_size*100:
+                    if p > train_size*100:
                         val_set += tokens
 
                     else:
