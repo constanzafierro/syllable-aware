@@ -2,14 +2,14 @@
 
 *  **[Working]** lstm.py **Haven't been Tested yet !**
 
-* **[broken]** main.py **Haven't been Tested yet !**
+* **[broken]** main.py
 
 # TODO List
 
 
 ### main --> Crear Main en Root
 
-* Implementar Callback de Losswise en lstm.py
+* **[Done]** Implementar Callback de Losswise en lstm.py
 
 * Testear modelo en lstm.py
 
@@ -24,7 +24,7 @@
 
 * **[Tested]** TokenSelector.py
 
-* **[Partially Tested]** Corpus.py
+* **[Not Tested]** Tokenization.py
 
 * RNN.py
 
@@ -39,6 +39,7 @@
 ### perplexity
 
 * **[Done]** Implementar perplexity [BPC] (bits per character)
+
 * Implementar perplexity per word
 
 
@@ -49,65 +50,6 @@
 
 ---
 
-
-
-# Data
-
-## Syllable-aware tests
-
-Spanish data for tests obtained from [HERE](https://github.com/yoonkim/lstm-char-cnn/blob/master/get_data.sh)
-
-
-## Spanish Billion Words Corpus
-
-Raw Data down obtained from [Spanish Billion Words Corpus](http://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/clean_corpus.tar.bz2)
-
-> Cristian Cardellino: Spanish Billion Words Corpus and Embeddings (March 2016), http://crscardellino.me/SBWCE/
-
-
-## getData
-
-```
-wget http://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/clean_corpus.tar.bz2
-
-tar xf clean_corpus.tar.bz2
-
-mv spanish_billion_words ./data/
-```
-
-
-# Conda Environment
-
-
-## List of conda environments
-
-```
-conda env list
-```
-
-## Activate Environment (base)
-
-```
-source activate base
-```
-
-## Theano Install
-
-```
-pip install theano --upgrade
-```
-
-## Keras Install
-
-```
-pip install keras --upgrade
-```
-
-## Deactivate Enviroment (base)
-
-```
-source deactivate base
-```
 
 ## Switch KERAS Backend to Theano
 
@@ -192,6 +134,41 @@ git clone https://github.com/nlpchile/syllable-aware.git
 And save it.
 
 
+---
+# Conda Environment
+
+
+### List of conda environments
+
+```
+conda env list
+```
+
+### Activate Environment (base)
+
+```
+source activate base
+```
+
+### Theano Install
+
+```
+pip install theano --upgrade
+```
+
+### Keras Install
+
+```
+pip install keras --upgrade
+```
+
+### Deactivate Enviroment (base)
+
+```
+source deactivate base
+```
+
+
 ## Extras
 
 ```
@@ -201,3 +178,30 @@ conda install openblas
 conda install pygpu
 ```
 
+
+---
+
+
+# Data
+
+## Syllable-aware tests
+
+Spanish data for tests obtained from [HERE](https://github.com/yoonkim/lstm-char-cnn/blob/master/get_data.sh)
+
+
+## Spanish Billion Words Corpus
+
+Raw Data down obtained from [Spanish Billion Words Corpus](http://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/clean_corpus.tar.bz2)
+
+> Cristian Cardellino: Spanish Billion Words Corpus and Embeddings (March 2016), http://crscardellino.me/SBWCE/
+
+
+## getData
+
+```
+wget http://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/clean_corpus.tar.bz2
+
+tar xf clean_corpus.tar.bz2
+
+mv spanish_billion_words ./data/
+```
