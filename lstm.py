@@ -159,9 +159,9 @@ corpus.set_lprime(token_selected = token_selected, sequence_length = L)
 params_corpus = corpus.params()
 
 train_set, val_set = corpus.split_corpus(percentage = 80,
-                                          random_split = random_split,
-                                          token_split=token_split,
-                                          min_len = 0
+                                         random_split = random_split,
+                                         token_split=token_split,
+                                         min_len = 0
                                          )
 
 print("average tokens per words = {}".format(params_corpus["average_tpw"]))
