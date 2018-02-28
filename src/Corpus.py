@@ -8,7 +8,7 @@ import json
 
 
 class Corpus:
-  
+
     def __init__(self,
                  path_to_file,
                  final_char,
@@ -35,6 +35,8 @@ class Corpus:
         :param sign_not_syllable: '<sns>'
 
         '''
+
+        random.seed(667) # TODO: Seed
 
         self.path_to_file = path_to_file
         self.final_char = final_char
@@ -154,7 +156,7 @@ class Corpus:
     def split_corpus(self, percentage = 0, random_split = False, token_split= '<nl>', min_len = 0):
 
         if 0 <= percentage <= 100:
-            percentage = percentage if percentage < 1 else percentage / 100.0
+            percentage = percentage*100 if percentage < 1 else percentage
         else:
             raise (ValueError, "percentage = {} must be between zero and one hundred".format(percentage))
 

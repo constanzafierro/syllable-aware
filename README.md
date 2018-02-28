@@ -2,7 +2,7 @@
 
 *  **[Working]** lstm.py **Haven't been Tested yet !**
 
-* **[Working]** main.py **Haven't been Tested yet !**
+* **[broken]** main.py **Haven't been Tested yet !**
 
 # TODO List
 
