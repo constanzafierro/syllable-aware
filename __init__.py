@@ -10,7 +10,7 @@ from .src import utils
 from .src import separadorSilabas
 
 from .src import TokenSelector
-from .src import Corpus
+from .src import Tokenization
 
 
 #from .src import RNN

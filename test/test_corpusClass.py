@@ -214,6 +214,6 @@ if __name__ == '__main__':
 
     sys.path.append("..")
 
-    from src.Corpus import Corpus
+    from src.Tokenization import Tokenization
 
     unittest.main()

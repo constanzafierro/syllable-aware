@@ -6,7 +6,7 @@ from . import separadorSilabas
 
 from . import TokenSelector
 from . import Generators
-from . import Corpus
+from . import Tokenization
 
 #from . import RNN
 
