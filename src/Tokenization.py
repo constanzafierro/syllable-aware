@@ -224,8 +224,8 @@ class Tokenization:
                         tokens = []
                         continue
 
-                    if len(train_size) == 0:
-                        train_size += tokens
+                    if len(train_set) == 0:
+                        train_set += tokens
                         continue
                     elif len(val_set) == 0:
                         val_set += tokens
