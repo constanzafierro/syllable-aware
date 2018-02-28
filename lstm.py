@@ -49,6 +49,7 @@ random.seed(seed)
 #path_in = './data/horoscopo_test_overfitting.txt'
 #path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
+
 path_in = './data/train.txt'
 path_out = './data/train_add_space.txt'
 
