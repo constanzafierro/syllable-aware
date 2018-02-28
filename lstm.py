@@ -101,8 +101,8 @@ if keras.backend.backend() == 'tensorflow':
 dropout_seed = 1
 
 train_size = 0.8 # 1
-batch_size = 256
-epochs = 30
+batch_size = 128
+epochs = 300
 
 optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
