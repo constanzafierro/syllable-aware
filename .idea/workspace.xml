@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/lstm.py" afterPath="$PROJECT_DIR$/lstm.py" />
-      <change beforePath="$PROJECT_DIR$/src/Tokenization.py" afterPath="$PROJECT_DIR$/src/Tokenization.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -45,7 +43,7 @@
       <file leaf-file-name="Tokenization.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Tokenization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-269">
+            <state relative-caret-position="190">
               <caret line="246" column="44" lean-forward="true" selection-start-line="246" selection-start-column="44" selection-end-line="246" selection-end-column="44" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -57,8 +55,8 @@
       <file leaf-file-name="lstm.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="380" column="51" lean-forward="true" selection-start-line="380" selection-start-column="51" selection-end-line="380" selection-end-column="51" />
+            <state relative-caret-position="176">
+              <caret line="378" column="37" lean-forward="false" selection-start-line="378" selection-start-column="37" selection-end-line="378" selection-end-column="37" />
               <folding>
                 <element signature="e#28#61#0" expanded="true" />
               </folding>
@@ -230,8 +228,8 @@
         <option value="$PROJECT_DIR$/.env.example" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Callbacks.py" />
-        <option value="$PROJECT_DIR$/lstm.py" />
         <option value="$PROJECT_DIR$/src/Tokenization.py" />
+        <option value="$PROJECT_DIR$/lstm.py" />
       </list>
     </option>
   </component>
@@ -297,6 +295,11 @@
             <path>
               <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
               <item name="syllable-aware" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
+              <item name="syllable-aware" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
@@ -1138,7 +1141,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Tokenization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-269">
+        <state relative-caret-position="190">
           <caret line="246" column="44" lean-forward="true" selection-start-line="246" selection-start-column="44" selection-end-line="246" selection-end-column="44" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
@@ -1148,8 +1151,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="380" column="51" lean-forward="true" selection-start-line="380" selection-start-column="51" selection-end-line="380" selection-end-column="51" />
+        <state relative-caret-position="176">
+          <caret line="378" column="37" lean-forward="false" selection-start-line="378" selection-start-column="37" selection-end-line="378" selection-end-column="37" />
           <folding>
             <element signature="e#28#61#0" expanded="true" />
           </folding>

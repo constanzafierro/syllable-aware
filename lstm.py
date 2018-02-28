@@ -46,8 +46,8 @@ random.seed(seed)
 
 ## Path to File
 
-path_in = './data/horoscopo_test_overfitting.txt'
-path_out = './data/horoscopo_test_overfitting_add_space.txt'
+path_in = './data/nicanor_clean.txt'
+path_out = './data/nicanor_clean2.txt'
 
 #path_in = './data/train.txt'
 #path_out = './data/train_add_space.txt'
@@ -376,7 +376,7 @@ print('\n Elapsed Time {} \n'.format(dt))
 print('\nTesting\n')
 ######################### TEST SET ################################
 
-path_to_test = './data/test.txt'
+path_to_test = './data/nicanor_clean2.txt'
 
 test_set = tokenization.select_tokens(path_to_test)
 
