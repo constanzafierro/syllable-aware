@@ -17,8 +17,6 @@ import keras # para Callbacks
 import losswise
 from src.callback_losswise import LosswiseKerasCallback
 
-import json
-
 ########################################################################################################################
 
 ## Setting Seed for Reproducibility
@@ -388,7 +386,7 @@ test_set = tokenization.select_tokens(path_to_test)
 index_test = tokenization.converting_token_to_index(test_set)
 
 test_generator = GeneralGenerator(batch_size = batch_size,
-                                 ind_tokens = test_set,
+                                 ind_tokens = index_test,
                                  vocabulary = params_tokenization["vocabulary"],
                                  max_len = params_tokenization["lprime"],
                                  split_symbol_index = token_split,
