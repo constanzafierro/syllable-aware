@@ -74,8 +74,10 @@ class Tokenization:
         self.tokenSelector.set_params(params)
 
     def setting_tokenSelector_params(self, quantity_word, quantity_syllable):
-        self.tokenSelector.setting_selectors(quantity_word=quantity_word,
-                                             quantity_syll=quantity_syllable
+        self.quantity_word = quantity_word
+        self.quantity_syll = quantity_syllable
+        self.tokenSelector.setting_selectors(quantity_word=self.quantity_word,
+                                             quantity_syll=self.quantity_syll
                                              )
 
     def save_tokenSelector(self, path_to_file):
@@ -164,7 +166,7 @@ class Tokenization:
 
         params = {"tokensplit": self.tokensplit,
                   "quantity_word": self.quantity_word,
-                  "quantity_syll": self.quantity_syllable,
+                  "quantity_syll": self.quantity_syll,
                   "lprime": self.lprime,
                   "vocabulary": list(self.vocabulary),
                   "token_to_index": self.token_to_index,
@@ -176,7 +178,7 @@ class Tokenization:
 
     def save_experiment(self, path_to_file):
 
-        params = self.params()
+        params = self.params_experiment()
 
         if os.path.exists(path=path_to_file):
             Warning(FileExistsError, "Warning path exists, '{}'".format(path_to_file))
