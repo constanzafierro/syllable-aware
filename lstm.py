@@ -344,7 +344,7 @@ losswise_callback.set_params(params=params_model)
 ###################################################
 
 ## Callbacks Pipeline
-callbacks = callbacks.get_callbacks()
+callbacks_pipeline = callbacks.get_callbacks()
 
 '''
 callbacks = [checkpoint, early_stopping, losswise_callback]
@@ -360,7 +360,7 @@ ti = time.time()
 model.fit(train_generator=train_generator,
           val_generator=val_generator,
           epochs=epochs,
-          callbacks=callbacks,
+          callbacks=callbacks_pipeline,
           workers=workers
           )
 
