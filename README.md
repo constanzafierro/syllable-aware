@@ -51,39 +51,6 @@
 ---
 
 
-# Conda Environment
-
-
-### List of conda environments
-
-```
-conda env list
-```
-
-### Activate Environment (base)
-
-```
-source activate base
-```
-
-### Theano Install
-
-```
-pip install theano --upgrade
-```
-
-### Keras Install
-
-```
-pip install keras --upgrade
-```
-
-### Deactivate Enviroment (base)
-
-```
-source deactivate base
-```
-
 ## Switch KERAS Backend to Theano
 
 Keras Documentation: [Switching from one backend to another](https://keras.io/backend/#switching-from-one-backend-to-another)
@@ -165,6 +132,41 @@ git clone https://github.com/nlpchile/syllable-aware.git
 ```
 
 And save it.
+
+
+---
+# Conda Environment
+
+
+### List of conda environments
+
+```
+conda env list
+```
+
+### Activate Environment (base)
+
+```
+source activate base
+```
+
+### Theano Install
+
+```
+pip install theano --upgrade
+```
+
+### Keras Install
+
+```
+pip install keras --upgrade
+```
+
+### Deactivate Enviroment (base)
+
+```
+source deactivate base
+```
 
 
 ## Extras
