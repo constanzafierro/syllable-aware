@@ -108,6 +108,13 @@ cnmem = 1
 
 And save it.
 
+then, on a terminal, execute
+
+```
+export MKL_THREADING_LAYER=GNU
+```
+and press enter
+
 ---
 
 ## clone_github.sh
