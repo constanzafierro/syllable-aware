@@ -34,7 +34,7 @@ class Corpus:
 
         '''
 
-        #random.seed(667) # TODO: Seed
+        random.seed(667) # TODO: Seed
 
         self.path_to_file = path_to_file
         self.final_char = final_char

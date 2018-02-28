@@ -25,7 +25,7 @@ class GeneralGenerator():
             count_to_split:
         '''
 
-        #random.seed(779) # TODO: Seed
+        random.seed(779) # TODO: Seed
 
         self.ind_tokens = ind_tokens
         self.voc = vocabulary
