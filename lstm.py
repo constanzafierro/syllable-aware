@@ -12,7 +12,7 @@ from src.Callbacks import Callbacks
 
 import time
 
-import keras # para Callbacks
+from keras import backend as K
 
 import losswise
 from src.callback_losswise import LosswiseKerasCallback
@@ -95,7 +95,7 @@ D = 512
 recurrent_dropout = 0
 dropout = 0
 
-if keras.backend.backend() == 'tensorflow':
+if K.backend() == 'tensorflow':
     recurrent_dropout = 0.3
     dropout = 0.3
 
