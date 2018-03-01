@@ -120,7 +120,7 @@ T = 6000 # quantity of tokens
 quantity_word = 30
 quantity_syllable = T - quantity_word
 
-L = 80  # 100 sequence_length
+L = 10  # 100 sequence_length
 
 random_split = False
 token_split = '<nl>'
