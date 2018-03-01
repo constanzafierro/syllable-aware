@@ -14,9 +14,6 @@ import time
 
 from keras import backend as K
 
-import losswise
-from src.callback_losswise import LosswiseKerasCallback
-
 
 ########################################################################################################################
 
