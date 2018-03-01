@@ -17,6 +17,7 @@ from keras import backend as K
 import losswise
 from src.callback_losswise import LosswiseKerasCallback
 
+
 ########################################################################################################################
 
 ## Setting Seed for Reproducibility
@@ -39,6 +40,7 @@ random.seed(seed)
 # tf.set_random_seed(seed)
 # sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
 # K.set_session(sess)
+
 
 ########################################################################################################################
 
@@ -115,14 +117,15 @@ workers = 16 # default 1
 
 T = 6000 # quantity of tokens
 
-quantity_word = 60
+quantity_word = 30
 quantity_syllable = T - quantity_word
 
-L = 100  # 100 sequence_length
+L = 80  # 100 sequence_length
 
 random_split = False
 token_split = '<nl>'
 use_perplexity = True
+
 
 ###################################################
 
@@ -185,6 +188,7 @@ print(text.format(quantity_word,
                   )
       )
 
+
 ########################################################################################################################
 
 ## Init Model
@@ -232,6 +236,7 @@ val_generator = GeneralGenerator(batch_size = batch_size,
                                  count_to_split = -1
                                  )
 
+
 ########################################################################################################################
 
 ## Callbacks
@@ -275,16 +280,6 @@ callbacks.checkpoint(filepath=out_directory_model + outfile,
                      monitor=monitor_checkpoint,
                      save_best_only=save_best_only)
 
-'''
-checkpoint = keras.callbacks.ModelCheckpoint(filepath=out_directory_model + outfile,
-                                             monitor=monitor_checkpoint,
-                                             verbose=1,
-                                             save_best_only=True, # TODO: Guardar cada K epochs, y Guardar el mejor
-                                             save_weights_only=False,
-                                             mode='auto',
-                                             period=1 # Interval (number of epochs) between checkpoints.
-                                             )
-'''
 
 ###################################################
 ## EarlyStopping
@@ -296,14 +291,6 @@ patience = 100 # number of epochs with no improvement after which training will 
 callbacks.early_stopping(monitor=monitor_early_stopping,
                          patience=patience)
 
-'''
-early_stopping = keras.callbacks.EarlyStopping(monitor=monitor_early_stopping,
-                                               min_delta=0,
-                                               patience=patience,
-                                               verbose=0,
-                                               mode='auto'
-                                               )
-'''
 
 ###################################################
 ## Losswise
@@ -319,41 +306,12 @@ callbacks.losswise(keyfile='.env',
                    epochs=epochs,
                    steps_per_epoch=steps_per_epoch)
 
-'''
-keyfile = json.load(open('.env'))
-
-losswise_api_key = keyfile["losswise_api_key"]
-losswise_tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
-
-losswise_tag = losswise_tag.format(T, quantity_word, quantity_syllable)
-
-losswise.set_api_key(losswise_api_key)
-
-params_data = json.loads(model.to_json)
-
-params_data['samples'] = len(train_generator.ind_tokens)
-params_data['steps'] = train_generator.steps_per_epoch
-
-params_data['batch_size'] = train_generator.batch_size # para meterlo igual a los params que se muestran online
-
-params_model = {'batch_size': train_generator.batch_size}
-
-losswise_callback = LosswiseKerasCallback(tag=losswise_tag,
-                                          params_data=params_data,
-                                          params_model=params_model
-                                          )
-
-losswise_callback.set_params(params=params_model)
-'''
 
 ###################################################
 
 ## Callbacks Pipeline
 callbacks_pipeline = callbacks.get_callbacks()
 
-'''
-callbacks = [checkpoint, early_stopping, losswise_callback]
-'''
 
 ########################################################################################################################
 
