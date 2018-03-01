@@ -64,7 +64,6 @@ class GeneralGenerator():
         self.verbose = verbose
 
 
-    @threadsafe_generator
     def generator(self):
 
         n_features = len(self.voc)
