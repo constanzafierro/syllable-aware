@@ -224,7 +224,7 @@ train_generator = GeneralGenerator(batch_size = batch_size,
                                    split_symbol_index = token_split,
                                    count_to_split = -1,
                                    verbose = True
-                                   )
+                                   ).__next__()
 
 val_generator = GeneralGenerator(batch_size = batch_size,
                                  ind_tokens = val_set,
@@ -232,7 +232,7 @@ val_generator = GeneralGenerator(batch_size = batch_size,
                                  max_len = params_tokenization["lprime"],
                                  split_symbol_index = token_split,
                                  count_to_split = -1
-                                 )
+                                 ).__next__()
 
 
 ########################################################################################################################
