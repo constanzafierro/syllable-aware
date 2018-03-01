@@ -55,7 +55,7 @@ class evaluationModel():
                 text_array.append(token)
 
 
-        text = "".join(generated)
+        text = "".join(text_array)
         text = text.replace(self.tokenization_params["final_char"], " ")
         text = text.replace(self.tokenization_params["inter_char"], "")
 
@@ -82,4 +82,3 @@ def sample(pred, temperature=1.0):
     prob = np.random.multinomial(1, pred, 1)
 
     return np.argmax(prob)
-
