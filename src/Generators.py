@@ -55,7 +55,7 @@ class GeneralGenerator():
         random.seed(779) # TODO: Seed
 
         if max_len > len(ind_tokens):
-            raise ValueError("max_len > len(ind_tokens), max_len = {} and len(ind_tokens) = {}".format(max_len, len(ind_tokens))
+            raise ValueError("max_len > len(ind_tokens), max_len = {} and len(ind_tokens) = {}".format(max_len, len(ind_tokens)))
         
         self.ind_tokens = ind_tokens
         self.voc = vocabulary
