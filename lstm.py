@@ -261,8 +261,8 @@ val_generator = GeneralGenerator(batch_size = batch_size,
 ## Callbacks
 # https://keras.io/callbacks/
 
-out_directory_train_history = './train_history/'
-out_directory_model = './models/'
+out_directory_train_history = '../train_history/'
+out_directory_model = '../models/'
 out_model_pref = 'lstm_model_'
 
 
