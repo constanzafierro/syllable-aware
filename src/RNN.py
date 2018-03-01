@@ -76,13 +76,14 @@ class RecurrentLSTM:
         self.to_json = self.model.to_json()
 
 
-    def fit(self, train_generator, val_generator, epochs, steps_per_epoch, callbacks, workers):
+    def fit(self, train_generator, val_generator, epochs, steps_per_epoch, validation_steps, callbacks, workers):
 
         self.train_generator = train_generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
         self.val_generator = val_generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
 
         self.epochs = epochs
         self.steps_per_epoch = steps_per_epoch
+        self.validation_steps = validation_steps
         self.workers = workers
         self.callbacks = callbacks
 
@@ -92,8 +93,8 @@ class RecurrentLSTM:
                                  epochs=self.epochs,
                                  verbose=2,
                                  callbacks=self.callbacks,
-                                 validation_data=self.val_generator.generator(),
-                                 validation_steps=self.val_generator.steps_per_epoch,
+                                 validation_data=self.val_generator,
+                                 validation_steps=self.validation_steps,
                                  class_weight=None,
                                  max_queue_size=10,
                                  workers=self.workers,
