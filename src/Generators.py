@@ -29,6 +29,7 @@ def threadsafe_generator(f):
     return g
 
 
+@threadsafe_generator
 class GeneralGenerator():
 
     def __init__(self,
@@ -63,7 +64,6 @@ class GeneralGenerator():
         self.verbose = verbose
 
 
-    @threadsafe_generator
     def generator(self):
 
         n_features = len(self.voc)
