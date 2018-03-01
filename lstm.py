@@ -33,7 +33,9 @@ if K.backend() == 'tensorflow':
     import tensorflow as tf
 
     config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
+    
+    # Don't pre-allocate memory; allocate as-needed
+    config.gpu_options.allow_growth = True 
   
     sess = tf.Session(config=config)
   
