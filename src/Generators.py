@@ -16,7 +16,7 @@ class threadsafe_iter:
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         with self.lock:
             return self.it.__next__()
 
@@ -29,7 +29,7 @@ def threadsafe_generator(f):
     return g
 
 
-
+@threadsafe_generator
 class GeneralGenerator():
 
     def __init__(self,
@@ -64,8 +64,10 @@ class GeneralGenerator():
         self.verbose = verbose
 
 
-    def generator(self):
+    def __iter__(self):
+        return self
 
+    def __next__(self):
         n_features = len(self.voc)
         X_batch = np.zeros((self.batch_size, self.max_len), dtype = np.int32)
         Y_batch = np.zeros((self.batch_size, n_features), dtype = np.bool)
@@ -113,3 +115,4 @@ class GeneralGenerator():
 
                 X_batch = np.zeros((self.batch_size, self.max_len), dtype = np.int32)
                 Y_batch = np.zeros((self.batch_size, n_features), dtype = np.bool)
+
