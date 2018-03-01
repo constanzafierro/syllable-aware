@@ -35,7 +35,7 @@ if K.backend() == 'tensorflow':
   config = tf.ConfigProto()
   config.gpu_options.allow_growth = True
   
-  session = tf.Session(config=config)
+  sess = tf.Session(config=config)
   
   tf.set_random_seed(seed)
   K.set_session(sess)
