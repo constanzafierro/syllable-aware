@@ -324,7 +324,8 @@ model.fit(train_generator=train_generator,
           steps_per_epoch= steps_per_epoch,
           validation_steps= len(val_set)/batch_size,
           callbacks=callbacks_pipeline,
-          workers=workers
+          workers=workers,
+          use_multiprocessing= True
           )
 
 
