@@ -5,6 +5,7 @@ import keras
 import json
 
 # TODO : Inicializar correctamente para que el append sea safe
+# TODO: Mover clase Callbacks al archivo RNN.py, renombrar archivo y actualizar los imports en otros archivos
 
 
 class Callbacks:
