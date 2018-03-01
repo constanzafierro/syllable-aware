@@ -295,9 +295,9 @@ callbacks.early_stopping(monitor=monitor_early_stopping,
 
 model_to_json = model.to_json
 
-samples = len(train_generator.ind_tokens)
-steps_per_epoch = train_generator.steps_per_epoch
-batch_size = train_generator.batch_size
+samples = len(train_set.ind_tokens)
+steps_per_epoch = samples / batch_size
+batch_size = batch_size
 
 callbacks.losswise(keyfile='.env',
                    model_to_json=model_to_json,
