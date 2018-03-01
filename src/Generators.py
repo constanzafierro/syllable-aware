@@ -63,7 +63,6 @@ class GeneralGenerator():
         self.steps_per_epoch = int(len(ind_tokens) / batch_size) + 1
         self.verbose = verbose
 
-
     def __iter__(self):
         return self
 
