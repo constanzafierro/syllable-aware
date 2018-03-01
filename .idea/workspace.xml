@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/evaluationModel.py" afterPath="$PROJECT_DIR$/src/evaluationModel.py" />
+      <change beforePath="$PROJECT_DIR$/lstm.py" afterPath="$PROJECT_DIR$/lstm.py" />
+      <change beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,11 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="296" column="14" lean-forward="false" selection-start-line="296" selection-start-column="14" selection-end-line="296" selection-end-column="14" />
+            <state relative-caret-position="459">
+              <caret line="138" column="6" lean-forward="false" selection-start-line="138" selection-start-column="6" selection-end-line="138" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -53,8 +54,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4879">
-              <caret line="287" column="0" lean-forward="false" selection-start-line="287" selection-start-column="0" selection-end-line="288" selection-end-column="10" />
+            <state relative-caret-position="281">
+              <caret line="167" column="56" lean-forward="false" selection-start-line="167" selection-start-column="56" selection-end-line="167" selection-end-column="56" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -65,7 +66,7 @@
       <file leaf-file-name="evaluationModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/evaluationModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="969">
               <caret line="57" column="33" lean-forward="false" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -74,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generate_text.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="generate_text.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generate_text.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+            <state relative-caret-position="102">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -137,8 +138,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>L = 10</find>
-      <find>average</find>
       <find>steps</find>
       <find>lossw</find>
       <find>os.</find>
@@ -166,6 +165,8 @@
       <find>validation</find>
       <find>.fit</find>
       <find>verbose</find>
+      <find>models</find>
+      <find>./</find>
       <find>save</find>
     </findStrings>
   </component>
@@ -234,12 +235,12 @@
         <option value="$PROJECT_DIR$/src/__init__.py" />
         <option value="$PROJECT_DIR$/test/test_corpusClass.py" />
         <option value="$PROJECT_DIR$/src/Generators.py" />
-        <option value="$PROJECT_DIR$/lstm.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/src/Tokenization.py" />
         <option value="$PROJECT_DIR$/src/RNN.py" />
         <option value="$PROJECT_DIR$/src/evaluationModel.py" />
         <option value="$PROJECT_DIR$/generate_text.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/lstm.py" />
       </list>
     </option>
   </component>
@@ -1176,13 +1177,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1253,27 +1247,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lstm.py">
+    <entry file="file://$PROJECT_DIR$/generate_text.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="296" column="14" lean-forward="false" selection-start-line="296" selection-start-column="14" selection-end-line="296" selection-end-column="14" />
+        <state relative-caret-position="102">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4879">
-          <caret line="287" column="0" lean-forward="false" selection-start-line="287" selection-start-column="0" selection-end-line="288" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/evaluationModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
+        <state relative-caret-position="969">
           <caret line="57" column="33" lean-forward="false" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
@@ -1281,10 +1273,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generate_text.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+        <state relative-caret-position="281">
+          <caret line="167" column="56" lean-forward="false" selection-start-line="167" selection-start-column="56" selection-end-line="167" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lstm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="138" column="6" lean-forward="false" selection-start-line="138" selection-start-column="6" selection-end-line="138" selection-end-column="6" />
           <folding />
         </state>
       </provider>

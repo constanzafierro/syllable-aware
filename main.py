@@ -21,6 +21,24 @@ random.seed(seed)
 path_in = './data/train.txt'
 path_out = './data/train2.txt'
 
+out_directory_train_history = '../train_history/'
+out_directory_model = '../models/'
+out_model_pref = 'lstm_model_'
+
+if not os.path.exists(path=out_directory_model):
+    os.mkdir(path=out_directory_model,
+             mode=0o755
+             )
+else:
+    pass
+
+if not os.path.exists(path=out_directory_train_history):
+    os.mkdir(path=out_directory_train_history,
+             mode=0o755
+             )
+else:
+    pass
+
 
 def main():
 
@@ -147,7 +165,7 @@ def main():
         print("Get and save parameters experiment")
         params_tokenization = tokenization.params_experiment()
 
-        path_setting_experiment = "./data/experimentT{}Tw{}Ts{}.txt".format(Tmax, quantity_word, quantity_syllable)
+        path_setting_experiment = out_directory_model + "experimentT{}Tw{}Ts{}.txt".format(Tmax, quantity_word, quantity_syllable)
         tokenization.save_experiment(path_setting_experiment)
         print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
         if use_perplexity: metrics.append(metric_pp(average_TPW=params_tokenization["average_tpw"]))
@@ -213,24 +231,6 @@ def main():
                                          split_symbol_index=token_split,
                                          count_to_split=-1
                                          ).__next__()
-
-        out_directory_train_history = './train_history/'
-        out_directory_model = './models/'
-        out_model_pref = 'lstm_model_'
-
-        if not os.path.exists(path=out_directory_model):
-            os.mkdir(path=out_directory_model,
-                     mode=0o755
-                     )
-        else:
-            pass
-
-        if not os.path.exists(path=out_directory_train_history):
-            os.mkdir(path=out_directory_train_history,
-                     mode=0o755
-                     )
-        else:
-            pass
 
         time_pref = time.strftime('%y%m%d.%H%M')  # Ver código de Jorge Perez
 
