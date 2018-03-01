@@ -1,13 +1,11 @@
 import losswise
-#from losswise.libs import LosswiseKerasCallback
-
-from src.callback_losswise import LosswiseKerasCallback
 from losswise.libs import LosswiseKerasCallback
 
 import keras
 import json
 
 # TODO : Inicializar correctamente para que el append sea safe
+
 
 class Callbacks:
 
@@ -55,8 +53,6 @@ class Callbacks:
         self.losswise_callback = LosswiseKerasCallback(tag=tag,
                                                        params=params
                                                        )
-
-        #self.losswise_callback.set_params(params=params)
 
 
     def get_callbacks(self):
