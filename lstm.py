@@ -233,7 +233,7 @@ print('\n Get Generators \n')
 
 
 if params_tokenization["lprime"] > len(train_set):
-    raise ValueError("lprime > len(train_set), lprime = {} and len(train_size) = {}".format(max_len, len(train_size))
+    raise ValueError("lprime > len(train_set), lprime = {} and len(train_set) = {}".format(params_tokenization["lprime"], len(train_set)))
 
 train_generator = GeneralGenerator(batch_size = batch_size,
                                    ind_tokens = train_set,
@@ -245,7 +245,7 @@ train_generator = GeneralGenerator(batch_size = batch_size,
 
 
 if params_tokenization["lprime"] > len(val_set):
-    raise ValueError("lprime > len(val_set), lprime = {} and len(val_size) = {}".format(max_len, len(val_size))
+    raise ValueError("lprime > len(val_set), lprime = {} and len(val_set) = {}".format(params_tokenization["lprime"], len(val_set)))
                      
 val_generator = GeneralGenerator(batch_size = batch_size,
                                  ind_tokens = val_set,
