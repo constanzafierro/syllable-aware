@@ -1,7 +1,32 @@
 import numpy as np
 import random
+import threading
 
 # TODO: We must set a seed !!
+
+
+class threadsafe_iter:
+    """Takes an iterator/generator and makes it thread-safe by
+    serializing call to the `next` method of given iterator/generator.
+    """
+    def __init__(self, it):
+        self.it = it
+        self.lock = threading.Lock()
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        with self.lock:
+            return self.it.next()
+
+
+def threadsafe_generator(f):
+    """A decorator that takes a generator function and makes it thread-safe.
+    """
+    def g(*a, **kw):
+        return threadsafe_iter(f(*a, **kw))
+    return g
 
 
 class GeneralGenerator():
@@ -12,7 +37,8 @@ class GeneralGenerator():
                  vocabulary,
                  max_len,
                  split_symbol_index,
-                 count_to_split
+                 count_to_split,
+                 verbose = False
                  ):
 
         '''Generates X,Y batches dynamically.
@@ -34,8 +60,10 @@ class GeneralGenerator():
         self.split_symbol_index = split_symbol_index
         self.count_to_split = count_to_split
         self.steps_per_epoch = int(len(ind_tokens) / batch_size) + 1
+        self.verbose = verbose
 
 
+    @threadsafe_generator
     def generator(self):
 
         n_features = len(self.voc)
@@ -49,6 +77,8 @@ class GeneralGenerator():
 
             # find X data
             group_count = 0
+
+            if self.verbose: print("generator yielded a batch {}".format(current_batch_index))
 
             for i, e in enumerate(self.ind_tokens[left_limit:], left_limit):
 

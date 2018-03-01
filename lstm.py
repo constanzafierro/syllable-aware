@@ -222,7 +222,8 @@ train_generator = GeneralGenerator(batch_size = batch_size,
                                    vocabulary = params_tokenization["vocabulary"],
                                    max_len = params_tokenization["lprime"],
                                    split_symbol_index = token_split,
-                                   count_to_split = -1
+                                   count_to_split = -1,
+                                   verbose = True
                                    )
 
 val_generator = GeneralGenerator(batch_size = batch_size,
