@@ -295,7 +295,7 @@ callbacks.early_stopping(monitor=monitor_early_stopping,
 
 model_to_json = model.to_json
 
-samples = len(train_set.ind_tokens)
+samples = len(train_set)
 steps_per_epoch = samples / batch_size
 batch_size = batch_size
 
