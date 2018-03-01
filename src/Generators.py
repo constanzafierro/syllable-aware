@@ -18,7 +18,7 @@ class threadsafe_iter:
 
     def next(self):
         with self.lock:
-            return self.it.next()
+            return self.it.__next__()
 
 
 def threadsafe_generator(f):
@@ -29,7 +29,7 @@ def threadsafe_generator(f):
     return g
 
 
-@threadsafe_generator
+
 class GeneralGenerator():
 
     def __init__(self,
@@ -64,6 +64,7 @@ class GeneralGenerator():
         self.verbose = verbose
 
 
+    @threadsafe_generator
     def generator(self):
 
         n_features = len(self.voc)
