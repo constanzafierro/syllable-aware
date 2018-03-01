@@ -171,7 +171,10 @@ class Tokenization:
                   "token_to_index": self.token_to_index,
                   "index_to_token": self.index_to_token,
                   "index_ends": self.index_ends,
-                  "average_tpw": self.average_tpw
+                  "average_tpw": self.average_tpw,
+                  "final_char": self.final_char,
+                  "final_punc": self.final_punc,
+                  "inter_char": self.inter_char
                   }
         return params
 
