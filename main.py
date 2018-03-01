@@ -117,7 +117,7 @@ def main():
         ## Config .env file
 
         keyfile = json.load(open('.env'))
-        tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
+        tag = "syllable-aware " + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
         keyfile["losswise_tag"] = tag.format(Tmax, quantity_word, quantity_syllable)
 
         with open(".env", "w") as f:
