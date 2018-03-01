@@ -45,7 +45,7 @@ class Callbacks:
 
         losswise.set_api_key(api_key)
 
-        params = json.loads(model_to_json)[0]
+        params = json.loads(model_to_json)
         params['steps_per_epoch'] = steps_per_epoch
         params['epochs'] = epochs
 
