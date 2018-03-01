@@ -76,18 +76,19 @@ class RecurrentLSTM:
         self.to_json = self.model.to_json()
 
 
-    def fit(self, train_generator, val_generator, epochs, callbacks, workers):
+    def fit(self, train_generator, val_generator, epochs, steps_per_epoch, callbacks, workers):
 
         self.train_generator = train_generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
         self.val_generator = val_generator # Object/Instance Generator, containing .generator() and .steps_per_epoch
 
         self.epochs = epochs
+        self.steps_per_epoch = steps_per_epoch
         self.workers = workers
         self.callbacks = callbacks
 
         # https://keras.io/models/sequential/#fit_generator
-        self.model.fit_generator(generator=self.train_generator.generator(),
-                                 steps_per_epoch=self.train_generator.steps_per_epoch,
+        self.model.fit_generator(generator=self.train_generator,
+                                 steps_per_epoch=self.steps_per_epoch,
                                  epochs=self.epochs,
                                  verbose=2,
                                  callbacks=self.callbacks,

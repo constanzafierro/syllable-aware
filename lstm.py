@@ -321,6 +321,7 @@ ti = time.time()
 model.fit(train_generator=train_generator,
           val_generator=val_generator,
           epochs=epochs,
+          steps_per_epoch= steps_per_epoch,
           callbacks=callbacks_pipeline,
           workers=workers
           )
