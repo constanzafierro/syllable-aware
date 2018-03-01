@@ -214,8 +214,8 @@ def main():
                                          count_to_split=-1
                                          ).__next__()
 
-        out_directory_train_history = './train_history/'
-        out_directory_model = './models/'
+        out_directory_train_history = '../train_history/'
+        out_directory_model = '../models/'
         out_model_pref = 'lstm_model_'
 
         if not os.path.exists(path=out_directory_model):
