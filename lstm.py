@@ -29,16 +29,16 @@ random.seed(seed)
 from keras import backend as K
 
 if K.backend() == 'tensorflow':
+
+    import tensorflow as tf
+
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
   
-  import tensorflow as tf
+    sess = tf.Session(config=config)
   
-  config = tf.ConfigProto()
-  config.gpu_options.allow_growth = True
-  
-  sess = tf.Session(config=config)
-  
-  tf.set_random_seed(seed)
-  K.set_session(sess)
+    tf.set_random_seed(seed)
+    K.set_session(sess)
 
 
 ############################ Limit operation to 1 thread for deterministic results #####################################
