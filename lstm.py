@@ -223,8 +223,7 @@ train_generator = GeneralGenerator(batch_size = batch_size,
                                    max_len = params_tokenization["lprime"],
                                    split_symbol_index = token_split,
                                    count_to_split = -1,
-                                   verbose = True
-                                   )
+                                   ).__next__()
 
 val_generator = GeneralGenerator(batch_size = batch_size,
                                  ind_tokens = val_set,
@@ -232,7 +231,7 @@ val_generator = GeneralGenerator(batch_size = batch_size,
                                  max_len = params_tokenization["lprime"],
                                  split_symbol_index = token_split,
                                  count_to_split = -1
-                                 )
+                                 ).__next__()
 
 
 ########################################################################################################################
@@ -321,48 +320,14 @@ ti = time.time()
 model.fit(train_generator=train_generator,
           val_generator=val_generator,
           epochs=epochs,
+          steps_per_epoch= steps_per_epoch,
+          validation_steps= len(val_set)/batch_size,
           callbacks=callbacks_pipeline,
-          workers=workers
+          workers=workers,
+          use_multiprocessing= True
           )
 
 
 tf = time.time()
 dt = (tf - ti) / 60.0
 print('\n Elapsed Time {} \n'.format(dt))
-
-
-## Test
-print('\nTesting\n')
-######################### TEST SET ################################
-
-path_to_test = './data/horoscopo_test_overfitting_add_space.txt'
-
-test_set = tokenization.select_tokens(path_to_test)
-
-index_test = tokenization.converting_token_to_index(test_set)
-
-test_generator = GeneralGenerator(batch_size = batch_size,
-                                 ind_tokens = index_test,
-                                 vocabulary = params_tokenization["vocabulary"],
-                                 max_len = params_tokenization["lprime"],
-                                 split_symbol_index = token_split,
-                                 count_to_split = -1
-                                 )
-
-path_log = './logs/'
-if not os.path.exists(path=path_log):
-    os.mkdir(path=path_log,
-             mode=0o755
-             )
-
-path_test_result = path_log + 'test_result.txt'
-
-ti = time.time()
-scores = model.evaluate(test_generator)
-tf = time.time()
-dt = (tf - ti) / 60.0
-print('\n Elapsed Time {} \n'.format(dt))
-
-
-with open(path_test_result, "a") as f1:
-    f1.write("Result experiment T = {} ; Tw = {} ; Ts = {} \nScores={}".format(T, quantity_word, quantity_syllable, scores))

@@ -67,7 +67,7 @@ def main():
 
     train_size = 0.8  # 1
     batch_size = 128
-    epochs = 500
+    epochs = 100
 
     optimizer = 'rmsprop'  # 'adam'
     metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
@@ -117,7 +117,7 @@ def main():
         ## Config .env file
 
         keyfile = json.load(open('.env'))
-        tag = keyfile["losswise_tag"] + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
+        tag = "syllable-aware " + path_to_file + " experiment T = {} ; Tw = {} ; Ts = {}"
         keyfile["losswise_tag"] = tag.format(Tmax, quantity_word, quantity_syllable)
 
         with open(".env", "w") as f:
@@ -204,7 +204,7 @@ def main():
                                            max_len=params_tokenization["lprime"],
                                            split_symbol_index=token_split,
                                            count_to_split=-1
-                                           )
+                                           ).__next__()
 
         val_generator = GeneralGenerator(batch_size=batch_size,
                                          ind_tokens=val_set,
@@ -212,7 +212,7 @@ def main():
                                          max_len=params_tokenization["lprime"],
                                          split_symbol_index=token_split,
                                          count_to_split=-1
-                                         )
+                                         ).__next__()
 
         out_directory_train_history = './train_history/'
         out_directory_model = './models/'
@@ -246,23 +246,23 @@ def main():
                              save_best_only=save_best_only)
 
         monitor_early_stopping = 'val_top_k_categorical_accuracy'  # 'val_loss'
-        patience = 100  # number of epochs with no improvement after which training will be stopped
+        patience = 5  # number of epochs with no improvement after which training will be stopped
 
         callbacks.early_stopping(monitor=monitor_early_stopping,
                                  patience=patience)
 
         model_to_json = model.to_json
 
-        samples = len(train_generator.ind_tokens)
-        steps_per_epoch = train_generator.steps_per_epoch
-        batch_size = train_generator.batch_size
+        samples = len(train_set)
+        steps_per_epoch = samples / batch_size
 
         callbacks.losswise(keyfile='.env',
                            model_to_json=model_to_json,
                            epochs=epochs,
                            steps_per_epoch=steps_per_epoch)
 
-        callbacks = callbacks.get_callbacks()
+        callbacks_ = callbacks.get_callbacks()
+
 
         ## Training
         print('Training ...')
@@ -271,8 +271,11 @@ def main():
         model.fit(train_generator=train_generator,
                   val_generator=val_generator,
                   epochs=epochs,
-                  callbacks=callbacks,
-                  workers=workers
+                  steps_per_epoch= steps_per_epoch,
+                  validation_steps= len(val_set)/batch_size,
+                  callbacks= callbacks_,
+                  workers=workers,
+                  use_multiprocessing= True
                   )
 
         tf = time.time()
