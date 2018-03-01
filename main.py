@@ -261,9 +261,8 @@ def main():
                            epochs=epochs,
                            steps_per_epoch=steps_per_epoch)
 
-        callbacks = callbacks.get_callbacks()
+        callbacks_ = callbacks.get_callbacks()
 
-        callbacks_pipeline = callbacks.get_callbacks()
 
         ## Training
         print('Training ...')
@@ -274,7 +273,7 @@ def main():
                   epochs=epochs,
                   steps_per_epoch= steps_per_epoch,
                   validation_steps= len(val_set)/batch_size,
-                  callbacks=callbacks_pipeline,
+                  callbacks= callbacks_,
                   workers=workers,
                   use_multiprocessing= True
                   )
