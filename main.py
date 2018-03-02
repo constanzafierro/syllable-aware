@@ -40,7 +40,7 @@ else:
     pass
 
 if not os.path.exists(path= out_directory_model + "experiment/"):
-    os.mkdir(path= out_directory_model + "experiment/",
+    os.mkdir(path= out + "experiment/",
              mode=0o755
              )
 else:
@@ -66,7 +66,9 @@ def main():
                        ';': '<sc>'
                        }
 
-    letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
+    # Agregué caracteres con acentos hacia atrás y con dos
+    # puntos para las palabras en frances y alemán
+    letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyzàèìòùäëïö'
 
     add_space = True
 

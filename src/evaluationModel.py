@@ -21,21 +21,21 @@ class evaluationModel():
         self.model = load_model(model_path)
 
         with open(tokenSelector_path) as f:
-            tokenSelector_params = json.load(f)
+            self.tokenSelector_params = json.load(f)
 
-        self.tokenSelector = TokenSelector(final_char= tokenSelector_params["final_char"],
-                                           inter_char= tokenSelector_params["inter_char"],
-                                           signs_to_ignore= tokenSelector_params["signs_to_ignore"],
-                                           words_to_ignore= tokenSelector_params["words_to_ignore"],
-                                           map_punctuation= tokenSelector_params["map_punctuation"],
-                                           letters= "".join(tokenSelector_params["letters"]),
-                                           sign_not_syllable= tokenSelector_params["sign_not_syllable"]
+        self.tokenSelector = TokenSelector(final_char= self.tokenSelector_params["final_char"],
+                                           inter_char= self.tokenSelector_params["inter_char"],
+                                           signs_to_ignore= self.tokenSelector_params["signs_to_ignore"],
+                                           words_to_ignore= self.tokenSelector_params["words_to_ignore"],
+                                           map_punctuation= self.tokenSelector_params["map_punctuation"],
+                                           letters= "".join(self.tokenSelector_params["letters"]),
+                                           sign_not_syllable= self.tokenSelector_params["sign_not_syllable"]
                                            )
 
-        self.tokenSelector.set_params(tokenSelector_params)
+        self.tokenSelector.set_params(self.tokenSelector_params)
 
         self.map_punctuation_inv = dict()
-        for key, value in self.tokenSelector["map_punctuation"].items():
+        for key, value in self.tokenSelector_params["map_punctuation"]:
             self.map_punctuation_inv[value] = key
 
 
@@ -61,7 +61,7 @@ class evaluationModel():
                 x_pred[0, t] = self.tokenization_params["token_to_index"][token]
             preds = self.model.predict(x_pred, verbose=0)[0]
             next_index = sample(preds, temperature)
-            next_token = self.tokenization_params["index_to_token"][next_index + 1]
+            next_token = self.tokenization_params["index_to_token"][str(next_index + 1)]
 
             generated += [next_token]
             sentence = sentence[1:] + [next_token]
@@ -78,8 +78,8 @@ class evaluationModel():
                 text_array.append(token)
 
         text = "".join(text_array)
-        text = text.replace(self.tokenization_params["final_char"], " ")
-        text = text.replace(self.tokenization_params["inter_char"], "")
+        text = text.replace(self.tokenSelector_params["final_char"], " ")
+        text = text.replace(self.tokenSelector_params["inter_char"], "")
 
         fprint(text)
 
