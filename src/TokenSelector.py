@@ -149,7 +149,9 @@ class TokenSelector():
                   "final_car": self.final_char,
                   "inter_char": self.inter_char,
                   "sign_not_syllable": self.sign_not_syllable,
-                  "letters": self.letters,
+                  "words_to_ignore":self.words_to_ignore,
+                  "sign_to_ignore": self.signs_to_ignore,
+                  "letters": list(self.letters),
                   "map_punctuation": self.map_punctuation
                   }
         return params

@@ -24,7 +24,13 @@ class evaluationModel():
             tokenSelector_params = json.load(f)
 
         self.tokenSelector = TokenSelector(final_char= tokenSelector_params["final_char"],
-                                           inter_char= tokenSelector_params["inter_char"])
+                                           inter_char= tokenSelector_params["inter_char"],
+                                           signs_to_ignore= tokenSelector_params["signs_to_ignore"],
+                                           words_to_ignore= tokenSelector_params["words_to_ignore"],
+                                           map_punctuation= tokenSelector_params["map_punctuation"],
+                                           letters= "".join(tokenSelector_params["letters"]),
+                                           sign_not_syllable= tokenSelector_params["sign_not_syllable"]
+                                           )
 
         self.tokenSelector.set_params(tokenSelector_params)
 
