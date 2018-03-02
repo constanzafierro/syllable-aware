@@ -4,6 +4,7 @@
     <list default="true" id="b5c72bae-b672-4133-ac39-2e3e2a434702" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/Generators.py" afterPath="$PROJECT_DIR$/src/Generators.py" />
+
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +42,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lstm.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-393">
@@ -54,11 +55,33 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="119" column="30" lean-forward="false" selection-start-line="119" selection-start-column="30" selection-end-line="119" selection-end-column="30" />
+            <state relative-caret-position="281">
+              <caret line="167" column="56" lean-forward="false" selection-start-line="167" selection-start-column="56" selection-end-line="167" selection-end-column="56" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="evaluationModel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/evaluationModel.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="969">
+              <caret line="57" column="33" lean-forward="false" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="generate_text.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/generate_text.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -106,9 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>coverage</find>
-      <find>L = 10</find>
-      <find>average</find>
       <find>steps</find>
       <find>lossw</find>
       <find>os.</find>
@@ -136,6 +156,9 @@
       <find>validation</find>
       <find>.fit</find>
       <find>verbose</find>
+      <find>models</find>
+      <find>./</find>
+      <find>save</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -199,7 +222,6 @@
         <option value="$PROJECT_DIR$/.env.example" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Callbacks.py" />
-        <option value="$PROJECT_DIR$/src/Tokenization.py" />
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/src/__init__.py" />
         <option value="$PROJECT_DIR$/test/test_corpusClass.py" />
@@ -273,21 +295,6 @@
             <path>
               <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
               <item name="syllable-aware" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
-              <item name="syllable-aware" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
-              <item name="syllable-aware" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="syllable-aware" type="b2602c69:ProjectViewProjectNode" />
-              <item name="syllable-aware" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1054,9 +1061,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/perplexity.py" />
-    <entry file="file://$PROJECT_DIR$/process_text.py" />
-    <entry file="file://$PROJECT_DIR$/perplexity.py" />
     <entry file="file://$PROJECT_DIR$/process_text.py" />
     <entry file="file://$PROJECT_DIR$/calculate_Lmax.py" />
     <entry file="file://$PROJECT_DIR$/generate_percent.py" />
@@ -1135,16 +1139,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Corpus.py" />
-    <entry file="file://$PROJECT_DIR$/src/Tokenization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="82" column="8" lean-forward="true" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1170,13 +1164,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1234,7 +1221,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lstm.py">
+    <entry file="file://$PROJECT_DIR$/generate_text.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-393">
           <caret line="243" column="47" lean-forward="true" selection-start-line="243" selection-start-column="47" selection-end-line="243" selection-end-column="47" />
@@ -1249,6 +1236,14 @@
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lstm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="138" column="6" lean-forward="false" selection-start-line="138" selection-start-column="6" selection-end-line="138" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -66,6 +66,25 @@ if K.backend() == 'tensorflow':
 path_in = './data/train.txt'
 path_out = './data/train_add_space.txt'
 
+out_directory_train_history = '../train_history/'
+out_directory_model = '../models/'
+out_model_pref = 'lstm_model_'
+
+
+if not os.path.exists(path=out_directory_model):
+    os.mkdir(path=out_directory_model,
+             mode=0o755
+             )
+else:
+    pass
+
+if not os.path.exists(path=out_directory_train_history):
+    os.mkdir(path=out_directory_train_history,
+             mode=0o755
+             )
+else:
+    pass
+
 
 ##################################################
 
@@ -126,7 +145,8 @@ workers = 1 # default 1 (máx 8 fisicos o 16 virtuales)
 
 ################ CORPUS ATRIBUTES #################
 
-T = 500 # quantity of tokens
+T = 50 # quantity of tokens
+
 
 quantity_word = 30
 quantity_syllable = T - quantity_word
@@ -171,7 +191,7 @@ print('Set experiment Done\n')
 print("\nGet and save parameters experiment")
 params_tokenization = tokenization.params_experiment()
 
-path_setting_experiment = "./data/experimentT{}Tw{}Ts{}.txt".format(T, quantity_word, quantity_syllable)
+path_setting_experiment = out_directory_model + "experimentT{}Tw{}Ts{}.txt".format(T, quantity_word, quantity_syllable)
 tokenization.save_experiment(path_setting_experiment)
 
 train_set, val_set = tokenization.split_train_val(train_size = train_size,
@@ -260,26 +280,6 @@ val_generator = GeneralGenerator(batch_size = batch_size,
 
 ## Callbacks
 # https://keras.io/callbacks/
-
-out_directory_train_history = '../train_history/'
-out_directory_model = '../models/'
-out_model_pref = 'lstm_model_'
-
-
-if not os.path.exists(path=out_directory_model):
-    os.mkdir(path=out_directory_model,
-             mode=0o755
-             )
-else:
-    pass
-
-if not os.path.exists(path=out_directory_train_history):
-    os.mkdir(path=out_directory_train_history,
-             mode=0o755
-             )
-else:
-    pass
-
 
 time_pref = time.strftime('%y%m%d.%H%M') # Ver código de Jorge Perez
 

@@ -90,20 +90,20 @@ class RecurrentLSTM:
         self.callbacks = callbacks
 
         # https://keras.io/models/sequential/#fit_generator
-        self.model.fit_generator(generator=self.train_generator,
-                                 steps_per_epoch=self.steps_per_epoch,
-                                 epochs=self.epochs,
-                                 verbose=2,
-                                 callbacks=self.callbacks,
-                                 validation_data=self.val_generator,
-                                 validation_steps=self.validation_steps,
-                                 class_weight=None,
-                                 max_queue_size=10,
-                                 workers=self.workers,
-                                 use_multiprocessing=self.use_multiprocessing, # Must be False, unless there is a "thread safe generator"
-                                 shuffle=False, # Must be False
-                                 initial_epoch=0
-                                 )
+        self.model_output = self.model.fit_generator(generator=self.train_generator,
+                                                     steps_per_epoch=self.steps_per_epoch,
+                                                     epochs=self.epochs,
+                                                     verbose=2,
+                                                     callbacks=self.callbacks,
+                                                     validation_data=self.val_generator,
+                                                     validation_steps=self.validation_steps,
+                                                     class_weight=None,
+                                                     max_queue_size=10,
+                                                     workers=self.workers,
+                                                     use_multiprocessing=self.use_multiprocessing, # Must be False, unless there is a "thread safe generator"
+                                                     shuffle=False, # Must be False
+                                                     initial_epoch=0
+                                                     )
 
     def evaluate(self, test_generator):
 
@@ -126,3 +126,6 @@ class RecurrentLSTM:
     def to_json(self):
 
         return self.to_json()
+    
+    def save(self, path_to_file):
+        self.model.save(path_to_file)
