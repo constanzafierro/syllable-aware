@@ -3,9 +3,8 @@ import argparse
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-i','--ifile', help='path to infile')
-parser = argparse.ArgumentParser()
-parser.add_argument('-o','--ofile', help='path to outfile')
+parser.add_argument('-i','--infile', help='path to infile')
+parser.add_argument('-o','--outfile', help='path to outfile')
 
 args = parser.parse_args()
 

@@ -7,7 +7,7 @@ import os
 import json
 
 
-path_to_file = "./logs/evaluation_model.txt"
+path_to_file = "./logs/testing_model.txt"
 
 
 def fprint(text):
@@ -16,7 +16,7 @@ def fprint(text):
         out.write(text)
 
 
-class testingModel():
+class CheckModel():
 
     def __init__(self, model_path, tokenization_path, tokenSelector_path):
 
@@ -116,8 +116,40 @@ class testingModel():
                                     sign_not_syllable=self.tokenSelector_params["sign_not_syllable"],
                                     )
         tokenization.set_params_experiment(self.tokenization_params)
-
+        max_len = self.tokenization_params["lprime"]
         test_selected = tokenization.select_tokens(path_to_test)
+
+        sentence = []
+        token_word = []
+        ppl = 0
+        qw = 0
+
+        for i,token in enumerate(test_selected):
+            token_word += token
+            if token[-1] in [self.tokenSelector_params["final_char"], self.tokenSelector_params["final_punc"]]:
+                if len(sentence) < 1:
+                    sentence += token_word
+                    token_word = []
+                    continue
+
+                seed = sentence
+                probs_word = 1
+                ## Calculo la probabilidad de la palabra
+                for tok in token_word:
+                    probs_word *= self.get_probability_token(tok, seed)
+                    seed += [tok]
+
+                ## sumo la probabilidad a la del resto
+                ppl += np.log2(probs_word)
+
+                sentence += token_word
+                qw += 1
+                token_word = []
+                if len(sentence) > max_len:
+                    sentence = sentence[-max_len:]
+
+        return - ppl / qw
+
 
 
 
