@@ -1,0 +1,10 @@
+[1] Hwang K, Sung W. Character-Level Language Modeling with Hierarchical Recurrent Neural Networks[J]. 2016. (https://arxiv.org/pdf/1609.03777v1.pdf)
+
+[2] Graves A. Generating Sequences With Recurrent Neural Networks[J]. Computer Science, 2013. (https://arxiv.org/pdf/1308.0850.pdf)
+
+[3] T. Mikolov, I. Sutskever, A. Deoras, H. Le, S. Kombrink, and J. Cernocky. Subword language modeling with neural networks. Technical report, Un-published Manuscript, 2012. (http://www.fit.vutbr.cz/~imikolov/rnnlm/char.pdf)
+
+[4] I. Sutskever, J. Martens, G. Hinton. Generating Text with Recurrent Neural Networks. 2011. (http://www.cs.toronto.edu/~ilya/pubs/2011/LANG-RNN.pdf)
+
+
+https://stats.stackexchange.com/questions/211858/how-to-compute-bits-per-character-bpc
