@@ -7,15 +7,6 @@ import os
 import json
 
 
-path_to_file = "./logs/testing_model.txt"
-
-
-def fprint(text):
-    print(text)
-    with open(path_to_file, "a") as out:
-        out.write(text)
-
-
 class CheckModel():
 
     def __init__(self, model_path, tokenization_path, tokenSelector_path):
@@ -91,8 +82,8 @@ class CheckModel():
             text += word
             sentence += generated
 
-        fprint("Generating with seed: {}".format(seed))
-        fprint(text)
+        return text
+
 
 
     def get_probability_token(self, token, sentence):
