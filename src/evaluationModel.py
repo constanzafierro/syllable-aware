@@ -1,13 +1,22 @@
 from keras.models import load_model
 from src.TokenSelector import TokenSelector
+from src.Tokenization import Tokenization
 
 import numpy as np
 import os
 import json
 
-path_to_file = "./log/evaluation_model.txt"
 
-class evaluationModel():
+path_to_file = "./logs/evaluation_model.txt"
+
+
+def fprint(text):
+    print(text)
+    with open(path_to_file, "a") as out:
+        out.write(text)
+
+
+class testingModel():
 
     def __init__(self, model_path, tokenization_path, tokenSelector_path):
 
@@ -38,62 +47,78 @@ class evaluationModel():
         for key, value in self.tokenSelector_params["map_punctuation"]:
             self.map_punctuation_inv[value] = key
 
+    def predict_word(self, sentence, temperature):
 
-    def predict_text(self,
-                     seed = "declaro reanudado el período de sesiones",
-                     nwords = 10,
-                     temperature = 1.0):
-
-        seed = seed.lower().split()
-
-        sentence = []
-
-        for word in seed:
-            sentence = self.tokenSelector.select(word, sentence)
-
-        generated = (sentence + ["."])[:-1]
-
-        fprint("Generating with seed: {}".format(seed))
-        words_count = 0
-        while words_count < nwords:
+        next_token = ""
+        generated = []
+        while next_token not in self.tokenSelector_params["index_ends"]:
             x_pred = np.zeros((1, self.tokenization_params["lprime"]))
             for t, token in enumerate(sentence):
                 x_pred[0, t] = self.tokenization_params["token_to_index"][token]
             preds = self.model.predict(x_pred, verbose=0)[0]
             next_index = sample(preds, temperature)
             next_token = self.tokenization_params["index_to_token"][str(next_index + 1)]
-
             generated += [next_token]
             sentence = sentence[1:] + [next_token]
 
-            if next_index in self.tokenization_params["index_ends"]:
-                words_count += 1
-
-
-        text_array = []
+        word = ""
         for token in generated:
             if token in self.map_punctuation_inv:
-                text_array.append(" " + self.map_punctuation_inv[token] + " ")
+                word += self.map_punctuation_inv[token]+ " "
             else:
-                text_array.append(token)
+                token = token.replace(self.tokenSelector_params["final_char"], " ")
+                token = token.replace(self.tokenSelector_params["inter_char"], "")
+                word += token
 
-        text = "".join(text_array)
-        text = text.replace(self.tokenSelector_params["final_char"], " ")
-        text = text.replace(self.tokenSelector_params["inter_char"], "")
+        return word, generated
 
+
+    def predict_text(self,
+                     seed = "declaro",
+                     nwords = 10,
+                     temperature = 1.0):
+
+        seed_array = seed.lower().split()
+
+        sentence = []
+        text = ""
+
+        for word in seed_array:
+            sentence = self.tokenSelector.select(word, sentence)
+
+        for i in range(nwords):
+            word, generated = self.predict_word(sentence, temperature)
+            text += word
+            sentence += generated
+
+        fprint("Generating with seed: {}".format(seed))
         fprint(text)
 
 
+    def get_probability_token(self, token, sentence):
+        x_pred = np.zeros((1, self.tokenization_params["lprime"]))
+        for t, tk in enumerate(sentence):
+            x_pred[0, t] = self.tokenization_params["token_to_index"][tk]
+        preds = self.model.predict(x_pred, verbose=0)[0]
 
+        return preds[token]
 
+    def perplexity(self, path_to_test):
 
+        tokenization = Tokenization(path_to_file=None,
+                                    final_char=self.tokenSelector_params["final_char"],
+                                    final_punc=self.tokenSelector_params["final_punc"],
+                                    inter_char=self.tokenSelector_params["inter_char"],
+                                    signs_to_ignore=self.tokenSelector_params["signs_to_ignore"],
+                                    words_to_ignore=self.tokenSelector_params["words_to_ignore"],
+                                    map_punctuation=self.tokenSelector_params["map_punctuation"],
+                                    letters=self.tokenSelector_params["letters"],
+                                    sign_not_syllable=self.tokenSelector_params["sign_not_syllable"],
+                                    )
+        tokenization.set_params_experiment(self.tokenization_params)
 
+        test_selected = tokenization.select_tokens(path_to_test)
 
-
-def fprint(text):
-    print(text)
-    with open(path_to_file, "a") as out:
-        out.write(text)
 
 
 def sample(pred, temperature=1.0):

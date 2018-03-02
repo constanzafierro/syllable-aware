@@ -46,7 +46,8 @@ class TokenSelector():
                                                                                          to_ignore = to_ignore,
                                                                                          middle = self.inter_char,
                                                                                          end = self.final_char,
-                                                                                         sign_not_syllable = self.sign_not_syllable
+                                                                                         sign_not_syllable = self.sign_not_syllable,
+                                                                                         letters = self.letters
                                                                                          )
 
 

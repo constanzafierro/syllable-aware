@@ -56,7 +56,8 @@ class Tokenization:
                                            sign_not_syllable=self.sign_not_syllable
                                            )
 
-        self.tokenSelector.setting_dictionaries(path_file=self.path_to_file)
+        if self.path_to_file != None:
+            self.tokenSelector.setting_dictionaries(path_file=self.path_to_file)
 
         ## parameters tokenization
         self.lprime = 0

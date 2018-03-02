@@ -46,7 +46,7 @@ def get_freq_syllables(freq_word, dict_word, to_ignore):
     return freq_syll
 
 
-def preprocessing_file(path_in, path_out, to_ignore):
+def preprocessing_file(path_in, path_out, to_ignore, punctuation, token_unknow):
 
     if not os.path.exists(path_in):
         raise TypeError("File not exists {0}".format(path_in))
@@ -55,11 +55,22 @@ def preprocessing_file(path_in, path_out, to_ignore):
         with open(path_in) as f2:
 
             for line in f2:
+                words = line.lower().split()
+                words_array = []
+                for word in words:
+                    if word in to_ignore:
+                        continue
+                    elif word in punctuation:
+                        words_array.append(word)
+                        continue
+                    try:
+                        syll = get_syllables(word=word, middle='-', end=':')
+                        words_array.append(word)
+                    except:
+                        print("Word '{}' does not belong to Spanish, was replaced by '{}'".format(word, token_unknow))
+                        words_array.append(token_unknow)
 
-                s = re.sub('([.,;:¿¡!?"()//\´-])', r' \1 ', line)
-                s = re.sub('\s{2,}', ' ', s)
-                rx = '[' + re.escape(''.join(to_ignore)) + ']'
-                s = re.sub(rx, '', s)
+                s = " ".join(words_array)
                 f1.write(s+'\n')
 
 
@@ -86,7 +97,7 @@ def get_syllables(word, middle, end):
 def get_characters(token,
                    middle,
                    end,
-                   letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'):
+                   letters):
 
     s = []
 
@@ -119,7 +130,7 @@ def word_to_syll(word, dict_word, to_ignore, middle, end, sign_not_syllable, ver
     return dict_word
 
 
-def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_syllable):
+def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_syllable, letters):
 
     if word in to_ignore:
         return dict_syll
@@ -139,12 +150,14 @@ def syll_to_charac(word, dict_syll, dict_word, to_ignore, middle, end, sign_not_
             if syll == sign_not_syllable:
                 dict_syll[word] = get_characters(token = word + end,
                                                  middle = middle,
-                                                 end = end
+                                                 end = end,
+                                                 letters = letters
                                                  )
             else:
                 dict_syll[syll] = get_characters(token = syll,
                                                  middle = middle,
-                                                 end = end
+                                                 end = end,
+                                                 letters = letters
                                                  )
 
     return dict_syll
@@ -155,7 +168,8 @@ def tokenize_corpus(path_file,
                     middle = '-',
                     end = ':',
                     sign_not_syllable = '<sns>',
-                    verbose = False
+                    verbose = False,
+                    letters = 'aáeéoóíúiuübcdfghjklmnñopqrstvwxyz'
                     ):
 
     dict_word = dict()
@@ -187,7 +201,8 @@ def tokenize_corpus(path_file,
                                            to_ignore = to_ignore,
                                            middle = middle,
                                            end = end,
-                                           sign_not_syllable = sign_not_syllable
+                                           sign_not_syllable = sign_not_syllable,
+                                           letters = letters
                                            )
 
                 freq_word = get_freq_words(word = word,
