@@ -1,8 +1,8 @@
 # STATUS
 
-*  **[Working]** lstm.py **Haven't been Tested yet !**
+* **[Working]** lstm.py **Haven't been Tested yet !**
 
-* **[broken]** main.py
+* **[Working]** main.py
 
 # TODO List
 
@@ -13,7 +13,7 @@
 
 * Testear modelo en lstm.py
 
-* Agregar modelo al main y testear el main
+* Testear el main
 
 
 ### Testear archivos y clases

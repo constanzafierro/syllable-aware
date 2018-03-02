@@ -232,6 +232,7 @@ def main():
                                          count_to_split=-1
                                          ).__next__()
 
+
         time_pref = time.strftime('%y%m%d.%H%M')  # Ver código de Jorge Perez
 
         outfile = out_model_pref + time_pref + '.h5'

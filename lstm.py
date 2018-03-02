@@ -1,37 +1,51 @@
 # coding: utf-8
 
 ## Imports
+import time
+import os
+import numpy as np
+import random
+
 from src.RNN import RecurrentLSTM
 from src.Tokenization import Tokenization
 from src.utils import preprocessing_file
 from src.perplexity import metric_pp
 from src.Generators import GeneralGenerator
-
 from src.Callbacks import Callbacks
 
-
-import time
-
-from keras import backend as K
-
-
 ########################################################################################################################
-
 ## Setting Seed for Reproducibility
 # https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
-
-import os
-import numpy as np
-import random
-
-# import tensorflow as tf
 
 os.environ['PYTHONHASHSEED'] = '57' # https://github.com/fchollet/keras/issues/850
 seed = 57 # must be the same as PYTHONHASHSEED
 np.random.seed(seed)
 random.seed(seed)
 
-## Limit operation to 1 thread for deterministic results.
+
+################### TensoFlow GPU Usage #######################
+# https://www.tensorflow.org/programmers_guide/using_gpu#allowing_gpu_memory_growth
+
+from keras import backend as K
+
+if K.backend() == 'tensorflow':
+
+    import tensorflow as tf
+
+    config = tf.ConfigProto()
+    
+    # Don't pre-allocate memory; allocate as-needed
+    config.gpu_options.allow_growth = True 
+  
+    sess = tf.Session(config=config)
+  
+    tf.set_random_seed(seed)
+    K.set_session(sess)
+
+
+############################ Limit operation to 1 thread for deterministic results #####################################
+# https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
+
 # session_conf = tf.ConfigProto( intra_op_parallelism_threads = 1 , inter_op_parallelism_threads = 1 )
 # from keras import backend as K
 # tf.set_random_seed(seed)
@@ -43,14 +57,14 @@ random.seed(seed)
 
 ## Path to File
 
-path_in = './data/horoscopo_test_overfitting.txt'
-path_out = './data/horoscopo_test_overfitting_add_space.txt'
+#path_in = './data/horoscopo_test_overfitting.txt'
+#path_out = './data/horoscopo_test_overfitting_add_space.txt'
 
 #path_in = './data/nicanor_clear.txt'
 #path_out = './data/nicanor_clear2.txt'
 
-#path_in = './data/train.txt'
-#path_out = './data/train_add_space.txt'
+path_in = './data/train.txt'
+path_out = './data/train_add_space.txt'
 
 out_directory_train_history = '../train_history/'
 out_directory_model = '../models/'
@@ -126,21 +140,22 @@ epochs = 300
 optimizer = 'rmsprop' # 'adam'
 metrics = ['top_k_categorical_accuracy', 'categorical_accuracy']
 
-workers = 16 # default 1
+workers = 1 # default 1 (máx 8 fisicos o 16 virtuales)
 
 
 ################ CORPUS ATRIBUTES #################
 
 T = 50 # quantity of tokens
 
+
 quantity_word = 30
 quantity_syllable = T - quantity_word
 
-L = 10  # 100 sequence_length
+L = 100  # 100 sequence_length
 
 random_split = False
 token_split = '<nl>'
-use_perplexity = True
+use_perplexity = False # True
 
 
 ###################################################
@@ -236,6 +251,10 @@ print(model.summary)
 ## Generators
 print('\n Get Generators \n')
 
+
+if params_tokenization["lprime"] > len(train_set):
+    raise ValueError("lprime > len(train_set), lprime = {} and len(train_set) = {}".format(params_tokenization["lprime"], len(train_set)))
+
 train_generator = GeneralGenerator(batch_size = batch_size,
                                    ind_tokens = train_set,
                                    vocabulary = params_tokenization["vocabulary"],
@@ -244,6 +263,10 @@ train_generator = GeneralGenerator(batch_size = batch_size,
                                    count_to_split = -1,
                                    ).__next__()
 
+
+if params_tokenization["lprime"] > len(val_set):
+    raise ValueError("lprime > len(val_set), lprime = {} and len(val_set) = {}".format(params_tokenization["lprime"], len(val_set)))
+                     
 val_generator = GeneralGenerator(batch_size = batch_size,
                                  ind_tokens = val_set,
                                  vocabulary = params_tokenization["vocabulary"],
