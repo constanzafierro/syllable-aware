@@ -39,7 +39,7 @@ if not os.path.exists(path=out_directory_train_history):
 else:
     pass
 
-if not os.path.exists(path=out_directory_train_history + "experiment/"):
+if not os.path.exists(path= out_directory_model + "experiment/"):
     os.mkdir(path=out_directory_train_history + "experiment/",
              mode=0o755
              )
