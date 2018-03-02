@@ -40,7 +40,7 @@ else:
     pass
 
 if not os.path.exists(path= out_directory_model + "experiment/"):
-    os.mkdir(path= out + "experiment/",
+    os.mkdir(path= out_directory_model + "experiment/",
              mode=0o755
              )
 else:
