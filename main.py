@@ -39,6 +39,13 @@ if not os.path.exists(path=out_directory_train_history):
 else:
     pass
 
+if not os.path.exists(path=out_directory_train_history + "experiment/"):
+    os.mkdir(path=out_directory_train_history + "experiment/",
+             mode=0o755
+             )
+else:
+    pass
+
 
 def main():
 
@@ -84,7 +91,7 @@ def main():
     dropout_seed = 1
 
     train_size = 0.8  # 1
-    batch_size = 128
+    batch_size = 512
     epochs = 100
 
     optimizer = 'rmsprop'  # 'adam'
@@ -165,8 +172,14 @@ def main():
         print("Get and save parameters experiment")
         params_tokenization = tokenization.params_experiment()
 
-        path_setting_experiment = out_directory_model + "experimentT{}Tw{}Ts{}.txt".format(Tmax, quantity_word, quantity_syllable)
+        target_experiment = "experimentT{}Tw{}Ts{}".format(Tmax, quantity_word, quantity_syllable)
+
+        path_setting_experiment = out_directory_model + "experiment/" + target_experiment + "_setting_tokenize.txt"
         tokenization.save_experiment(path_setting_experiment)
+
+        path_setting_tokenSelector = out_directory_model + "experiment/" + target_experiment + "_setting_tokenSelector.txt"
+        tokenization.save_tokenSelector(path_setting_tokenSelector)
+
         print("average tokens per words = {}".format(params_tokenization["average_tpw"]))
         if use_perplexity: metrics.append(metric_pp(average_TPW=params_tokenization["average_tpw"]))
 
@@ -235,7 +248,7 @@ def main():
 
         time_pref = time.strftime('%y%m%d.%H%M')  # Ver código de Jorge Perez
 
-        outfile = out_model_pref + time_pref + '.h5'
+        outfile = out_model_pref + target_experiment + time_pref +"_{loss:.2f}_{val_loss:.2f}" + ".h5"
 
         callbacks = Callbacks()
 

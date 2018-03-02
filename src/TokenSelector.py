@@ -145,7 +145,12 @@ class TokenSelector():
                   "freq_word":self.freq_word,
                   "freq_syll":self.freq_syll,
                   "words":list(self.words),
-                  "syllables": list(self.syllables)
+                  "syllables": list(self.syllables),
+                  "final_car": self.final_char,
+                  "inter_char": self.inter_char,
+                  "sign_not_syllable": self.sign_not_syllable,
+                  "letters": self.letters,
+                  "map_punctuation": self.map_punctuation
                   }
         return params
 

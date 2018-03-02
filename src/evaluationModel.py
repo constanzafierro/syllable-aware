@@ -1,4 +1,6 @@
 from keras.models import load_model
+from src.TokenSelector import TokenSelector
+
 import numpy as np
 import os
 import json
@@ -7,20 +9,28 @@ path_to_file = "./log/evaluation_model.txt"
 
 class evaluationModel():
 
-    def __init__(self, model_file, tokenization_file, map_punctuation):
+    def __init__(self, model_path, tokenization_path, tokenSelector_path):
 
-        if not os.path.exists(path= tokenization_file):
-            raise FileNotFoundError("Path doesn't exists, '{}'".format(tokenization_file))
+        raisePathNotExists(model_path)
+        raisePathNotExists(tokenization_path)
+        raisePathNotExists(tokenSelector_path)
 
-        with open(tokenization_file) as f:
+        with open(tokenization_path) as f:
             self.tokenization_params = json.load(f)
 
-        if not os.path.exists(path= model_file):
-            raise FileNotFoundError("Path doesn't exists, '{}'".format(model_file))
+        self.model = load_model(model_path)
 
-        self.model = load_model(model_file)
+        with open(tokenSelector_path) as f:
+            tokenSelector_params = json.load(f)
 
-        self.map_punctuation = map_punctuation
+        self.tokenSelector = TokenSelector(final_char= tokenSelector_params["final_char"],
+                                           inter_char= tokenSelector_params["inter_char"])
+
+        self.tokenSelector.set_params(tokenSelector_params)
+
+        self.map_punctuation_inv = dict()
+        for key, value in self.tokenSelector["map_punctuation"].items():
+            self.map_punctuation_inv[value] = key
 
 
     def predict_text(self,
@@ -28,8 +38,15 @@ class evaluationModel():
                      nwords = 10,
                      temperature = 1.0):
 
-        sentence = seed
-        generated = sentence.copy()
+        seed = seed.lower().split()
+
+        sentence = []
+
+        for word in seed:
+            sentence = self.tokenSelector.select(word, sentence)
+
+        generated = (sentence + ["."])[:-1]
+
         fprint("Generating with seed: {}".format(seed))
         words_count = 0
         while words_count < nwords:
@@ -49,11 +66,10 @@ class evaluationModel():
 
         text_array = []
         for token in generated:
-            if token in self.map_punctuation:
-                text_array.append(" " + self.map_punctuation[token] + " ")
+            if token in self.map_punctuation_inv:
+                text_array.append(" " + self.map_punctuation_inv[token] + " ")
             else:
                 text_array.append(token)
-
 
         text = "".join(text_array)
         text = text.replace(self.tokenization_params["final_char"], " ")
@@ -82,3 +98,8 @@ def sample(pred, temperature=1.0):
     prob = np.random.multinomial(1, pred, 1)
 
     return np.argmax(prob)
+
+
+def raisePathNotExists(path_to_file):
+    if not os.path.exists(path= path_to_file):
+        raise FileNotFoundError("Path doesn't exists, '{}'".format(path_to_file))
