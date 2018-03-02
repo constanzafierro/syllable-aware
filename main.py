@@ -119,9 +119,9 @@ def main():
 
     train_size = 0.8
 
-    random_split = True
+    random_split = False
     token_split = '<nl>'
-    use_perplexity = True
+    use_perplexity = False
     sequence_length = 50
 
     ## Init Corpus
