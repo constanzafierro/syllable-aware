@@ -18,6 +18,19 @@ seed = 1 # must be the same as PYTHONHASHSEED
 np.random.seed(seed)
 random.seed(seed)
 
+if K.backend() == 'tensorflow':
+    import tensorflow as tf
+
+    config = tf.ConfigProto()
+
+    # Don't pre-allocate memory; allocate as-needed
+    config.gpu_options.allow_growth = True
+
+    sess = tf.Session(config=config)
+
+    tf.set_random_seed(seed)
+    K.set_session(sess)
+
 path_in = './data/train.txt'
 path_out = './data/train2.txt'
 
@@ -291,7 +304,7 @@ def main():
                   validation_steps= len(val_set)/batch_size,
                   callbacks= callbacks_,
                   workers=workers,
-                  use_multiprocessing= True
+                  use_multiprocessing= False
                   )
 
         tf = time.time()

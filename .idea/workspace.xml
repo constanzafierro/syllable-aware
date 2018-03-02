@@ -43,8 +43,8 @@
       <file leaf-file-name="lstm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2414">
-              <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="42" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -53,8 +53,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="42" column="38" lean-forward="false" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
+            <state relative-caret-position="298">
+              <caret line="31" column="23" lean-forward="false" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -165,8 +165,8 @@
       <find>./</find>
       <find>train_size</find>
       <find>final</find>
-      <find>workers</find>
       <find>next_index</find>
+      <find>workers</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1230,14 +1230,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lstm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2414">
-          <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/horoscopo_test_overfitting.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1290,10 +1282,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lstm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="42" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="42" column="38" lean-forward="false" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
+        <state relative-caret-position="298">
+          <caret line="31" column="23" lean-forward="false" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
